@@ -1,0 +1,130 @@
+{
+    "NEW_LANGUAGE": {
+        "english": "اللغة الأن هي {LANGUAGE}."
+    },
+    "LANGUAGE_NOT_SUPPORTED": {
+        "english": "يرجى الإختيار بين `[arabic]`\nحيث لا توجد لغة أخرى"
+    },
+    "CURRENT_LANGUAGE": {
+        "english": "اللغة الحالية هي {LANGUAGE}."
+    },
+    "BOT_OWNERS_ONLY": {
+        "english": "أونر البوت فقط لديه الحق بتشغيل هذا الأمر."
+    },
+    "DISABLED_COMMAND": {
+        "english": "تم إيقاف تشغيل هذا الأمر في السيرفر."
+    },
+    "MISSING_PERMISSION": {
+        "english": "يجب أن تمتلك صلاحية {PERM} لتشغيل الأمر."
+    },
+    "MISSING_ROLES": {
+        "english": "يجب أن تمتلك أي رتبة من الرتب الآتية: {ROLES}"
+    },
+    "COOLDOWN": {
+        "english": "يرجى الإنتظار {COOLDOWN}."
+    },
+    "ENABLE_DISABLE_STATE": {
+        "english": "يجب أن تكون الحالة بين \"enable\" أو \"disable\"."
+    },
+    "CANNOT_ENABLE_DISABLE_IN_DMS": {
+        "english": "لا يمكنك إيقاف أو تشغيل الأوامر في الخاص."
+    },
+    "COMMAND_ALREADY_ENABLED": {
+        "english": "هذا الأمر مفعل بالفعل."
+    },
+    "COMMAND_ALREADY_DISABLED": {
+        "english": "هذا الأمر مغلق بالفعل."
+    },
+    "COMMAND_NOW_ENABLED": {
+        "english": "تم تشغيل الأمر {COMMAND}."
+    },
+    "COMMAND_NOW_DISABLED": {
+        "english": "تم إيقاف تشغيل الأمر {COMMAND}."
+    },
+    "UNKNOWN_COMMAND": {
+        "english": "لا أستطيع العثور على الأمر {COMMAND}."
+    },
+    "CURRENT_PREFIX": {
+        "english": "البادئة الأن هي: `{PREFIX}`"
+    },
+    "SET_PREFIX": {
+        "english": "تم تحديد البادئة الأن هي: `{PREFIX}`"
+    },
+    "CANNOT_SET_PREFIX_IN_DMS": {
+        "english": "لا يمكن تحديد بادئة الخاص."
+    },
+    "CANNOT_CHANGE_REQUIRED_ROLES_IN_DMS": {
+        "english": "لا يمكن أن تحدد رتبة في الخاص."
+    },
+    "REMOVED_ALL_REQUIRED_ROLES": {
+        "english": "تم حذف جميع الرتب المسموح لها بتشغيل الأمر {COMMAND}."
+    },
+    "ADDED_REQUIRED_ROLE": {
+        "english": "تم السماح للرتبة {ROLE} للأمر {COMMAND}."
+    },
+    "SYNTAX_ERROR": {
+        "english": "إستخدام خاطئ! جرب `{PREFIX}{COMMAND} {ARGUMENTS}`."
+    },
+    "NO_DATABASE_FOUND": {
+        "english": "لا توجد حافظة معلومات بالبوت."
+    },
+    "GUILD_ONLY_COMMAND": {
+        "english": "هذا الأمر يعمل في السيرفر فقط"
+    },
+    "NO_REACT_PERMS": {
+        "english": "يحتاج البوت صلاحية \"Add Reactions\""
+    },
+    "EXCEPTION": {
+        "english": "× حدث خطأ أثناء تشغيل الأمر (يرجى التواصل معنا) ×"
+    },
+    "NO_TAGGED_CHANNELS": {
+        "english": "من فضلك قم بتحديد الغرفة"
+    },
+    "NOT_CHANNEL_COMMAND": {
+        "english": "هذا الأمر متوقف في هذه الغرفة."
+    },
+    "NO_LONGER_CHANNEL_COMMAND": {
+        "english": "تم إلغاء تحديد غرفة الأمر."
+    },
+    "NOW_CHANNEL_COMMAND": {
+        "english": "الأمر \"{COMMAND}\" يعمل الأن في الغرف التالية: {CHANNELS}."
+    },
+    "ALLOWED_CHANNELS": {
+        "english": "يمكنك تشغيل هذا الأمر في الغرف التالية: {CHANNELS}."
+    },
+    "CANNOT_DISABLE_THIS_COMMAND": {
+        "english": "لا يمكن إيقاف هذا الأمر"
+    },
+    "INVALID_SLASH_COMMAND": {
+        "english": "هذا الأمر ليس له وجود حاليا"
+    },
+    "REQUIRE_ROLES": {
+        "english": "يجب تحديد الرتبة والأمر جيدا `{PREFIX}requiredroles {COMMAND} <role ID>`."
+    },
+    "HELP_MENU": {
+        "TITLE": {
+            "english": "قائمة الأوامر"
+        },
+        "SELECT_A_CATEGORY": {
+            "english": "قم بإختيار قائمة من التفاعلات."
+        },
+        "COMMANDS": {
+            "english": "الأوامر"
+        },
+        "DESCRIPTION_FIRST_LINE": {
+            "english": "🚪 للرجوع إلى الخلف"
+        },
+        "DESCRIPTION_SECOND_LINE": {
+            "english": "إستخدم ⬅ و ➡ للتنقل بين الصحف."
+        },
+        "ALIASES": {
+            "english": "الإختصارات"
+        },
+        "SYNTAX": {
+            "english": "طريقة الإستخدام"
+        }
+    },
+    "COMMANDS": {
+        "english": "الأوامر"
+    }
+}

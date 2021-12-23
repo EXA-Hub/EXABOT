@@ -1,0 +1,26 @@
+[{
+    "name": "الإعـدادات",
+    "emoji": "🛠️",
+    "customEmoji": false,
+    "hidden": false
+}, {
+    "name": "أوامـر عـامـة",
+    "emoji": "👥",
+    "customEmoji": false,
+    "hidden": false
+}, {
+    "name": "الألـعـاب",
+    "emoji": "🎲",
+    "customEmoji": false,
+    "hidden": false
+}, {
+    "name": "الإداريـة",
+    "emoji": "⚖️",
+    "customEmoji": false,
+    "hidden": false
+}, {
+    "name": "أوامر خـاصـة",
+    "emoji": "📛",
+    "customEmoji": false,
+    "hidden": true
+}]
