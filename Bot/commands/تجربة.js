@@ -92,10 +92,7 @@ module.exports = {
       "https://cdn.discordapp.com/attachments/902195455893573632/913115261979209738/150d8c66c0374189.pdf",
       "https://goo.gl/dQ2vrX",
       "https://rkns.link/kd589",
-      "",
-      "",
-      "",
-      "",
+      "🎁هدية: `{{prefix}}gift {{giftCode}}`",
     ];
     const min = 0;
     const max = responses.length;
