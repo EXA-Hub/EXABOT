@@ -1,8 +1,8 @@
 .App {
-    text-align: center;
-    font-family: 'Bakbak One', cursive;
+  text-align: center;
+  font-family: "Bakbak One", cursive;
 }
 
-* {
-    background-color: #000;
+body {
+  background-color: #001630;
 }
