@@ -325,7 +325,7 @@ module.exports = {
       });
     let firstserverclickerID;
     client.on("interactionCreate", async (interaction) => {
-      if (!interaction.isButton) return;
+      if (!interaction.isButton()) return;
       if (interaction.customId == `ignore${user.id + channel.id}`) {
         interaction.reply({
           content: `تم رفض الطلب\nوسيتم إعلام <@!${user.id}>`,
@@ -409,8 +409,7 @@ module.exports = {
         });
         firstserverclickerID = interaction.user.id;
         interaction.message.delete();
-      }
-      if (interaction.customId === `done${user.id + channel.id}`) {
+      } else if (interaction.customId === `done${user.id + channel.id}`) {
         try {
           interaction.message.delete().then(() => {
             sharechannel.send({
@@ -474,8 +473,7 @@ module.exports = {
           });
           console.error(error);
         }
-      }
-      if (interaction.customId === `undone${user.id + channel.id}`) {
+      } else if (interaction.customId === `undone${user.id + channel.id}`) {
         sharerequest.send({
           content: `تم رفض الشراكة في سيرفر: \`${interaction.guild.name}\``,
         });
