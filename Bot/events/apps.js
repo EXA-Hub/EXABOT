@@ -55,7 +55,7 @@ module.exports = async (client, instance) => {
           interaction.channelId
         ),
         client: client,
-        // prefix: instance.getPrefix(interaction.member.guild.id),
+        prefix: instance.getPrefix(interaction.member.guild.id),
         instance: instance,
         interaction: interaction,
       };
