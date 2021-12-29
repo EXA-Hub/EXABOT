@@ -29,7 +29,7 @@
         "discord-autorole-badges": "^2.0.1",
         "discord-giveaways": "^5.0.1",
         "discord-inv": "^1.1.0",
-        "discord.js": "^13.3.1",
+        "discord.js": "^13.5.0",
         "discord.js-akinator": "^3.3.1",
         "distube": "^3.0.4",
         "dotenv": "^8.6.0",
