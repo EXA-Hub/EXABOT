@@ -8,7 +8,6 @@ module.exports = {
     target,
     channel,
     client,
-    prefix,
     instance,
     interaction,
   }) => {
