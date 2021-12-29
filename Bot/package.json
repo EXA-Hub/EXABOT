@@ -12,7 +12,9 @@
     "license": "ISC",
     "description": "EXA-BOT™",
     "dependencies": {
+        "@discordjs/builders": "^0.8.2",
         "@discordjs/opus": "^0.7.0",
+        "@discordjs/rest": "^0.2.0-canary.0",
         "@discordjs/voice": "^0.7.5",
         "@distube/soundcloud": "^1.0.0",
         "@distube/spotify": "^1.0.0",
@@ -23,6 +25,7 @@
         "common-tags": "^1.8.2",
         "connect-mongo": "^4.6.0",
         "cors": "^2.8.5",
+        "discord-api-types": "^0.24.0",
         "discord-autorole-badges": "^2.0.1",
         "discord-giveaways": "^5.0.1",
         "discord-inv": "^1.1.0",
