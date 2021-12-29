@@ -25,7 +25,7 @@
         "common-tags": "^1.8.2",
         "connect-mongo": "^4.6.0",
         "cors": "^2.8.5",
-        "discord-api-types": "^0.24.0",
+        "discord-api-types": "^0.26.0",
         "discord-autorole-badges": "^2.0.1",
         "discord-giveaways": "^5.0.1",
         "discord-inv": "^1.1.0",

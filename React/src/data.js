@@ -1,12 +1,18 @@
 module.exports = {
-  buttons: {
-    send: {
-      title: "Send Message",
+  login: "http://localhost:2323/api/auth/discord",
+  logout: "http://localhost:2323/api/auth/logout",
+  user: "http://localhost:2323/api/auth",
+  buttons: [
+    {
+      title: "إرسال رسالة",
+      text: "يقوم بإرسال رسالة للغرفة",
+      button: "أرسل",
+      image: "https://th.bing.com/th/id/OIP.1HOjiBzIYbSQfPZzhT1PcwHaCl",
       function: (params) => {
         if (!params) return;
       },
     },
-  },
+  ],
   servers: [
     {
       title: "EXA-4-EVER",

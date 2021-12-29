@@ -91,9 +91,9 @@ client.on("ready", () => {
   });
 });
 
-client.on("ready", () => {
-  require("./events/apps")(client, {});
-});
+// client.on("ready", () => {
+//   require("./events/apps")(client, {});
+// });
 
 client.login(config.bot.token);
 

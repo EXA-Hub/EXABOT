@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { react } = require("../../../data/config").dashboard;
 
 const router = Router();
 
@@ -11,7 +12,7 @@ router.get(
   passport.authenticate("discord"),
   (req, res) => {
     req.session.user = req.user;
-    res.redirect("/api");
+    res.redirect(react);
   }
 );
 
@@ -27,12 +28,9 @@ router.get("/", async (req, res) => {
 
 // Logout endpoint.
 router.get("/logout", function (req, res) {
-  // We destroy the session.
   req.session.destroy(() => {
-    // We logout the user.
     req.logout();
-    // We redirect user to index.
-    res.redirect("/");
+    res.redirect(react);
   });
 });
 
