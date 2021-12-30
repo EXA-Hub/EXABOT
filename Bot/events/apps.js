@@ -13,10 +13,13 @@ const fs = require("fs");
 module.exports = async (client, instance) => {
   const pathDir = path.join(__dirname, "..", "apps");
   const apps = fs.readdirSync(pathDir);
-  const filter = (x) => x.type === "message" || "user" || 3 || 2;
+  const filter = (x) =>
+    x.type === "message" || x.type === "user" || x.type === 3 || x.type === 2;
   const cmds = apps
     .map((file) => require(path.join(pathDir, file)))
     .filter(filter);
+
+  console.log(cmds);
 
   const commands = cmds.map((cmd) =>
     new ContextMenuCommandBuilder()

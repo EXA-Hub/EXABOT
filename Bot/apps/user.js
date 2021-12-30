@@ -78,8 +78,14 @@ module.exports = {
       .addField("الرتب:", `${roles}`, true)
       .addField("الحالة:", `${statusFull}`, true)
       .setThumbnail(targetUser.avatarURL({ dynamic: true, size: 1024 }))
-      .setFooter(client.user.username, client.user.avatarURL({ dynamic: true }))
-      .setAuthor(targetUser.tag, targetUser.avatarURL({ dynamic: true }))
+      .setFooter(
+        { text: client.user.username },
+        client.user.avatarURL({ dynamic: true })
+      )
+      .setAuthor(
+        { name: targetUser.tag },
+        targetUser.avatarURL({ dynamic: true })
+      )
       .setTimestamp();
 
     return interaction.reply({ embeds: [embed] });
