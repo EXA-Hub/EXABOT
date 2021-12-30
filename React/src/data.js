@@ -1,8 +1,4 @@
-import dotenv from "dotenv";
-dotenv.config();
-
-const backend = process.env.BACKEND;
-
+const backend = "http://localhost:2323";
 module.exports = {
   login: `${backend}/api/auth/discord`,
   logout: `${backend}/api/auth/logout`,
