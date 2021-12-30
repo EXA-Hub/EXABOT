@@ -41,7 +41,9 @@ module.exports = {
         content: "**❌ | لا أستطيع العثور على العضو**",
       });
 
-    const status = targetMember.presence.status;
+    const status = targetMember.presence
+      ? targetMember.presence.status
+      : "offline";
     const roles = targetMember.roles.cache
       .map((r) => `<@&${r.id}> |`)
       .join(` `);

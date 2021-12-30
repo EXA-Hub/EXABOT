@@ -19,8 +19,6 @@ module.exports = async (client, instance) => {
     .map((file) => require(path.join(pathDir, file)))
     .filter(filter);
 
-  console.log(cmds);
-
   const commands = cmds.map((cmd) =>
     new ContextMenuCommandBuilder()
       .setName(cmd.name)
