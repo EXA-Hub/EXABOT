@@ -27,7 +27,9 @@ module.exports = (Client) => {
       resave: false,
       saveUninitialized: false,
       secret: config.dashboard.secret,
-      cookie: { maxAge: 60 * 1000 * 60 * 24 },
+      cookie: {
+        maxAge: 60 * 1000 * 60 * 24,
+      },
       store: MongoStore.create({ mongoUrl: Client.mongo._connectionString }),
     })
   );
