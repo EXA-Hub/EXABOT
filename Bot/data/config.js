@@ -1,3 +1,4 @@
+const { client } = require("../index");
 module.exports = {
   prefix: ".",
   devs: ["635933198035058700"],
@@ -22,11 +23,11 @@ module.exports = {
   },
   bot: {
     token: "" || process.env.token,
-    id: "878362295628095558",
-    invite: `https://discord.com/api/oauth2/authorize?client_id=878362295628095558&permissions=8&scope=bot`,
+    id: `${client.user.id}`,
+    invite: `https://discord.com/api/oauth2/authorize?client_id=${client.user.id}&permissions=8&scope=bot`,
     client: {
       secret: "" || process.env.CLIENT_SECRET,
-      id: "878362295628095558",
+      id: `${client.user.id}`,
     },
     color: {
       hex: "#092D82",
