@@ -121,7 +121,9 @@ export default function MainPage(props) {
           </div>
         </div>
       </header>
-      <h1 className="container-fluid fs-1 badge text-muted">EXA-BOT™</h1>
+      <h1 className="container-fluid fs-1 badge text-muted">
+        {userData ? userData.discordTag : "EXA-BOT™"}
+      </h1>
       <div className="text-dark text-muted row">{cards}</div>
       <div className="container fixed-bottom">
         <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
