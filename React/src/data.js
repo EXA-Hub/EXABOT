@@ -1,7 +1,12 @@
+import dotenv from "dotenv";
+dotenv.config();
+
+const backend = process.env.BACKEND;
+
 module.exports = {
-  login: "http://localhost:2323/api/auth/discord",
-  logout: "http://localhost:2323/api/auth/logout",
-  user: "http://localhost:2323/api/auth",
+  login: `${backend}/api/auth/discord`,
+  logout: `${backend}/api/auth/logout`,
+  user: `${backend}/api/auth`,
   buttons: [
     {
       title: "إرسال رسالة",
