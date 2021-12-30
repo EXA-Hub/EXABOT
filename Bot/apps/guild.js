@@ -1,6 +1,20 @@
+const {
+  Guild,
+  GuildMember,
+  User,
+  Channel,
+  Client,
+  Interaction,
+} = require("discord.js");
+const WOKcommands = require("wokcommands");
+
 module.exports = {
   name: "guild",
   type: "message",
+  /**
+   *
+   * @param {{guild: Guild,member: GuildMember,user: User,target: { type: String, id: String },channel: Channel,client: Client,instance: WOKcommands,interaction: Interaction}} data
+   */
   run: ({
     guild,
     member,
@@ -10,7 +24,7 @@ module.exports = {
     client,
     instance,
     interaction,
-  }) => {
+  } = data) => {
     function convertHMS(value) {
       const sec = parseInt(value, 10); // convert value to number if it's string
       let hours = Math.floor(sec / 3600); // get hours
