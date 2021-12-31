@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Card, Button } from "react-bootstrap";
-const { servers, login, user, logout } = require("../../data");
+const { servers, login, user, logout, backend } = require("../../data");
 const { getData } = require("../api/getData");
 
 const cards = servers.map((server) => {
@@ -43,11 +43,18 @@ const logoutAPIURL = () => (window.location.href = logout);
 
 export default function MainPage(props) {
   const [userData, setuserData] = useState(null);
-
   getData(user)
     .then(({ data }) => {
-      console.log(data);
       setuserData(data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+
+  const [coins, setCoins] = useState("0");
+  getData(backend + "/api/user/coins")
+    .then(({ data }) => {
+      setCoins(data);
     })
     .catch((err) => {
       console.log(err);
@@ -123,6 +130,13 @@ export default function MainPage(props) {
       </header>
       <h1 className="container-fluid fs-1 badge text-muted">
         {userData ? userData.discordTag : "EXA-BOT™"}
+        <p
+          style={{
+            fontFamily: "Michroma, sans-serif",
+          }}
+        >
+          $<span>{coins}</span>
+        </p>
       </h1>
       <div className="text-dark text-muted row">{cards}</div>
       <div className="container fixed-bottom">
