@@ -1,4 +1,4 @@
-const backend = "http://localhost:2323";
+const backend = "https://www.exabot.ml";
 module.exports = {
   backend: backend,
   login: `${backend}/api/auth/discord`,
