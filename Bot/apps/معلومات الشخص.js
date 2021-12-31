@@ -9,7 +9,7 @@ const {
 const WOKcommands = require("wokcommands");
 
 module.exports = {
-  name: "user",
+  name: "معلومات الشخص",
   type: "user",
   /**
    *

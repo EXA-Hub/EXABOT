@@ -9,7 +9,7 @@ const {
 const WOKcommands = require("wokcommands");
 
 module.exports = {
-  name: "guild",
+  name: "معلومات السيرفر",
   type: "message",
   /**
    *
