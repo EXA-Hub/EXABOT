@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 const { servers, login, user, logout, backend } = require("../../data");
 const { getData } = require("../api/getData");
@@ -20,45 +20,63 @@ const cards = servers.map((server) => {
   );
 });
 
-// const { buttons } = require("../../data");
-// const btns = buttons.map((button) => {
-//   return (
-//     <div className="column">
-//       <Card className="card">
-//         <Card.Img variant="top" src={button.image} />
-//         <Card.Body>
-//           <Card.Title>{button.title}</Card.Title>
-//           <Card.Text>{button.text}</Card.Text>
-//           <Button variant="primary" onClick={button.function()}>
-//             {button.button}
-//           </Button>
-//         </Card.Body>
-//       </Card>
-//     </div>
-//   );
-// });
+function guildsIcons(guilds) {
+  return guilds.map((guild) => {
+    return (
+      <div key={guild.id} className="column p-5">
+        <div className="card">
+          <img
+            className="circular--square card"
+            src={
+              guild.icon
+                ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=2048`
+                : "https://cdn.discordapp.com/avatars/865052410841792532/c9d03e1001a8cee703e486f810623533.png?size=2048"
+            }
+            alt={guild.name}
+          />
+          <Button
+            className="top p-2 m-2"
+            href={`/${guild.id}`}
+            style={{ textDecoration: "none" }}
+          >
+            {guild.name}
+          </Button>
+        </div>
+      </div>
+    );
+  });
+}
 
 const loginAPIURL = () => (window.location.href = login);
 const logoutAPIURL = () => (window.location.href = logout);
 
 export default function MainPage(props) {
   const [userData, setuserData] = useState(null);
-  getData(user)
-    .then(({ data }) => {
-      setuserData(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
-
+  const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
   const [coins, setCoins] = useState("0");
-  getData(backend + "/api/user/coins")
-    .then(({ data }) => {
-      setCoins(data);
-    })
-    .catch((err) => {
-      console.log(err);
-    });
+
+  useEffect(() => {
+    getData(user)
+      .then(({ data }) => {
+        console.log(data);
+        setuserData(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    getData(backend + "/api/user/coins")
+      .then(({ data }) => {
+        setCoins(data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+    (async () => {
+      const guildsData = (await userData) ? await userData.guilds : [];
+      setGuilds(guildsIcons(guildsData));
+      // console.log(guildsData);
+    })();
+  }, []);
 
   return (
     <div>
@@ -135,11 +153,21 @@ export default function MainPage(props) {
             fontFamily: "Michroma, sans-serif",
           }}
         >
-          $<span>{coins}</span>
+          <span style={{ color: "lime" }} className="flick">
+            ${coins}
+          </span>
         </p>
       </h1>
-      <div className="text-dark text-muted row">{cards}</div>
-      <div className="container fixed-bottom">
+      <div
+        className="text-dark text-muted row"
+        style={{
+          marginRight: "0px",
+          marginLeft: "0px",
+        }}
+      >
+        {userData ? guilds : cards}
+      </div>
+      <div className="container bottom">
         <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
           <div className="col-md-4 d-flex align-items-center">
             <a
