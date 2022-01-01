@@ -146,7 +146,7 @@ export default function MainPage(props) {
           }}
         >
           <span style={{ color: "lime" }} className="flick">
-            ${userData.coins}
+            ${userData ? userData.coins : '0'}
           </span>
         </p>
       </h1>
