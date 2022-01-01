@@ -51,7 +51,7 @@ const loginAPIURL = () => (window.location.href = login);
 const logoutAPIURL = () => (window.location.href = logout);
 
 export default function MainPage(props) {
-  const [userData, setuserData] = useState(null);
+  const [userData, setUserData] = useState(null);
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
   const [coins, setCoins] = useState("0");
 
@@ -59,7 +59,7 @@ export default function MainPage(props) {
     getData(user)
       .then(({ data }) => {
         console.log(data);
-        setuserData(data);
+        setUserData(data);
       })
       .catch((err) => {
         console.log(err);
@@ -76,7 +76,7 @@ export default function MainPage(props) {
       setGuilds(guildsIcons(guildsData));
       // console.log(guildsData);
     })();
-  }, []);
+  }, [userData, setUserData]);
 
   return (
     <div>
