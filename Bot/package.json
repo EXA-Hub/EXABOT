@@ -37,6 +37,8 @@
         "express": "^4.17.1",
         "express-partials": "^0.3.0",
         "express-session": "^1.17.2",
+        "ffmpeg": "^0.0.4",
+        "ffmpeg-static": "^4.4.0",
         "libsodium-wrappers": "^0.7.9",
         "lodash": "^4.17.21",
         "mongoose": "^6.1.0",

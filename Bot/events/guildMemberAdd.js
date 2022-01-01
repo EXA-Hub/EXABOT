@@ -1,4 +1,5 @@
 const Discord = require("discord.js");
+const { owner } = require("../data/config");
 /**
  * @param {Discord.Client} client
  */
@@ -28,18 +29,31 @@ module.exports = (client, instance) => {
           saveMutedDataFile[member.guild.id].length > 0
         ) &&
         saveMutedDataFile[member.guild.id].includes(member.id)
-      )
+      ) {
         mute(null, member, member.guild);
-      else if (member.guild.id === config.support.server.id) {
+      } else if (member.guild.id === config.support.server.id) {
         const welcomeCoins = 10 * 1000;
         giveCoins(member.id, welcomeCoins);
         const welcomeChannelsID = await db.get("welcome_channels");
         const welcomeChannelID = welcomeChannelsID[member.guild.id];
         const welcomeChannel =
           member.guild.channels.cache.get(welcomeChannelID);
-        welcomeChannel.send({
-          content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
-        });
+        if (welcomeChannel) {
+          welcomeChannel.send({
+            content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
+          });
+        } else {
+          try {
+            member.send({
+              content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
+            });
+          } catch (err) {
+            return client.users.cache.get(owner).send({
+              content:
+                "**❤ | يرجى تحديد قناة الترحيب في السيرفر الرئيسي يا سيدي**",
+            });
+          }
+        }
       }
     } catch (error) {
       console.error(error);
