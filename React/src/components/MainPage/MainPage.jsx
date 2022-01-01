@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
-const { servers, login, user, logout, backend } = require("../../data");
+const { servers, login, user, logout } = require("../../data");
 const { getData } = require("../api/getData");
 
 const cards = servers.map((server) => {
@@ -53,20 +53,12 @@ const logoutAPIURL = () => (window.location.href = logout);
 export default function MainPage(props) {
   const [userData, setUserData] = useState(null);
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
-  const [coins, setCoins] = useState("0");
 
   useEffect(() => {
     getData(user)
       .then(({ data }) => {
         console.log(data);
         setUserData(data);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    getData(backend + "/api/user/coins")
-      .then(({ data }) => {
-        setCoins(data);
       })
       .catch((err) => {
         console.log(err);
@@ -154,7 +146,7 @@ export default function MainPage(props) {
           }}
         >
           <span style={{ color: "lime" }} className="flick">
-            ${coins}
+            ${userData.coins}
           </span>
         </p>
       </h1>

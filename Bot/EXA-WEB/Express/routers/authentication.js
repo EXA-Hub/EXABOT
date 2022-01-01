@@ -23,6 +23,7 @@ router.get("/", async (req, res) => {
     guilds: req.user.guilds,
     userId: req.user.userId,
     discordTag: req.user.discordTag,
+    coins: await require("../../../functions/getCoins")(req.user.userId),
   });
 });
 

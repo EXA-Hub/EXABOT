@@ -4,9 +4,7 @@ const getCoins = require("../../../../../functions/getCoins");
 const router = Router();
 
 router.all("/coins", async (req, res) => {
-  const userId = req.user.id;
-  const userCoins = await getCoins(userId);
-  res.send(userCoins.toString());
+  res.send((await getCoins(req.user.userId)).toString());
 });
 
 module.exports = router;
