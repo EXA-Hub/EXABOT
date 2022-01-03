@@ -7,7 +7,7 @@ ReactDOM.render(
   <React.StrictMode>
     {/* <BrowserRouter>
       <Routes>
-        <Route path="/:line?">
+        <Route path="/:guildID?">
           
         </Route>
       </Routes>
