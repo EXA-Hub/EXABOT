@@ -54,6 +54,8 @@ export default function MainPage(props) {
   const [userData, setUserData] = useState(null);
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
 
+  console.log(props);
+
   useEffect(() => {
     getData(user)
       .then(({ data }) => {

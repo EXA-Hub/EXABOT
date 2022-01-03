@@ -18,23 +18,19 @@ module.exports = async (client, instance) => {
   const cmds = apps
     .map((file) => require(path.join(pathDir, file)))
     .filter(filter);
-
   const commands = cmds.map((cmd) =>
     new ContextMenuCommandBuilder()
       .setName(cmd.name)
       .setType(cmd.type === "message" ? 3 : 2)
       .toJSON()
   );
-
   const rest = new REST({ version: "9" }).setToken(token);
-
   await rest
     .put(Routes.applicationCommands(client.application.id), {
       body: commands,
     })
     .then(() => console.log("Successfully registered application commands."))
     .catch(console.error);
-
   client.on("interactionCreate", async (interaction) => {
     if (!interaction.isContextMenu()) return;
     const { commandName } = interaction;
