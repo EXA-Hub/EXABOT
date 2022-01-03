@@ -1,15 +1,18 @@
-import App from "./App";
 import React from "react";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+// import { BrowserRouter, Routes, Route } from "react-router-dom";
+import App from "./App";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    {/* <BrowserRouter>
       <Routes>
-        <Route path="/:line?" element={<App />} />
+        <Route path="/:line?">
+          
+        </Route>
       </Routes>
-    </BrowserRouter>
+    </BrowserRouter> */}
+    <App />
   </React.StrictMode>,
   document.getElementById("root")
 );
