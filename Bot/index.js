@@ -50,7 +50,7 @@ client.on("ready", () => {
     testServers: ["879062548551454740"],
     botOwners: ["635933198035058700"],
     owners: ["635933198035058700"],
-    defaultLangauge: "arabic",
+    defaultLanguage: "arabic",
     mongoUri: mongoUri,
     typeScript: false,
     ignoreBots: false,

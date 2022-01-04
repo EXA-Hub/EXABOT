@@ -32,8 +32,18 @@ module.exports = (client, instance) => {
       ) {
         mute(null, member, member.guild);
       } else if (member.guild.id === config.support.server.id) {
+        const giftedMainGuildMembers =
+          (await db.get("giftedMainGuildMembers")) || {};
+        if (
+          giftedMainGuildMembers &&
+          giftedMainGuildMembers.done &&
+          giftedMainGuildMembers.done.includes(member.id)
+        )
+          return;
         const welcomeCoins = 10 * 1000;
         giveCoins(member.id, welcomeCoins);
+        const newGiftedData = giftedMainGuildMembers.done.push(member.id);
+        await db.set("giftedMainGuildMembers", newGiftedData);
         const welcomeChannelsID = await db.get("welcome_channels");
         const welcomeChannelID = welcomeChannelsID[member.guild.id];
         const welcomeChannel =
@@ -48,10 +58,11 @@ module.exports = (client, instance) => {
               content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
             });
           } catch (err) {
-            return client.users.cache.get(owner).send({
+            client.users.cache.get(owner).send({
               content:
                 "**❤ | يرجى تحديد قناة الترحيب في السيرفر الرئيسي يا سيدي**",
             });
+            return console.error(err);
           }
         }
       }
