@@ -220,13 +220,7 @@ module.exports = {
                   } else {
                     editShareMessageDonning.forEach((x) => {
                       if (x.includes("<@&") && x.endsWith(">")) {
-                        let wantedRoleID = x
-                          .replace("\\", "")
-                          .replace("@", "")
-                          .replace("<", "")
-                          .replace(">", "")
-                          .replace("!", "")
-                          .replace("&", "");
+                        let wantedRoleID = x.replace(/[\\@<>!&]+/g, "");
                         const roleGuild = client.guilds.cache.get(
                           invite.guild.id
                         );
