@@ -51,6 +51,7 @@
         "request": "^2.88.2",
         "snakecord": "^1.0.9",
         "string-width": "^5.0.1",
+        "valid-url": "^1.0.9",
         "wokcommands": "^1.5.3",
         "ytdl": "^1.4.1",
         "ytdl-core": "^4.9.1"

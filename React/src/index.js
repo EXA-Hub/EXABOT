@@ -8,7 +8,7 @@ ReactDOM.render(
     {/* <BrowserRouter>
       <Routes>
         <Route path="/:guildID?">
-          
+        
         </Route>
       </Routes>
     </BrowserRouter> */}
