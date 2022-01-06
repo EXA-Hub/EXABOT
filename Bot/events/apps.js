@@ -13,18 +13,27 @@ const fs = require("fs");
 module.exports = async (client, instance) => {
   const pathDir = path.join(__dirname, "..", "apps");
   const apps = fs.readdirSync(pathDir);
-  const filter = (x) =>
-    x.type === "message" || x.type === "user" || x.type === 3 || x.type === 2;
+  const rest = new REST({ version: "9" }).setToken(token);
+  const currentApps = await rest
+    .get(Routes.applicationCommands(client.application.id))
+    .filter((app) => app.type === 2 || app.type === 3);
   const cmds = apps
     .map((file) => require(path.join(pathDir, file)))
-    .filter(filter);
+    .filter(
+      (x) =>
+        (x.type === "message" ||
+          x.type === "user" ||
+          x.type === 3 ||
+          x.type === 2) &&
+        !currentApps.find((app) => app.name === x.name)
+    );
   const commands = cmds.map((cmd) =>
     new ContextMenuCommandBuilder()
       .setName(cmd.name)
       .setType(cmd.type === "message" ? 3 : 2)
       .toJSON()
   );
-  const rest = new REST({ version: "9" }).setToken(token);
+  console.log(commands, cmds, apps);
   await rest
     .put(Routes.applicationCommands(client.application.id), {
       body: commands,

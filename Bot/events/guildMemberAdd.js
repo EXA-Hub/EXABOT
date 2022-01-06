@@ -42,7 +42,9 @@ module.exports = (client, instance) => {
           return;
         const welcomeCoins = 10 * 1000;
         giveCoins(member.id, welcomeCoins);
-        const newGiftedData = giftedMainGuildMembers.done.push(member.id);
+        const newGiftedData = Array.isArray(giftedMainGuildMembers.done)
+          ? giftedMainGuildMembers.done.push(member.id)
+          : { done: [member.id] };
         await db.set("giftedMainGuildMembers", newGiftedData);
         const welcomeChannelsID = await db.get("welcome_channels");
         const welcomeChannelID = welcomeChannelsID[member.guild.id];

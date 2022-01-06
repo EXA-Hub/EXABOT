@@ -93,6 +93,8 @@ module.exports = {
       "https://goo.gl/dQ2vrX",
       "https://rkns.link/kd589",
       "🎁هدية: `{{prefix}}gift {{giftCode}}`",
+      "",
+      "",
     ];
     const min = 0;
     const max = responses.length;
