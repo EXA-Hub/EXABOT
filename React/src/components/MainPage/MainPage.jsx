@@ -47,8 +47,8 @@ function guildsIcons(guilds) {
   });
 }
 
-const loginAPIURL = () => (window.location.href = login);
-const logoutAPIURL = () => (window.location.href = logout);
+const loginUrl = () => (window.location.href = login);
+const logoutUrl = () => (window.location.href = logout);
 
 export default function MainPage(props) {
   const [userData, setUserData] = useState(null);
@@ -123,7 +123,7 @@ export default function MainPage(props) {
                 <button
                   type="button"
                   className="btn btn-outline-danger me-2"
-                  onClick={logoutAPIURL}
+                  onClick={logoutUrl}
                 >
                   Logout
                 </button>
@@ -131,7 +131,7 @@ export default function MainPage(props) {
                 <button
                   type="button"
                   className="btn btn-outline-success me-2"
-                  onClick={loginAPIURL}
+                  onClick={loginUrl}
                 >
                   Login
                 </button>
