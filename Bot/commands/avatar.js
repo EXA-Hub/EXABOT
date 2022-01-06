@@ -43,7 +43,7 @@ module.exports = {
             .setTitle('رابط الصورة من هنا')
             .setColor(require('../data/config').bot.color.hex)
             .setFooter(`صاحب الطلب ${user.username}`)
-            .setURL(user.avatarURL({ dynamic: true, size: 1024 }) || client.user.avatarURL({ dynamic: true, size: 1024, format: 'png' }))
+            .setURL(avatarUser.avatarURL({ dynamic: true, size: 1024 }) || client.user.avatarURL({ dynamic: true, size: 1024, format: 'png' }))
             .setImage(avatarUser.avatarURL({ size: 1024, dynamic: true }) || client.user.avatarURL({ dynamic: true, size: 1024, format: 'png' }));
         return { custom: true, embeds: [embed] };
     },

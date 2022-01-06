@@ -1,4 +1,4 @@
-import React, { useState, useLayoutEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 const { servers, login, user, logout } = require("../../data");
 const { getData } = require("../api/getData");
@@ -56,7 +56,7 @@ export default function MainPage(props) {
 
   console.log(props);
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     getData(user)
       .then(({ data }) => {
         console.log(data);
