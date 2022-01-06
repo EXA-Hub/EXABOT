@@ -70,7 +70,7 @@ export default function MainPage(props) {
       setGuilds(guildsIcons(guildsData));
       // console.log(guildsData);
     })();
-  });
+  }, [userData, setUserData]);
 
   return (
     <div>
