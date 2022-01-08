@@ -14,7 +14,7 @@ module.exports = (client, instance) => {
     if (guildMusicData && message.channel.id === guildMusicData.channel) {
       if (message.author.id === client.user.id) {
         setTimeout(() => {
-          if (message) message.delete();
+          if (message.deletable) message.delete();
         }, 1000 * 5);
       } else {
         if (message.deletable) {

@@ -102,8 +102,8 @@ module.exports = {
                       iconURL: botOwner.avatarURL({ dynamic: true, size: 256 }),
                     })
                     .setAuthor({
-                      name: message.guild.name,
-                      iconURL: message.guild.iconURL({
+                      name: guild.name,
+                      iconURL: guild.iconURL({
                         dynamic: true,
                         size: 256,
                       }),
