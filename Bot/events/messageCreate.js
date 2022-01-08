@@ -3,12 +3,46 @@ const Discord = require("discord.js");
  * @param {Discord.Client} client
  */
 module.exports = (client, instance) => {
-  const unmute = require("../functions/unmute");
   const mute = require("../functions/mute");
   const config = require("../data/config");
   const db = require("../functions/database");
   client.on("messageCreate", async (message) => {
-    if (message.author.bot || message.webhookID || !message.guild) return;
+    if (!message.guild) return;
+    const guildMusicData = ((await db.get("MusicChannels")) || {})[
+      message.guild.id
+    ];
+    if (guildMusicData && message.channel.id === guildMusicData.channel) {
+      if (message.author.id === client.user.id) {
+        setTimeout(() => {
+          if (message) message.delete();
+        }, 1000 * 5);
+      } else {
+        if (message.deletable) {
+          message.delete();
+        } else {
+          musicChannel.send({
+            content: "> 💢 **يرجى إعطاء البوت الصلاحيات المطلوبة** 💢",
+          });
+        }
+        const musicChannel = message.guild.channels.cache.get(
+          guildMusicData.channel
+        );
+        if (message.member.voice.channel) {
+          client.distube.playVoiceChannel(
+            message.member.voice.channel,
+            message.content,
+            {
+              textChannel: musicChannel,
+              member: message.member,
+            }
+          );
+        } else {
+          message.channel.send({ content: "**❌ | إنضم لغرفة صوتية أولا**" });
+        }
+      }
+    }
+
+    if (message.author.bot || message.webhookID) return;
     const letters = message.content.trim().split("");
     const giveCoins = require("../functions/giveCoins");
     giveCoins(message.author.id, letters.length);

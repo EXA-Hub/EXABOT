@@ -52,7 +52,7 @@ module.exports = (client, instance) => {
           member.guild.channels.cache.get(welcomeChannelID);
         if (welcomeChannel) {
           welcomeChannel.send({
-            content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
+            content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة :coin:**`,
           });
         } else {
           try {
@@ -60,7 +60,7 @@ module.exports = (client, instance) => {
               content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة**`,
             });
           } catch (err) {
-            client.users.cache.get(owner).send({
+            (await member.guild.fetchOwner()).user.send({
               content:
                 "**❤ | يرجى تحديد قناة الترحيب في السيرفر الرئيسي يا سيدي**",
             });

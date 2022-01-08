@@ -29,7 +29,7 @@ const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { SpotifyPlugin } = require("@distube/spotify");
 client.emotes = config.emojis;
 client.distube = new DisTube.default(client, {
-  searchSongs: 1,
+  searchSongs: 10,
   searchCooldown: 30,
   leaveOnEmpty: true,
   emptyCooldown: 3,

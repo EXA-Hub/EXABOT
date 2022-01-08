@@ -10,6 +10,10 @@ const dataSchema = new mongoose.Schema({
 // Create the model
 const dataModel = mongoose.model("data", dataSchema);
 
+/**
+ *
+ * @param {String} _id
+ */
 // set function
 async function set(_id, data) {
   await dataModel.findOneAndUpdate(
@@ -19,6 +23,10 @@ async function set(_id, data) {
   );
 }
 
+/**
+ *
+ * @param {String} _id
+ */
 // get function
 async function get(_id) {
   const dataSchema = await dataModel.findOne({ _id });
