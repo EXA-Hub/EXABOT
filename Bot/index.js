@@ -29,13 +29,18 @@ const { SoundCloudPlugin } = require("@distube/soundcloud");
 const { SpotifyPlugin } = require("@distube/spotify");
 client.emotes = config.emojis;
 client.distube = new DisTube.default(client, {
-  searchSongs: 10,
-  searchCooldown: 30,
+  plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+  emitNewSongOnly: true,
   leaveOnEmpty: true,
-  emptyCooldown: 3,
   leaveOnFinish: true,
   leaveOnStop: true,
-  plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+  savePreviousSongs: true,
+  searchSongs: 10,
+  searchCooldown: 60,
+  emptyCooldown: 3,
+  nsfw: false,
+  emitAddListWhenCreatingQueue: true,
+  emitAddSongWhenCreatingQueue: true,
 });
 client.on("ready", () => {
   const dbOptions = {

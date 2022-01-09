@@ -3,6 +3,10 @@ module.exports = {
   devs: ["635933198035058700"],
   owner: "635933198035058700",
   youtube: {
+    music: {
+      banner:
+        "https://cdn.discordapp.com/attachments/865036175705112596/929499104709574676/xa.png",
+    },
     API_KEY: "" || process.env.API_KEY,
   },
   status: {

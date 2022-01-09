@@ -12,7 +12,7 @@ module.exports = {
   syntaxError: "× ؛خطأ ما؛ ×",
   permissions: ["MANAGE_CHANNELS", "ADMINISTRATOR", "MANAGE_GUILD"],
   // cooldown: '',
-  // globalCooldown: "1m",
+  globalCooldown: "1m",
   hidden: false,
   ownerOnly: false,
   testOnly: false,
@@ -95,7 +95,7 @@ module.exports = {
                   new MessageEmbed()
                     .setTitle("أرسل إسم أغنية")
                     .setColor(config.bot.color.hex)
-                    .setURL(config.dashboard.url.url)
+                    .setURL(config.dashboard.react)
                     .setDescription("أرسل إسم أغنية وسيقوم البوت فورا بتشغيلها")
                     .setFooter({
                       text: `Bot Developer: ${botOwner.tag}`,
@@ -109,12 +109,11 @@ module.exports = {
                       }),
                       url: config.support.server.invite.link,
                     })
-                    .setImage(
-                      "https://cdn.discordapp.com/attachments/865036175705112596/929499104709574676/xa.png"
-                    )
+                    .setImage(config.youtube.music.banner)
                     .setTimestamp(),
                 ],
               }).then(async (msg) => {
+                msg.pin();
                 MusicChannelsData[guild.id] = {
                   channel: MusicChannel.id,
                   message: msg.id,

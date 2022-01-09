@@ -1,26 +1,7 @@
-const builder = require("@discordjs/builders");
-const data = new builder.SlashCommandBuilder()
-  .setName("ds")
-  .setDescription("fd")
-  .addSubcommand((sub) =>
-    sub
-      .setName("s")
-      .setDescription("ds")
-      .addChannelOption((c) =>
-        c.setRequired(true).setDescription("d").setName("ds")
-      )
-  );
-console.log(JSON.stringify(data, 2, 2));
-data = {
-  type: 1,
-  name: "الغرفة",
-  description: "تحديد_غرفة_الموسيقى",
-  options: [
-    {
-      type: 7,
-      name: "إختار الغرفة",
-      description: "سيتم تحديد الغرفة تلقائيا",
-      required: true,
-    },
-  ],
-};
+const data = require("./data/json.json");
+const video = data.filter((file) => file.hasVideo && file.hasAudio);
+const audio = data.filter((file) => !file.hasVideo && file.hasAudio);
+console.log(video.length);
+console.log(audio.length);
+video.forEach((v) => console.log(v.qualityLabel));
+audio.forEach((v) => console.log(v));

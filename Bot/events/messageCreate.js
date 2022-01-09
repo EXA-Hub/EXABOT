@@ -8,22 +8,31 @@ module.exports = (client, instance) => {
   const db = require("../functions/database");
   client.on("messageCreate", async (message) => {
     if (!message.guild) return;
+    const prefix = instance.getPrefix(message.guild) || config.prefix;
     const guildMusicData = ((await db.get("MusicChannels")) || {})[
       message.guild.id
     ];
     if (guildMusicData && message.channel.id === guildMusicData.channel) {
       if (message.author.id === client.user.id) {
+        if (message.id === guildMusicData.message) return;
         setTimeout(() => {
           if (message.deletable) message.delete();
         }, 1000 * 5);
       } else {
         if (message.deletable) {
-          message.delete();
+          message.channel.messages.fetch().then((msgs) => {
+            msgs
+              .filter((msg) => msg.author.id !== client.user.id)
+              .forEach((msg) => {
+                if (msg) msg.delete();
+              });
+          });
         } else {
           musicChannel.send({
             content: "> 💢 **يرجى إعطاء البوت الصلاحيات المطلوبة** 💢",
           });
         }
+        if (message.content.startsWith(prefix)) return;
         const musicChannel = message.guild.channels.cache.get(
           guildMusicData.channel
         );
@@ -41,7 +50,6 @@ module.exports = (client, instance) => {
         }
       }
     }
-
     if (message.author.bot || message.webhookID) return;
     const letters = message.content.trim().split("");
     const giveCoins = require("../functions/giveCoins");
@@ -52,7 +60,6 @@ module.exports = (client, instance) => {
         !message.content.includes("@everyone")) &&
       message.mentions.users.first() === client.user
     ) {
-      const prefix = instance.getPrefix(message.guild) || config.prefix;
       message.channel.send({
         embeds: [
           new Discord.MessageEmbed()
