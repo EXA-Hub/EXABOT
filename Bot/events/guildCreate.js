@@ -2,13 +2,12 @@ const Discord = require("discord.js");
 /**
  * @param {Discord.Client} client
  */
-
 module.exports = (client, instance) => {
   const config = require("../data/config");
   client.on("guildCreate", async (guild) => {
     const { MessageEmbed } = require("discord.js");
     const { stripIndents } = require("common-tags");
-    const owner = await client.users.fetch(config.owner);
+    const botOwner = await client.users.fetch(config.owner);
     const guildOwner = guild.members.cache.get(guild.ownerID);
     const [bots, users] = guild.members.cache.partition(
       (member) => member.user.bot
@@ -44,11 +43,9 @@ module.exports = (client, instance) => {
         true
       );
     }
-
-    owner.send(embedMsg);
-
+    botOwner.send(embedMsg);
     if (users.size < "250") {
-      guild.owner.send(
+      (await guild.fetchOwner()).user.send(
         "> أنا أسف يجب أن يضم سيرفر 250 عضو لكي أنضم\nهذا أقل عدد ممكن للبوتات غير الموثقة"
       );
       guild.leave();
