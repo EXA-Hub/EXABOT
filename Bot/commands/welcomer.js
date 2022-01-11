@@ -265,17 +265,18 @@ module.exports = {
                 iconURL: member.displayAvatarURL({ dynamic: true, size: 256 }),
                 url: config.support.server.invite.link,
               })
-              .addFields({
-                name: guildWelcomeGiftData
-                  ? guildWelcomeGiftData.on
-                    ? "يعمل!"
-                    : "مقفل 🔒"
-                  : "غير موجود",
-                value: (guildWelcomeGiftData
+              .setTitle(
+                `${
+                  guildWelcomeGiftData
+                    ? guildWelcomeGiftData.on
+                      ? "يعمل!"
+                      : "مقفل 🔒"
+                    : "غير موجود"
+                } => ${(guildWelcomeGiftData
                   ? guildWelcomeGiftData.gift || 50
                   : 0
-                ).toString(),
-              })
+                ).toString()}عملة :coin:`
+              )
               .setColor(config.bot.color.hex),
           ],
         };
