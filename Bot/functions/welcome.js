@@ -1,6 +1,6 @@
 async function welcome(client, guildID, tag, name, avatar) {
-  const { MessageEmbed } = require("discord.js");
   const db = require("./database");
+  const { MessageEmbed } = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
   if (onOff === "on") {

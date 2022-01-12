@@ -6,26 +6,37 @@ module.exports = (client, instance) => {
   client.on("guildMemberAdd", async (member) => {
     const mute = require("../functions/mute");
     const db = require("../functions/database");
+    const welcome = require("../functions/welcome");
     const getCoins = require("../functions/getCoins");
     const takeCoins = require("../functions/takeCoins");
     const giveCoins = require("../functions/giveCoins");
     const saveMutedDataFile = (await db.get("muted")) || {};
     const welcomeGiftData = (await db.get("welcomeGiftData")) || {};
+    const avatar =
+      member.user.avatarURL({ dynamic: true, size: 128, format: "png" }) ||
+      client.user.avatarURL({ dynamic: true, size: 128, format: "png" });
+    welcome(
+      client,
+      member.guild.id,
+      member.user.discriminator,
+      member.user.username,
+      avatar
+    );
     if (
       saveMutedDataFile &&
       !(
         !Array.isArray(saveMutedDataFile[member.guild.id]) ||
-        saveMutedDataFile[member.guild.id].length > 0
+        saveMutedDataFile[member.guild.id].length === 0
       ) &&
       saveMutedDataFile[member.guild.id].includes(member.id)
     ) {
       mute(null, member, member.guild);
-    } else if (welcomeGiftData[member.guild.id]) {
+    } else if (welcomeGiftData && welcomeGiftData[member.guild.id]) {
       if (
-        !welcomeGiftData[member.guild.id].on &&
-        !Number.isNaN(welcomeGiftData[member.guild.id].gift) &&
-        welcomeGiftData[member.guild.id].done &&
-        welcomeGiftData[member.guild.id].done.includes(member.id)
+        !welcomeGiftData[member.guild.id].on ||
+        !Number.isNaN(welcomeGiftData[member.guild.id].gift) ||
+        (welcomeGiftData[member.guild.id].done &&
+          welcomeGiftData[member.guild.id].done.includes(member.id))
       )
         return;
       const welcomeCoins = parseInt(welcomeGiftData[member.guild.id].gift);
@@ -44,29 +55,17 @@ module.exports = (client, instance) => {
         });
       } else {
         try {
-          member.send({
+          member.user.send({
             content: `> **<@!${member.id}> مبروك لقد ربحت \`${welcomeCoins}\` عملة :coin:**`,
           });
         } catch (err) {
+          console.error(err);
           (await member.guild.fetchOwner()).user.send({
-            content:
-              "**❤ | يرجى تحديد قناة الترحيب في السيرفر الرئيسي يا سيدي**",
+            content: `**❤ | يرجى تحديد قناة الترحيب في السيرفر \`${member.guild.name}\`**`,
           });
-          return console.error(err);
         }
       }
     }
-    const welcome = require("../functions/welcome");
-    const avatar =
-      member.user.avatarURL({ dynamic: true, size: 128, format: "png" }) ||
-      client.user.avatarURL({ dynamic: true, size: 128, format: "png" });
-    welcome(
-      client,
-      member.guild.id,
-      member.user.discriminator,
-      member.user.username,
-      avatar
-    );
   });
 };
 
