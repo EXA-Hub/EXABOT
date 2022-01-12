@@ -15,8 +15,8 @@ module.exports = (client, instance) => {
     const embedMsg = new MessageEmbed()
       .setColor("GREEN")
       .setTimestamp()
-      .setFooter(guild.name, guild.iconURL())
-      .setAuthor("تم الإنضمام لسيرفر :)", guild.iconURL())
+      .setFooter({ text: guild.name, iconURL: guild.iconURL() })
+      .setAuthor({ name: "تم الإنضمام لسيرفر :)", iconURL: guild.iconURL() })
       .addField(
         "معلومات السيرفر",
         stripIndents`\\> **الأيدي:** ${guild.id}

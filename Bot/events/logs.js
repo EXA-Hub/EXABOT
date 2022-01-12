@@ -222,7 +222,10 @@ module.exports = (client, instance) => {
       .setColor("BLUE")
       .setTitle("تم فك حظر عضو")
       .setURL(config.support.server.invite.link)
-      .setAuthor(user.username, user.avatarURL({ dynamic: true }))
+      .setAuthor({
+        name: user.username,
+        iconURL: user.avatarURL({ dynamic: true }),
+      })
       .setDescription(`${user}`)
       .setFooter({
         text: `Bot Developer: ${owner.tag}`,

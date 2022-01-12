@@ -112,16 +112,15 @@ module.exports = {
         true
       )
       .setImage(guild.bannerURL({ format: "png", size: "2048" }))
-      .setAuthor(
-        { name: `${user.tag}` },
-        `${user.avatarURL()}`,
-        `${config.support.server.invite.link}`
-      )
-      .setFooter(
-        { text: `صاحب الطلب ${user.username}` },
-        user.avatarURL({ dynamic: true })
-      );
-
+      .setAuthor({
+        name: `${user.tag}`,
+        iconURL: `${user.avatarURL()}`,
+        url: `${config.support.server.invite.link}`,
+      })
+      .setFooter({
+        text: `صاحب الطلب ${user.username}`,
+        iconURL: user.avatarURL({ dynamic: true }),
+      });
     if (guild.vanityURLCode)
       EMBED.addField(
         "الرابط المخصص 💎",

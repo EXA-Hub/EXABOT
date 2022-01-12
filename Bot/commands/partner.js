@@ -191,7 +191,10 @@ module.exports = {
                   shareMessage[invite.guild.id].split(" ");
                 shareMessageDonning = editShareMessageDonning;
                 let requestEmbed = new MessageEmbed()
-                  .setAuthor(invite.guild.name, invite.guild.iconURL)
+                  .setAuthor({
+                    name: invite.guild.name,
+                    iconURL: invite.guild.iconURL,
+                  })
                   .setThumbnail(invite.guild.iconURL)
                   .addField("🔠 إسم السيرفر :", `${invite.guild.name}`, true)
                   .addField("🆔 أيدي السيرفر :", `${invite.guild.id}`, true)
@@ -210,7 +213,10 @@ module.exports = {
                     `${invite.inviter.username}`,
                     true
                   )
-                  .setFooter(user.username, user.avatarURL({ dynamic: true }))
+                  .setFooter({
+                    text: user.username,
+                    iconURL: user.avatarURL({ dynamic: true }),
+                  })
                   .setTimestamp();
                 requestChannel.send({ embeds: [requestEmbed] });
                 requestChannel.send({ content: m.content });
