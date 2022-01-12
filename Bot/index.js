@@ -76,9 +76,9 @@ client.on("ready", () => {
     const GiveawayManagerWithOwnDatabase =
       require("./functions/GiveawayManagerWithOwnDatabase")(connection);
     client.giveawaysManager = new GiveawayManagerWithOwnDatabase(client, {
-      // storage: path.join(__dirname, 'data/giveaways.json'),
-      endedGiveawaysLifetime: 60 * 1000,
-      forceUpdateEvery: 1000,
+      storage: path.join(__dirname, "data/giveaways.json"),
+      endedGiveawaysLifetime: 24 * 60 * 60 * 1000,
+      forceUpdateEvery: 60 * 1000,
       default: {
         botsCanWin: false,
         exemptPermissions: ["ADMINISTRATOR"],
