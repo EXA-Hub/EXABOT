@@ -72,7 +72,6 @@ client.on("ready", () => {
   wok.on("databaseConnected", async (connection, state) => {
     console.log(`DataBase ${state}`);
     client.mongo = await connection;
-    require("./EXA-WEB/server")(client);
     const GiveawayManagerWithOwnDatabase =
       require("./functions/GiveawayManagerWithOwnDatabase")(connection);
     client.giveawaysManager = new GiveawayManagerWithOwnDatabase(client, {

@@ -1,14 +1,18 @@
-module.exports = (Client) => {
-  const express = require("express");
-  const session = require("express-session");
-  const config = require("../../data/config");
-  const passport = require("./strategy");
-  const { react } = config.dashboard;
+const config = require("../../data/config");
+module.exports = (Client, instance) => {
   const cors = require("cors");
-  const authenticationRouter = require("./routers/authentication");
+  const { react } = config.dashboard;
+  const express = require("express");
+  const passport = require("./strategy");
+  const session = require("express-session");
   const MongoStore = require("connect-mongo");
+  const authenticationRouter = require("./routers/authentication");
 
   const app = express();
+  app.use((req, res, next) => {
+    req.wok = { instance };
+    next();
+  });
 
   app.use(
     cors({
@@ -34,7 +38,7 @@ module.exports = (Client) => {
     })
   );
 
-  app.use("/api/auth/", authenticationRouter);
+  app.use("/api/auth", authenticationRouter);
 
   const api = require("./routers/api");
   app.use("/api", api);

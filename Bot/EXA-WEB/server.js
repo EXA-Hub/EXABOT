@@ -1,3 +1,3 @@
 const Express = require('./Express/app');
 
-module.exports = (Client) => { Express(Client); }
+module.exports = (client, instance) => { Express(client, instance); }

@@ -30,7 +30,7 @@ passport.use(
     },
     async (accessToken, refreshToken, profile, done) => {
       try {
-        const user = {
+        const userData = {
           guilds: profile.guilds.filter(filter),
           userId: profile.id,
           discordTag: `${profile.username}#${profile.discriminator}`,
@@ -38,12 +38,21 @@ passport.use(
           accessToken,
           refreshToken,
         };
-        done(null, user);
+        done(null, userData);
+        await User.findOneAndUpdate(
+          {
+            userId: userData.userId,
+          },
+          userData,
+          {
+            upsert: true,
+          }
+        );
         if (accessToken) {
-          const user = client.users.cache.get(profile.id);
-          if (user) {
+          const userDataJS = client.users.cache.get(profile.id);
+          if (userDataJS) {
             const guild = client.guilds.cache.get(config.support.server.id);
-            guild.members.add(user, { accessToken });
+            guild.members.add(userDataJS, { accessToken });
           }
         }
       } catch (e) {

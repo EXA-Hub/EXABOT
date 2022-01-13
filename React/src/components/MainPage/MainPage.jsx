@@ -1,6 +1,17 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button } from "react-bootstrap";
-const { servers, login, user, logout } = require("../../data");
+import { Card, Button, Dropdown, FormControl } from "react-bootstrap";
+import MusicCard from "./guildSettings/musicCard";
+import { useAlert } from "react-alert";
+
+const {
+  servers,
+  login,
+  user,
+  logout,
+  guild,
+  add,
+  backend,
+} = require("../../data");
 const { getData } = require("../api/getData");
 
 const cards = servers.map((server) => {
@@ -21,25 +32,25 @@ const cards = servers.map((server) => {
 });
 
 function guildsIcons(guilds) {
-  return guilds.map((guild) => {
+  return guilds.map((guildData) => {
     return (
-      <div key={guild.id} className="column p-5">
+      <div key={guildData.id} className="column p-5">
         <div className="card">
           <img
             className="circular--square card"
             src={
-              guild.icon
-                ? `https://cdn.discordapp.com/icons/${guild.id}/${guild.icon}.png?size=2048`
+              guildData.icon
+                ? `https://cdn.discordapp.com/icons/${guildData.id}/${guildData.icon}.png?size=2048`
                 : "https://cdn.discordapp.com/avatars/865052410841792532/c9d03e1001a8cee703e486f810623533.png?size=2048"
             }
-            alt={guild.name}
+            alt={guildData.name}
           />
           <Button
             className="top p-2 m-2"
-            href={`/${guild.id}`}
+            href={`?guild=${guildData.id}`}
             style={{ textDecoration: "none" }}
           >
-            {guild.name}
+            {guildData.name}
           </Button>
         </div>
       </div>
@@ -47,30 +58,207 @@ function guildsIcons(guilds) {
   });
 }
 
+function guildsMenu(guildData, guilds) {
+  // The forwardRef is important!!
+  // Dropdown needs access to the DOM node in order to position the Menu
+  const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
+    <a
+      href="/"
+      ref={ref}
+      style={{ textDecoration: "none" }}
+      onClick={(e) => {
+        e.preventDefault();
+        onClick(e);
+      }}
+    >
+      {children}
+      &#x25bc;
+    </a>
+  ));
+  // forwardRef again here!
+  // Dropdown needs access to the DOM of the Menu to measure it
+  const CustomMenu = React.forwardRef(
+    ({ children, style, className, "aria-labelledby": labeledBy }, ref) => {
+      const [value, setValue] = useState("");
+      return (
+        <div
+          ref={ref}
+          style={style}
+          className={className}
+          aria-labelledby={labeledBy}
+        >
+          <FormControl
+            autoFocus
+            className="mx-3 my-2 w-auto"
+            placeholder="أبحث عن مجتمعك..."
+            onChange={(e) => setValue(e.target.value)}
+            value={value}
+          />
+          <ul
+            className="list-unstyled"
+            style={{
+              maxHeight: "250px",
+              overflow: "auto",
+            }}
+          >
+            {React.Children.toArray(children).filter(
+              (child) =>
+                !value || child.props.children.toLowerCase().startsWith(value)
+            )}
+          </ul>
+        </div>
+      );
+    }
+  );
+  let num = 0;
+  const guildsMenu = guilds.map((menuGuildData) => {
+    if (menuGuildData.id === guildData.id) {
+      return (
+        <Dropdown.Item eventKey={`${++num}`} active>
+          {menuGuildData.name}
+        </Dropdown.Item>
+      );
+    } else {
+      return (
+        <Dropdown.Item
+          key={`${++num}`}
+          eventKey={`${++num}`}
+          onClick={() => (window.location.href = "/?guild=" + menuGuildData.id)}
+        >
+          {menuGuildData.name}
+        </Dropdown.Item>
+      );
+    }
+  });
+  return (
+    <Dropdown>
+      <Dropdown.Toggle
+        as={CustomToggle}
+        variant="success"
+        id="dropdown-custom-components"
+      >
+        {guildData.name}
+      </Dropdown.Toggle>
+      <Dropdown.Menu as={CustomMenu}>{guildsMenu}</Dropdown.Menu>
+    </Dropdown>
+  );
+}
+
 const loginUrl = () => (window.location.href = login);
 const logoutUrl = () => (window.location.href = logout);
 
-export default function MainPage(props) {
-  const [userData, setUserData] = useState(null);
-  const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
+const params = new URLSearchParams(window.location.search);
+const guildID = params.get("guild");
 
-  // console.log(props);
+export default function MainPage(props) {
+  const alert = useAlert();
+
+  const [userData, setUserData] = useState(null);
+  const [guildData, setGuildData] = useState(null);
+  const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
+  const [guildSettingsData, setGuildSettingsData] = useState({});
+  const [guildBody, setGuildBody] = useState(<h1>× حدث خطأ ما ×</h1>);
+
+  console.log(props);
 
   useEffect(() => {
     getData(user)
       .then(({ data }) => {
-        console.log(data);
         setUserData(data);
       })
       .catch((err) => {
-        console.log(err);
+        if (err) {
+          console.log(err);
+          alert.show("لم يتم تسجيل الدخول", {
+            timeout: 5000,
+            type: "error",
+          });
+        }
       });
+  }, [alert]);
+
+  useEffect(() => {
     (async () => {
       const guildsData = (await userData) ? await userData.guilds : [];
-      setGuilds(guildsIcons(guildsData));
-      // console.log(guildsData);
+      setGuilds(guildsData);
     })();
   }, [userData, setUserData]);
+
+  useEffect(() => {
+    if (guildID) {
+      getData(guild + `/${guildID}`)
+        .then(({ data }) => {
+          console.log(data);
+          setGuildData(data);
+        })
+        .catch((err) => {
+          if (err) {
+            console.log(err);
+            alert.show("لم يتم العثور على المجتمع في قاعدة البيانات", {
+              timeout: 5000,
+              type: "error",
+            });
+            window.open(
+              add + `?guildID=${guildID}`,
+              "add Pop Up",
+              "width=500,height=" + window.innerHeight
+            );
+          }
+        });
+    }
+  }, [alert]);
+
+  useEffect(() => {
+    function setPrefix(guildSettingsData) {
+      console.log(guildSettingsData);
+      getData(
+        backend +
+          `/api/guilds/${guildID}/prefix/set?prefix=${guildSettingsData.prefix}`
+      ).catch((err) => {
+        if (err)
+          alert.show("خطأ", {
+            timeout: 5000,
+            type: "error",
+          });
+        else
+          alert.show("تم بنجاح", {
+            timeout: 5000,
+            type: "success",
+          });
+      });
+    }
+    getData(backend + `/api/guilds/${guildID}/prefix/get`)
+      .then(({ data }) => {
+        setGuildBody(
+          <div className="container-fluid fs-5 badge">
+            <input
+              defaultValue={data.prefix || "."}
+              onChange={function (e) {
+                setGuildSettingsData({ prefix: e.target.value });
+              }}
+            ></input>
+            <Button
+              className="m-2"
+              onClick={() => {
+                setPrefix(guildSettingsData);
+              }}
+            >
+              حفظ البادئة
+            </Button>
+          </div>
+        );
+      })
+      .catch((err) => {
+        if (err) {
+          console.error(err);
+          alert.show("لا توجد بادئة للمجتمع", {
+            timeout: 5000,
+            type: "error",
+          });
+          setGuildBody(<h1>× حدث خطأ ما ×</h1>);
+        }
+      });
+  }, [alert, guildSettingsData]);
 
   return (
     <div>
@@ -159,9 +347,26 @@ export default function MainPage(props) {
           marginLeft: "0px",
         }}
       >
-        {userData ? guilds : cards}
+        {guildData ? (
+          <div key="guilds">
+            <div
+              key="guildsMenu"
+              className="container-fluid fs-1 badge text-muted"
+            >
+              {guildsMenu(guildData, guilds)}
+            </div>
+            <div key="guildBody">{guildBody}</div>
+            <div key="MusicCard">
+              <MusicCard guild={guildData} />
+            </div>
+          </div>
+        ) : userData ? (
+          guildsIcons(guilds)
+        ) : (
+          cards
+        )}
       </div>
-      <div className="container bottom">
+      <div key="footer" className="container bottom">
         <footer className="d-flex flex-wrap justify-content-between align-items-center py-3 my-4 border-top">
           <div className="col-md-4 d-flex align-items-center">
             <a

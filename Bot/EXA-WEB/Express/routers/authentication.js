@@ -35,5 +35,16 @@ router.get("/logout", function (req, res) {
   });
 });
 
+// Logout endpoint.
+router.get("/add", function (req, res) {
+  if (req.query.guildID) {
+    res.redirect(
+      `https://discord.com/api/oauth2/authorize?client_id=${
+        require("../../../data/config").bot.id
+      }&permissions=8&scope=bot&guild_id=${req.query.guildID}`
+    );
+  } else return res.sendStatus(404);
+});
+
 // eslint-disable-next-line eol-last
 module.exports = router;
