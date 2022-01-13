@@ -7,7 +7,7 @@ module.exports = (client, instance) => {
   const config = require("../data/config");
   const db = require("../functions/database");
   client.on("messageCreate", async (message) => {
-    if (!message.guild || message.webhookId) return;
+    if (!message.guild) return;
     const prefix = instance.getPrefix(message.guild) || config.prefix;
     const guildMusicData = ((await db.get("MusicChannels")) || {})[
       message.guild.id
@@ -16,10 +16,10 @@ module.exports = (client, instance) => {
       if (message.author.id === client.user.id) {
         if (message.id === guildMusicData.message) return;
         setTimeout(() => {
-          if (message && message.deletable) message.delete();
+          if (message.deletable) message.delete();
         }, 1000 * 5);
       } else {
-        if (message && message.deletable) {
+        if (message.deletable) {
           message.channel.messages.fetch().then((msgs) => {
             msgs
               .filter((msg) => msg.author.id !== client.user.id)
@@ -36,7 +36,7 @@ module.exports = (client, instance) => {
         const musicChannel = message.guild.channels.cache.get(
           guildMusicData.channel
         );
-        if (message.member.voice && message.member.voice.channel) {
+        if (message.member.voice.channel) {
           client.distube.playVoiceChannel(
             message.member.voice.channel,
             message.content,
@@ -51,7 +51,7 @@ module.exports = (client, instance) => {
           });
       }
     }
-    if (message.author.bot) return;
+    if (message.author.bot || message.webhookId) return;
     if (message.content.includes("@someone")) {
       message.channel
         .fetchWebhooks((webhook) => webhook.name === message.member.displayName)
@@ -63,7 +63,7 @@ module.exports = (client, instance) => {
                 reason: "😂 | بندور على شخص عشوائي",
               })
               .then((webhook) => {
-                if (message && message.deletable) message.delete();
+                if (message.deletable) message.delete();
                 const memberID = message.guild.members.cache.random().id;
                 webhook.send({
                   content: message.content.replace(
@@ -76,7 +76,7 @@ module.exports = (client, instance) => {
           } else {
             if (webhooks.size > 1) {
               const selected = webhooks.toJSON().pop();
-              if (message && message.deletable) message.delete();
+              if (message.deletable) message.delete();
               const memberID = message.guild.members.cache.random().id;
               selected
                 .send({
@@ -92,7 +92,7 @@ module.exports = (client, instance) => {
                 });
             } else {
               webhooks.forEach((webhook) => {
-                if (message && message.deletable) message.delete();
+                if (message.deletable) message.delete();
                 const memberID = message.guild.members.cache.random().id;
                 webhook.send({
                   content: message.content.replace(
