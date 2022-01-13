@@ -7,7 +7,7 @@ module.exports = (client, instance) => {
   const config = require("../data/config");
   const db = require("../functions/database");
   client.on("messageCreate", async (message) => {
-    if (!message.guild) return;
+    if (!message.guild || message.webhookId) return;
     const prefix = instance.getPrefix(message.guild) || config.prefix;
     const guildMusicData = ((await db.get("MusicChannels")) || {})[
       message.guild.id
@@ -16,10 +16,10 @@ module.exports = (client, instance) => {
       if (message.author.id === client.user.id) {
         if (message.id === guildMusicData.message) return;
         setTimeout(() => {
-          if (message.deletable) message.delete();
+          if (message && message.deletable) message.delete();
         }, 1000 * 5);
       } else {
-        if (message.deletable) {
+        if (message && message.deletable) {
           message.channel.messages.fetch().then((msgs) => {
             msgs
               .filter((msg) => msg.author.id !== client.user.id)
@@ -36,7 +36,7 @@ module.exports = (client, instance) => {
         const musicChannel = message.guild.channels.cache.get(
           guildMusicData.channel
         );
-        if (message.member.voice.channel) {
+        if (message.member.voice && message.member.voice.channel) {
           client.distube.playVoiceChannel(
             message.member.voice.channel,
             message.content,
@@ -45,12 +45,66 @@ module.exports = (client, instance) => {
               member: message.member,
             }
           );
-        } else {
-          message.channel.send({ content: "**❌ | إنضم لغرفة صوتية أولا**" });
-        }
+        } else
+          return message.channel.send({
+            content: "**❌ | إنضم لغرفة صوتية أولا**",
+          });
       }
     }
-    if (message.author.bot || message.webhookID) return;
+    if (message.author.bot) return;
+    if (message.content.includes("@someone")) {
+      message.channel
+        .fetchWebhooks((webhook) => webhook.name === message.member.displayName)
+        .then((webhooks) => {
+          if (webhooks.size < 1) {
+            message.channel
+              .createWebhook(message.member.displayName, {
+                avatar: message.member.displayAvatarURL({ dynamic: true }),
+                reason: "😂 | بندور على شخص عشوائي",
+              })
+              .then((webhook) => {
+                if (message && message.deletable) message.delete();
+                const memberID = message.guild.members.cache.random().id;
+                webhook.send({
+                  content: message.content.replace(
+                    "@someone",
+                    `<@!${memberID}>`
+                  ),
+                });
+              })
+              .catch(console.error);
+          } else {
+            if (webhooks.size > 1) {
+              const selected = webhooks.toJSON().pop();
+              if (message && message.deletable) message.delete();
+              const memberID = message.guild.members.cache.random().id;
+              selected
+                .send({
+                  content: message.content.replace(
+                    "@someone",
+                    `<@!${memberID}>`
+                  ),
+                })
+                .then(() => {
+                  webhooks.forEach((webhook) => {
+                    webhook.delete("😭 | عفى عليه الزمن");
+                  });
+                });
+            } else {
+              webhooks.forEach((webhook) => {
+                if (message && message.deletable) message.delete();
+                const memberID = message.guild.members.cache.random().id;
+                webhook.send({
+                  content: message.content.replace(
+                    "@someone",
+                    `<@!${memberID}>`
+                  ),
+                });
+              });
+            }
+          }
+        });
+    }
     const letters = message.content.trim().split("");
     const giveCoins = require("../functions/giveCoins");
     giveCoins(message.author.id, letters.length);
