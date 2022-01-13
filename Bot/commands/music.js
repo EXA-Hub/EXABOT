@@ -95,7 +95,7 @@ module.exports = {
                   new MessageEmbed()
                     .setTitle("أرسل إسم أغنية")
                     .setColor(config.bot.color.hex)
-                    .setURL(config.dashboard.react)
+                    .setURL(`${config.dashboard.react}/?guild=${guild.id}`)
                     .setDescription("أرسل إسم أغنية وسيقوم البوت فورا بتشغيلها")
                     .setFooter({
                       text: `Bot Developer: ${botOwner.tag}`,

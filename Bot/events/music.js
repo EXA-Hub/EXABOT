@@ -63,7 +63,10 @@ module.exports = (client, instance) => {
                 const musicMessageEmbed = new MessageEmbed()
                   .setTitle(song.name || "لم أستطيع العثور على إسم الأغنية")
                   .setColor(config.bot.color.hex)
-                  .setURL(song.url || config.dashboard.react)
+                  .setURL(
+                    song.url ||
+                      `${config.dashboard.react}/?guild=${queue.textChannel.guild.id}`
+                  )
                   .setDescription(description)
                   .setFooter({
                     text: `Bot Developer: ${botOwner.tag}`,
@@ -180,7 +183,9 @@ module.exports = (client, instance) => {
                   new MessageEmbed()
                     .setTitle("أرسل إسم أغنية")
                     .setColor(config.bot.color.hex)
-                    .setURL(config.dashboard.react)
+                    .setURL(
+                      `${config.dashboard.react}/?guild=${queue.textChannel.guild.id}`
+                    )
                     .setDescription("أرسل إسم أغنية وسيقوم البوت فورا بتشغيلها")
                     .setFooter({
                       text: `Bot Developer: ${botOwner.tag}`,
