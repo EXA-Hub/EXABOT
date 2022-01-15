@@ -147,6 +147,8 @@ function guildsMenu(guildData, guilds) {
 const loginUrl = () => (window.location.href = login);
 const logoutUrl = () => (window.location.href = logout);
 
+// window.open(logout, "logout Pop Up", "width=500,height=" + window.innerHeight);
+
 const params = new URLSearchParams(window.location.search);
 const guildID = params.get("guild");
 
@@ -158,8 +160,6 @@ export default function MainPage(props) {
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
   const [guildSettingsData, setGuildSettingsData] = useState({});
   const [guildBody, setGuildBody] = useState(<h1>× حدث خطأ ما ×</h1>);
-
-  console.log(props);
 
   useEffect(() => {
     getData(user)
@@ -188,7 +188,6 @@ export default function MainPage(props) {
     if (guildID) {
       getData(guild + `/${guildID}`)
         .then(({ data }) => {
-          console.log(data);
           setGuildData(data);
         })
         .catch((err) => {
@@ -209,23 +208,25 @@ export default function MainPage(props) {
   }, [alert]);
 
   useEffect(() => {
+    if (!guildID) return;
     function setPrefix(guildSettingsData) {
-      console.log(guildSettingsData);
       getData(
         backend +
           `/api/guilds/${guildID}/prefix/set?prefix=${guildSettingsData.prefix}`
-      ).catch((err) => {
-        if (err)
-          alert.show("خطأ", {
-            timeout: 5000,
-            type: "error",
-          });
-        else
+      )
+        .then(({ data }) => {
           alert.show("تم بنجاح", {
             timeout: 5000,
             type: "success",
           });
-      });
+        })
+        .catch((err) => {
+          if (err)
+            alert.show("خطأ", {
+              timeout: 5000,
+              type: "error",
+            });
+        });
     }
     getData(backend + `/api/guilds/${guildID}/prefix/get`)
       .then(({ data }) => {
