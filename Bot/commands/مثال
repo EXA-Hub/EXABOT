@@ -1,5 +1,5 @@
 // const { Client } = require("discord.js");
-// const wok = require("wokcommands");
+// const { ICallbackObject } = require("wokcommands");
 // module.exports = {
 //   name: "",
 //   aliases: [],
@@ -38,7 +38,7 @@
 //    */
 //   init: (client, instance) => {},
 //   /**
-//    * @param {wok.ICallbackObject} ICallbackObject
+//    * @param {ICallbackObject} ICallbackObject
 //    *
 //    */ callback: async ({
 //     guild,

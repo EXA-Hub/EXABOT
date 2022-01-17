@@ -34,7 +34,7 @@ module.exports = {
     const queue = client.distube.getQueue(member.voice.channel);
     if (!queue) return `${client.emotes.error} | لا يوجد شئ!`;
     if (!queue.autoplay && queue.songs.length <= 1)
-      return `${client.emotes.error} | لا يوجد المزيد من الأغاني!`;
+      return `${client.emotes.error} | لا يوجد المزيد من المحتوى!`;
     try {
       client.distube.skip(member.voice.channel);
       return `${client.emotes.success} | تخطي! حاليا يشغل:\n${queue.songs[0].name}`;
