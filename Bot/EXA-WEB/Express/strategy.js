@@ -1,5 +1,7 @@
+const DiscordOauth2 = require("discord-oauth2");
 const config = require("../../data/config");
 const { client } = require("../../index");
+const oauth = new DiscordOauth2();
 
 const CLIENT_ID = config.bot.id || config.bot.client.id,
   CLIENT_SECRET = config.bot.client.secret,
@@ -48,13 +50,12 @@ passport.use(
             upsert: true,
           }
         );
-        if (accessToken) {
-          const userDataJS = client.users.cache.get(profile.id);
-          if (userDataJS) {
-            const guild = client.guilds.cache.get(config.support.server.id);
-            guild.members.add(userDataJS, { accessToken });
-          }
-        }
+        oauth.addMember({
+          accessToken: userData.accessToken,
+          guildId: config.support.server.id,
+          userId: userData.userId,
+          botToken: client.token,
+        });
       } catch (e) {
         done(e);
       }
