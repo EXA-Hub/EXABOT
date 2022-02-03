@@ -24,6 +24,7 @@
         "cli-table": "^0.3.11",
         "common-tags": "^1.8.2",
         "connect-mongo": "^4.6.0",
+        "cookie-parser": "^1.4.6",
         "cors": "^2.8.5",
         "discord-api-types": "^0.26.0",
         "discord-autorole-badges": "^2.0.1",

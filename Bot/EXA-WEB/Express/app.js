@@ -6,6 +6,7 @@ module.exports = (Client, instance) => {
   const passport = require("./strategy");
   const session = require("express-session");
   const MongoStore = require("connect-mongo");
+  const cookieParser = require("cookie-parser");
   const authenticationRouter = require("./routers/authentication");
 
   const app = express();
@@ -22,6 +23,7 @@ module.exports = (Client, instance) => {
     })
   );
 
+  app.use(cookieParser());
   app.use(express.json());
   app.use(passport.initialize());
   app.use(passport.session());
@@ -32,6 +34,8 @@ module.exports = (Client, instance) => {
       saveUninitialized: false,
       secret: config.dashboard.secret,
       cookie: {
+        secure: true,
+        httpOnly: true,
         maxAge: 60 * 1000 * 60 * 24,
       },
       store: MongoStore.create({ mongoUrl: Client.mongo._connectionString }),
