@@ -84,10 +84,8 @@ module.exports = {
                 grantType: "refresh_token",
               })
               .then(async (newUserData) => {
-                Users.updateOne(
-                  {
-                    userId: user.userId,
-                  },
+                await Users.updateOne(
+                  { userId: user.userId },
                   {
                     $set: {
                       accessToken: newUserData.access_token,
