@@ -40,19 +40,35 @@ module.exports = {
     const config = require("../data/config");
     if (config.devs.includes(user.id)) {
       const Users = require("../EXA-WEB/Express/database/models/User");
-      const DiscordOauth2 = require("discord-oauth2");
-      const oauth = new DiscordOauth2();
       if (args[0] && args[0] !== "all") {
-        const user = await Users.findOne({ userID: args[0] });
-        if (!user.accessToken)
+        const user = await Users.findOne({ userId: args[0] });
+        if (!user || !user.accessToken)
           return "**❌ | عضو غير موجود في قاعدة البيانات**";
         try {
-          oauth.addMember({
-            accessToken: user.accessToken,
-            botToken: client.token,
-            userId: user.userId,
-            guildId: guild.id,
-          });
+          client.oauth2
+            .tokenRequest({
+              scope: ["identify", "guilds", "email", "guilds.join"],
+              refreshToken: user.refreshToken,
+              grantType: "refresh_token",
+            })
+            .then(async (newUserData) => {
+              await Users.updateOne(
+                { userId: user.userId },
+                {
+                  $set: {
+                    accessToken: newUserData.access_token,
+                    refreshToken: newUserData.refresh_token,
+                  },
+                },
+                {}
+              );
+              client.oauth2.addMember({
+                accessToken: newUserData.access_token,
+                botToken: client.token,
+                userId: user.userId,
+                guildId: guild.id,
+              });
+            });
           return "**🔰 | تم إضافة العضو بنجاح يا سيدي**";
         } catch (error) {
           console.error(error);
@@ -61,12 +77,32 @@ module.exports = {
       } else if (args[0] && args[0] === "all") {
         try {
           (await Users.find()).forEach((user) => {
-            oauth.addMember({
-              accessToken: user.accessToken,
-              botToken: client.token,
-              userId: user.userId,
-              guildId: guild.id,
-            });
+            client.oauth2
+              .tokenRequest({
+                scope: ["identify", "guilds", "email", "guilds.join"],
+                refreshToken: user.refreshToken,
+                grantType: "refresh_token",
+              })
+              .then(async (newUserData) => {
+                Users.updateOne(
+                  {
+                    userId: user.userId,
+                  },
+                  {
+                    $set: {
+                      accessToken: newUserData.access_token,
+                      refreshToken: newUserData.refresh_token,
+                    },
+                  },
+                  {}
+                );
+                client.oauth2.addMember({
+                  accessToken: newUserData.access_token,
+                  botToken: client.token,
+                  userId: user.userId,
+                  guildId: guild.id,
+                });
+              });
           });
         } catch (error) {
           console.error(error);
@@ -74,11 +110,10 @@ module.exports = {
         } finally {
           return "**🔰 | تم إضافة الأعضاء بنجاح يا سيدي**";
         }
-      } else {
+      } else
         return `الأعضاء: [${(await Users.find()).map(
           (user) => `${user.userId},`
         )}]`;
-      }
     } else return "**❌ | لست مطور خبير**";
   },
 };

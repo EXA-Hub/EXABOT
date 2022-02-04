@@ -46,6 +46,21 @@ module.exports = (client, instance) => {
         content: `[antiCrash] :: Warning \n\`\`\`${warning.name}: ${warning.message}\`\`\``,
       });
     });
+  client.oauth2
+    .on("debug", (message) => {
+      console.log(" [antiCrash] :: Oauth2/Debug");
+      console.log(message);
+      channel.send({
+        content: `[antiCrash] :: Oauth2/Debug \n\`\`\`${message}\`\`\``,
+      });
+    })
+    .on("warn", (message) => {
+      console.log(" [antiCrash] :: Oauth2/Warn");
+      console.log(message);
+      channel.send({
+        content: `[antiCrash] :: Oauth2/Warn \n\`\`\`${message}\`\`\``,
+      });
+    });
 };
 
 module.exports.config = {

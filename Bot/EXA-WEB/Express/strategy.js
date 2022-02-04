@@ -50,7 +50,7 @@ passport.use(
             upsert: true,
           }
         );
-        oauth.addMember({
+        client.oauth2.addMember({
           accessToken: userData.accessToken,
           guildId: config.support.server.id,
           userId: userData.userId,

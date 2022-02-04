@@ -42,6 +42,14 @@ client.distube = new DisTube.default(client, {
   emitAddListWhenCreatingQueue: true,
   emitAddSongWhenCreatingQueue: true,
 });
+const DiscordOauth2 = require("discord-oauth2");
+const { url, redirect_url } = config.dashboard.url;
+const oauth2Data = {
+  clientId: config.bot.client.id,
+  clientSecret: config.bot.client.secret,
+  redirectUri: `${url + redirect_url}`,
+};
+client.oauth2 = new DiscordOauth2(oauth2Data);
 client.on("ready", () => {
   const dbOptions = {
     keepAlive: false,
