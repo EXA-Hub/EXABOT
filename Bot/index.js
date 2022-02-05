@@ -41,6 +41,7 @@ client.distube = new DisTube.default(client, {
   nsfw: false,
   emitAddListWhenCreatingQueue: true,
   emitAddSongWhenCreatingQueue: true,
+  youtubeDL: false,
 });
 const DiscordOauth2 = require("discord-oauth2");
 const { url, redirect_url } = config.dashboard.url;

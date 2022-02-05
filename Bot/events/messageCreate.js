@@ -37,14 +37,10 @@ module.exports = (client, instance) => {
           guildMusicData.channel
         );
         if (message.member.voice.channel) {
-          client.distube.playVoiceChannel(
-            message.member.voice.channel,
-            message.content,
-            {
-              textChannel: musicChannel,
-              member: message.member,
-            }
-          );
+          client.distube.play(message.member.voice.channel, message.content, {
+            textChannel: musicChannel,
+            member: message.member,
+          });
         } else
           return message.channel.send({
             content: "**❌ | إنضم لغرفة صوتية أولا**",

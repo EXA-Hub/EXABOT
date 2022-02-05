@@ -28,7 +28,7 @@ router.all("/:guildID/music/:task?", async (req, res) => {
           .status(404)
           .send({ message: "لا أستطيع العثور على قناة نظام الغرفة الموسيقية" });
       try {
-        client.distube.playVoiceChannel(guildMember.voice.channel, string, {
+        client.distube.play(guildMember.voice.channel, string, {
           textChannel: musicChannel,
           member: guildMember,
         });
@@ -39,11 +39,9 @@ router.all("/:guildID/music/:task?", async (req, res) => {
       }
     } else if (task === "stop") {
       if (!guildMember.voice.channel)
-        return res
-          .status(403)
-          .send({
-            message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
-          });
+        return res.status(403).send({
+          message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
+        });
       const queue = client.distube.getQueue(guildMember.voice.channel);
       if (!queue)
         return res
@@ -51,8 +49,85 @@ router.all("/:guildID/music/:task?", async (req, res) => {
           .send({ message: `${client.emotes.error} | لا يوجد شئ!` });
       client.distube.stop(queue);
       return res.send({ message: `${client.emotes.success} | توقف!` });
-    }
-    return res.sendStatus(404);
+    } else if (task === "autoPlay") {
+      if (!guildMember.voice.channel)
+        return res.status(403).send({
+          message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
+        });
+      const queue = client.distube.getQueue(guildMember.voice.channel);
+      if (!queue)
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | لا يوجد شئ!` });
+      const autoplay = queue.toggleAutoplay();
+      return res.send({
+        message: `${client.emotes.success} | التشغيل التلقائي: \`${
+          autoplay ? "On" : "Off"
+        }\``,
+        autoPlay: autoplay,
+      });
+    } else if (task === "pause") {
+      if (!guildMember.voice.channel)
+        return res.status(403).send({
+          message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
+        });
+      const queue = client.distube.getQueue(guildMember.voice.channel);
+      if (!queue)
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | لا يوجد شئ!` });
+      if (queue.paused) {
+        client.distube.resume(queue);
+        return res.send({ message: "أعدت تشغيل الأغنية من أجلك :)" });
+      } else {
+        client.distube.pause(queue);
+        return res.send({ message: "أوقفت الأغنية مؤقتا من أجلك :)" });
+      }
+    } else if (task === "skip") {
+      if (!guildMember.voice.channel)
+        return res.status(403).send({
+          message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
+        });
+      const queue = client.distube.getQueue(guildMember.voice.channel);
+      if (!queue)
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | لا يوجد شئ!` });
+      if (!queue.autoplay && queue.songs.length <= 1)
+        return res.status(403).send({
+          message: `${client.emotes.error} | لا يوجد المزيد من المحتوى!`,
+        });
+      client.distube.skip(queue);
+      return res.send({
+        message: `${client.emotes.success} | تخطي! حاليا يشغل:\n${queue.songs[0].name}`,
+      });
+    } else if (task === "filter") {
+      if (!guildMember.voice.channel)
+        return res.status(403).send({
+          message: `${client.emotes.error} | يجب أن تنضم لقناة صوتية!`,
+        });
+      const queue = client.distube.getQueue(guildMember.voice.channel);
+      if (!queue)
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | لا يوجد شئ!` });
+      const { filter } = req.query;
+      if (!filter) return res.send({ message: queue.filters });
+      if (!Object.keys(client.distube.filters).includes(filter))
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | ليس مصفي متاح` });
+      const status = client.distube.setFilter(queue, filter).includes(filter);
+      return res.send({
+        message: status
+          ? `${client.emotes.success} | ${filter} يعمل الأن`
+          : `${client.emotes.success} | ${filter} توقف الأن`,
+        status,
+      });
+    } else
+      return res
+        .status(404)
+        .send({ message: `${client.emotes.error} | مهمة غير معروفة!` });
   }
 });
 

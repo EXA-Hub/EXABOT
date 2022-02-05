@@ -31,9 +31,9 @@ module.exports = {
     {
       name: "نوع_التصفية",
       description: "يرجى إختيار نوع التصفية المراده",
-      required: true,
+      required: false,
       type: 3,
-      choices: result,
+      choices: result.push({ name: "إغلاق المرشحات", value: "off" }),
     },
   ],
   init: (client, instance) => {},
