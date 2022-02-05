@@ -10,15 +10,12 @@ module.exports = (Client, instance) => {
   const authenticationRouter = require("./routers/authentication");
 
   const app = express();
-  app.use((req, res, next) => {
-    req.wok = { instance };
-    next();
-  });
 
   app.use(
     cors({
       origin: [react],
       credentials: true,
+      optionsSuccessStatus: 200,
     })
   );
 
@@ -40,6 +37,11 @@ module.exports = (Client, instance) => {
       store: MongoStore.create({ mongoUrl: Client.mongo._connectionString }),
     })
   );
+
+  app.use((req, res, next) => {
+    req.wok = { instance };
+    next();
+  });
 
   app.use("/api/auth", authenticationRouter);
 
