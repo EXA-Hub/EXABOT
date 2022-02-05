@@ -18,6 +18,7 @@ router.get(
 
 router.get("/", async (req, res) => {
   req.user = req.session.user;
+  console.log(req.session);
   if (!req.user) return res.sendStatus(401);
   res.send({
     guilds: req.user.guilds,

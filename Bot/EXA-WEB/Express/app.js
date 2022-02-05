@@ -17,9 +17,8 @@ module.exports = (Client, instance) => {
 
   app.use(
     cors({
-      origin: react,
+      origin: [react],
       credentials: true,
-      optionSuccessStatus: 200,
     })
   );
 
