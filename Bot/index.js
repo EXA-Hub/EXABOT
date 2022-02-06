@@ -23,6 +23,8 @@ const client = new Discord.Client({
 const { dbName, dbUsername, dbPassword, dbEndPoint } = config.database;
 const intoDataBase = `${dbUsername}:${dbPassword}@${dbName}.${dbEndPoint}`;
 const mongoUri = `mongodb+srv://${intoDataBase}?retryWrites=true&w=majority`;
+// https://www.npmjs.com/package/discord-logs
+require("discord-logs")(client);
 const WOKCommands = require("wokcommands");
 const DisTube = require("distube");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
