@@ -35,7 +35,9 @@ router.all("/:guildID/music/:task?", async (req, res) => {
         return res.send({ message: `**⏯ | جار التشغيل**` });
       } catch (e) {
         console.log(e);
-        return res.status(404).send(`${client.emotes.error} | × خطأ: \`${e}\``);
+        return res
+          .status(404)
+          .send({ message: `${client.emotes.error} | × خطأ: \`${e}\`` });
       }
     } else if (task === "stop") {
       if (!guildMember.voice.channel)
