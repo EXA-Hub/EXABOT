@@ -3,7 +3,7 @@ const filtersMap = Object.keys(require("distube").defaultFilters)
   .join("/");
 var keys = Object.keys(require("distube").defaultFilters);
 var values = Object.values(require("distube").defaultFilters);
-var result = [];
+var result = [{ name: "إغلاق المرشحات", value: "off" }];
 keys.forEach((key, i) =>
   result.push({
     name: `${key.replace(" ", "_")} => ${values[i].replace(" ", "_")}`,
@@ -33,7 +33,7 @@ module.exports = {
       description: "يرجى إختيار نوع التصفية المراده",
       required: false,
       type: 3,
-      choices: result.push({ name: "إغلاق المرشحات", value: "off" }),
+      choices: result,
     },
   ],
   init: (client, instance) => {},

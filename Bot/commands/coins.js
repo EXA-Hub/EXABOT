@@ -137,14 +137,14 @@ module.exports = {
         : interaction.options.getMember("عضو");
       if (targetUser) {
         if (args[1]) {
+          if (user.id === targetUser.id) return "**😂 | لا تحتاج لهذا حتى**";
           const gifted = Number(
             message ? args[1] : interaction.options.getNumber("عدد_العملات")
           );
-          if (isNaN(gifted)) return "**👀 | أحتاج إلى أرقام**";
+          if (isNaN(gifted) || gifted < 0) return "**👀 | أحتاج إلى أرقام**";
           const userCoins = coins[user.id];
           if (gifted > userCoins)
             return "**🤨 | لكنك لا تمتلك هذا القدر من العملات الذهبية**";
-          if (user.id === targetUser.id) return "**😂 | لا تحتاج لهذا حتى**";
           takeCoins(user.id, gifted);
           giveCoins(targetUser.id, gifted);
           targetUser
@@ -152,7 +152,10 @@ module.exports = {
               `**${targetUser} 🏧 | مبروك لقد حصلت على ${gifted} عملة ذهبية 🪙 من: ${user}**`
             )
             .catch((e) => {
-              throw e;
+              if (e)
+                channel.send(
+                  `**${targetUser} 🏧 | مبروك لقد حصلت على ${gifted} عملة ذهبية 🪙 من: ${user}**`
+                );
             });
           return `**${targetUser} 🏧 | مبروك لقد حصلت على ${gifted} عملة ذهبية 🪙**`;
         } else {
