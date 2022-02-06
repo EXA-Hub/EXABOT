@@ -28,6 +28,7 @@
     "connect-mongo": "^4.6.0",
     "cookie-parser": "^1.4.6",
     "cors": "^2.8.5",
+    "discord-anti-spam": "^2.7.2",
     "discord-api-types": "^0.26.0",
     "discord-autorole-badges": "^2.0.1",
     "discord-giveaways": "^5.0.1",

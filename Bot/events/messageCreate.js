@@ -170,54 +170,47 @@ module.exports = (client, instance) => {
         }
       }
       const antiSpamChecker = (await db.get("antispam-on-off")) || {};
+      const AntiSpam = require("discord-anti-spam");
+      const antiSpam = new AntiSpam({
+        warnThreshold: 3,
+        muteThreshold: 4,
+        kickThreshold: 7,
+        banThreshold: 7,
+        maxInterval: 2000,
+        warnMessage: "{@user}, أوقف الإزعاج.",
+        kickMessage: "**{user_tag}** أزعجني فتم طرده.",
+        muteMessage: "**{user_tag}** أزعجني فتم حظرة كتابيا.",
+        banMessage: "**{user_tag}** أزعجني غتم حظره.",
+        maxDuplicatesWarning: 6,
+        maxDuplicatesKick: 10,
+        maxDuplicatesBan: 12,
+        maxDuplicatesMute: 8,
+        ignoredPermissions: ["ADMINISTRATOR"],
+        ignoreBots: true,
+        verbose: true,
+        ignoredMembers: config.devs,
+        unMuteTime: 10,
+        removeMessages: true,
+        modLogsEnabled: false,
+        modLogsChannelName: "المدونة",
+        modLogsMode: "embed",
+      });
       if (
         antiSpamChecker[message.guild.id] &&
         antiSpamChecker[message.guild.id] == "on" &&
         !antiSpamChecker[message.guild.id] == "off"
       ) {
-        const filter = (m) =>
-          m.author.id != client.user.id && m.author == message.author;
-        const spammerKiller = async (collected) => {
-          if (collected) {
-            message.channel.messages
-              .fetch({
-                limit: 20,
-              })
-              .then((messages) => {
-                let spammerMessages = [];
-                messages
-                  .filter((m) => m.author.id === message.author.id)
-                  .forEach((msg) => spammerMessages.push(msg));
-                message.channel.bulkDelete(spammerMessages);
-              });
-          } else collected.forEach((m) => m.delete());
-          const muteRole = await db.get("mute_roles")[message.guild.id];
-          if (!message.member.roles.cache.has(muteRole)) {
-            message.channel.send({ content: "إزعاج" });
-            mute(message, message.member);
-          }
-        };
         const allowed = (await db.get("antispam_protection/allowed")) || {};
         const allowedRolesInGuild = allowed[message.guild.id];
-        const spamCollector = message.channel.createMessageCollector(filter, {
-          max: 3,
-          time: 5 * 1000,
-        });
-        spamCollector.on("end", async (collected) => {
-          if (collected.size == spamCollector.options.max) {
-            if (!allowedRolesInGuild) {
-              await spammerKiller(collected);
-            } else if (allowedRolesInGuild) {
-              if (allowedRolesInGuild.length === 0)
-                await spammerKiller(collected);
-              const allowedMemberPremsRoles = await allowedRolesInGuild.filter(
-                (ID) => message.member.roles.cache.has(ID)
-              );
-              if (allowedMemberPremsRoles && allowedMemberPremsRoles.length > 0)
-                await spammerKiller();
-            }
-          }
-        });
+        if (!allowedRolesInGuild) {
+          antiSpam.message(message);
+        } else {
+          if (allowedRolesInGuild.length === 0) antiSpam.message(message);
+          if (
+            allowedRolesInGuild.some((ID) => message.member.roles.cache.has(ID))
+          )
+            antiSpam.message(message);
+        }
       }
     }
   });
