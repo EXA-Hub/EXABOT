@@ -9,7 +9,7 @@ router.all("/:guildID/prefix/:task", async (req, res) => {
   const { prefix } = req.query;
   if (task === "get") {
     const guildPrefix = await prefixes.get(guildID);
-    return res.send(guildPrefix);
+    return res.send({ prefix: guildPrefix });
   } else if (task === "set") {
     if (!prefix) return res.send({ message: req.url + "?prefix=" });
     req.wok.instance.setPrefix(client.guilds.cache.get(guildID), prefix);
