@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, Dropdown, FormControl } from "react-bootstrap";
+import {
+  Card,
+  Button,
+  Dropdown,
+  FormControl,
+  Tab,
+  Row,
+  Nav,
+  Col,
+} from "react-bootstrap";
 import MusicCard from "./guildSettings/musicCard";
 import { useAlert } from "react-alert";
 
@@ -158,8 +167,8 @@ export default function MainPage(props) {
   const [userData, setUserData] = useState(null);
   const [guildData, setGuildData] = useState(null);
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
-  const [guildSettingsData, setGuildSettingsData] = useState({});
-  const [guildBody, setGuildBody] = useState(<h1>× حدث خطأ ما ×</h1>);
+  const [guildSettingsData, setGuildSettingsData] = useState({ prefix: "." });
+  const [guildBody, setGuildBody] = useState(null);
 
   useEffect(() => {
     getData(user)
@@ -182,7 +191,7 @@ export default function MainPage(props) {
       const guildsData = (await userData) ? await userData.guilds : [];
       setGuilds(guildsData);
     })();
-  }, [userData, setUserData]);
+  }, [userData]);
 
   useEffect(() => {
     if (guildID) {
@@ -209,45 +218,10 @@ export default function MainPage(props) {
 
   useEffect(() => {
     if (!guildID) return;
-    function setPrefix(guildSettingsData) {
-      getData(
-        backend +
-          `/api/guilds/${guildID}/prefix/set?prefix=${guildSettingsData.prefix}`
-      )
-        .then(({ data }) => {
-          alert.show("تم بنجاح", {
-            timeout: 5000,
-            type: "success",
-          });
-        })
-        .catch((err) => {
-          if (err)
-            alert.show("خطأ", {
-              timeout: 5000,
-              type: "error",
-            });
-        });
-    }
     getData(backend + `/api/guilds/${guildID}/prefix/get`)
       .then(({ data }) => {
-        setGuildBody(
-          <div className="container-fluid fs-5 badge">
-            <input
-              defaultValue={data.prefix || "."}
-              onChange={function (e) {
-                setGuildSettingsData({ prefix: e.target.value });
-              }}
-            ></input>
-            <Button
-              className="m-2"
-              onClick={() => {
-                setPrefix(guildSettingsData);
-              }}
-            >
-              حفظ البادئة
-            </Button>
-          </div>
-        );
+        setGuildSettingsData({ prefix: data.prefix.prefix || "." });
+        setGuildBody(true);
       })
       .catch((err) => {
         if (err) {
@@ -256,10 +230,30 @@ export default function MainPage(props) {
             timeout: 5000,
             type: "error",
           });
-          setGuildBody(<h1>× حدث خطأ ما ×</h1>);
+          setGuildBody(null);
         }
       });
-  }, [alert, guildSettingsData]);
+  }, [alert]);
+
+  function setPrefix() {
+    getData(
+      backend +
+        `/api/guilds/${guildID}/prefix/set?prefix=${guildSettingsData.prefix}`
+    )
+      .then(({ data }) => {
+        alert.show("تم بنجاح", {
+          timeout: 5000,
+          type: "success",
+        });
+      })
+      .catch((err) => {
+        if (err)
+          alert.show("خطأ", {
+            timeout: 5000,
+            type: "error",
+          });
+      });
+  }
 
   return (
     <div>
@@ -356,10 +350,52 @@ export default function MainPage(props) {
             >
               {guildsMenu(guildData, guilds)}
             </div>
-            <div key="guildBody">{guildBody}</div>
-            <div key="MusicCard">
-              <MusicCard guild={guildData} />
-            </div>
+            {guildBody ? (
+              <div key="guildBody">
+                <div className="container-fluid fs-5 badge">
+                  <input
+                    style={{ width: "50%" }}
+                    defaultValue={guildSettingsData.prefix || "."}
+                    onChange={(e) =>
+                      setGuildSettingsData({ prefix: e.target.value })
+                    }
+                  ></input>
+                  <Button className="m-2" onClick={setPrefix}>
+                    حفظ البادئة
+                  </Button>
+                </div>
+                <Tab.Container id="left-tabs-example" defaultActiveKey="Data">
+                  <Row>
+                    <Col sm={3}>
+                      <Nav variant="pills" className="flex-column">
+                        <Nav.Item>
+                          <Nav.Link eventKey="Data">معلومات المجتمع</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                          <Nav.Link eventKey="MusicCard">الموسيقى</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                          <Nav.Link eventKey="second">آخر</Nav.Link>
+                        </Nav.Item>
+                      </Nav>
+                    </Col>
+                    <Col sm={9}>
+                      <Tab.Content>
+                        <Tab.Pane eventKey="Data">معلومات المجتمع</Tab.Pane>
+                        <Tab.Pane eventKey="MusicCard">
+                          <div key="MusicCard">
+                            <MusicCard guild={guildData} />
+                          </div>
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="second">مرحبا</Tab.Pane>
+                      </Tab.Content>
+                    </Col>
+                  </Row>
+                </Tab.Container>
+              </div>
+            ) : (
+              <h1>× حدث خطأ ما ×</h1>
+            )}
           </div>
         ) : userData ? (
           guildsIcons(guilds)

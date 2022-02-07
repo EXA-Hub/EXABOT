@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Card, Button, FormCheck } from "react-bootstrap";
+import { Card, Button, FormCheck, Form } from "react-bootstrap";
 import { useAlert } from "react-alert";
 
 const { backend } = require("../../../data");
@@ -9,9 +9,14 @@ export default function MainPage(props) {
   const alert = useAlert();
   const [songData, setSongData] = useState(null);
   const [filters, setFilters] = useState(<div></div>);
+  const [volume, setVolume] = useState(50);
 
   function playSong() {
     if (songData) {
+      alert.show("التشغيل جارٍ والرجاء الإنتظار", {
+        timeout: 3 * 2000,
+        type: "success",
+      });
       getData(
         backend +
           `/api/guilds/${props.guild.id}/music/play?songName=${songData.songName}`
@@ -36,7 +41,7 @@ export default function MainPage(props) {
       });
   }
 
-  function sp(task) {
+  function spv(task) {
     getData(backend + `/api/guilds/${props.guild.id}/music/${task}`)
       .then(({ data }) => {
         alert.show(data.message, {
@@ -133,6 +138,9 @@ export default function MainPage(props) {
           onChange={(e) => {
             setSongData({ songName: e.target.value });
           }}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") playSong();
+          }}
         />
         <div className="input-group-append">
           <button
@@ -145,7 +153,7 @@ export default function MainPage(props) {
           </button>
           <Button
             onClick={() => {
-              sp("stop");
+              spv("stop");
             }}
             className="ms-2 mt-1"
           >
@@ -153,7 +161,7 @@ export default function MainPage(props) {
           </Button>
           <Button
             onClick={() => {
-              sp("pause");
+              spv("pause");
             }}
             className="ms-2 mt-1"
           >
@@ -161,7 +169,7 @@ export default function MainPage(props) {
           </Button>
           <Button
             onClick={() => {
-              sp("skip");
+              spv("skip");
             }}
             className="ms-2 mt-1"
           >
@@ -171,16 +179,53 @@ export default function MainPage(props) {
         <div className="container-fluid">
           <FormCheck
             type="switch"
-            className="m-2"
+            className="m-2 p-2"
             id="autoplay-switch"
             label="التشغيل التلقائي"
-            style={{ display: "inline-block" }}
+            style={{
+              display: "inline-block",
+            }}
             onChange={(e) => {
               autoPlay(e);
             }}
           />
-          <h6>المرشحات: {filters}</h6>
+          <Form.Label>درجة الصوت:</Form.Label>
+          <Form.Range
+            className="p-1"
+            min="1"
+            max="100"
+            value={volume}
+            style={{
+              width: "80%",
+              height: "0rem",
+            }}
+            onChange={(e) => {
+              setVolume(e.target.value);
+            }}
+            onMouseUp={async (e) => {
+              spv(`volume?volume=${e.target.value}`);
+            }}
+          />
+          <Form.Label>{volume}%</Form.Label>
         </div>
+        <h6 className="container-fluid">
+          المرشحات: {filters}
+          <Form.Select
+            aria-label="Default select example"
+            className="m-2"
+            style={{
+              width: "50%",
+              display: "inline-block",
+            }}
+            onChange={(e) => {
+              spv(`loop?mode=${e.target.value}`);
+            }}
+          >
+            <option value="0">التكرار متوقف</option>
+            <option value="1">تكرار الأغنية</option>
+            <option value="2">تكرار القائمة</option>
+          </Form.Select>
+        </h6>
       </div>
     </Card>
   );
