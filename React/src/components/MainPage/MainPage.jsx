@@ -10,6 +10,7 @@ import {
   Col,
 } from "react-bootstrap";
 import MusicCard from "./guildSettings/musicCard";
+import Graphs from "./charts/chart";
 import { useAlert } from "react-alert";
 
 const {
@@ -123,7 +124,7 @@ function guildsMenu(guildData, guilds) {
   const guildsMenu = guilds.map((menuGuildData) => {
     if (menuGuildData.id === guildData.id) {
       return (
-        <Dropdown.Item eventKey={`${++num}`} active>
+        <Dropdown.Item eventKey={`${++num}`} key={menuGuildData.id} active>
           {menuGuildData.name}
         </Dropdown.Item>
       );
@@ -381,7 +382,9 @@ export default function MainPage(props) {
                     </Col>
                     <Col sm={9}>
                       <Tab.Content>
-                        <Tab.Pane eventKey="Data">معلومات المجتمع</Tab.Pane>
+                        <Tab.Pane eventKey="Data">
+                          <Graphs guild={guildData} />
+                        </Tab.Pane>
                         <Tab.Pane eventKey="MusicCard">
                           <div key="MusicCard">
                             <MusicCard guild={guildData} />

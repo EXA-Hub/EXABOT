@@ -130,7 +130,7 @@ export default function MainPage(props) {
   return (
     <Card>
       <h1>نظام الأغاني</h1>
-      <div className="input-group mb-3">
+      <div className="input-group mb-3" key="upCard">
         <input
           type="text"
           className="form-control"
@@ -176,7 +176,7 @@ export default function MainPage(props) {
             تخطي
           </Button>
         </div>
-        <div className="container-fluid">
+        <div className="container-fluid" key="downCard">
           <FormCheck
             type="switch"
             className="m-2 p-2"
