@@ -30,7 +30,7 @@ module.exports = (Client, instance) => {
       saveUninitialized: false,
       secret: config.dashboard.secret,
       cookie: {
-        secure: true,
+        // secure: true,
         httpOnly: true,
         maxAge: 60 * 1000 * 60 * 24,
       },
