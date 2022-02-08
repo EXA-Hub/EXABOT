@@ -12,13 +12,8 @@ export default class LineChart extends Component {
     const ctx = this.chartRef.current.getContext("2d");
 
     const labelsData = await getData(
-      backend + `/api/guilds/${this.props.guild.id}/logs/labels`
+      backend + `/api/guilds/${this.props.guild.id}/logs/${this.props.type}`
     );
-    const bansData = await getData(
-      backend + `/api/guilds/${this.props.guild.id}/logs/bans`
-    );
-
-    console.log(bansData);
 
     new Chart(ctx, {
       type: "line",
@@ -27,7 +22,7 @@ export default class LineChart extends Component {
         datasets: [
           {
             data: labelsData.data.data,
-            label: "عدد الغرف",
+            label: `عدد ال${this.props.name}`,
             borderColor: "#3e95cd",
             backgroundColor: "#7bb6dd",
             fill: false,
@@ -44,7 +39,7 @@ export default class LineChart extends Component {
         plugins: {
           title: {
             display: true,
-            text: "معلومات متنوعة عن الخادم الخاص بك",
+            text: `معلومات متنوعة عن ال${this.props.name} في الخادم - (${this.props.type})`,
           },
         },
         scales: {

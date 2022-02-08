@@ -11,7 +11,7 @@ import {
 } from "react-bootstrap";
 import MusicCard from "./guildSettings/musicCard";
 import { Switch, useDarkreader } from "react-darkreader";
-import Graphs from "./charts/chart";
+import Graphs from "./charts/charts";
 import { useAlert } from "react-alert";
 
 const {

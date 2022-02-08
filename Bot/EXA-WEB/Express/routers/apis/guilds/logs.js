@@ -7,7 +7,7 @@ const router = Router();
 router.all("/:guildID/logs/:type?", async (req, res) => {
   const { guildID, type } = req.params;
   const guild = client.guilds.cache.get(guildID);
-  const routsNames = [
+  const routsTypes = [
     "CHANNEL",
     "CHANNEL_OVERWRITE",
     "ROLE",
@@ -19,13 +19,28 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
     "GUILD_SCHEDULED_EVENT",
     "THREAD",
   ];
-  const typeIndex = routsNames.indexOf(type);
-  if (typeIndex < 0) return res.send(routsNames);
+  const routsNames = [
+    "غرف",
+    "تغير في إعدادات الغرف",
+    "رتب",
+    "ملتقطات",
+    "تعبيرات",
+    "إندماجات",
+    "أحداث",
+    "ملصقات",
+    "أحداث مجدولة",
+    "مواضيع",
+  ];
+  const typeIndex = routsTypes.indexOf(type);
+  if (typeIndex < 0)
+    return res.send(
+      require("../../../APIfunctions/combineArrays")(routsTypes, routsNames)
+    );
   const auditCC = await guild.fetchAuditLogs({
-    type: `${routsNames[typeIndex]}_CREATE`,
+    type: `${routsTypes[typeIndex]}_CREATE`,
   });
   const auditCD = await guild.fetchAuditLogs({
-    type: `${routsNames[typeIndex]}_DELETE`,
+    type: `${routsTypes[typeIndex]}_DELETE`,
   });
   const auditC = auditCD.entries
     .toJSON()
@@ -42,12 +57,12 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
   const labels = auditC.map((e) => e.date);
   let CN = guild.channels.cache.size;
   auditC.forEach((e) => {
-    if (e.action === `${routsNames[typeIndex]}_CREATE`) CN = CN - 1;
+    if (e.action === `${routsTypes[typeIndex]}_CREATE`) CN = CN - 1;
     else CN = CN + 1;
   });
   let ChannelsNumber = [];
   auditC.forEach((e) => {
-    if (e.action === `${routsNames[typeIndex]}_CREATE`) CN = CN + 1;
+    if (e.action === `${routsTypes[typeIndex]}_CREATE`) CN = CN + 1;
     else CN = CN - 1;
     ChannelsNumber.push(CN);
   });
