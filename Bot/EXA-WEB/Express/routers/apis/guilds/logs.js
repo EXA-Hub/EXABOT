@@ -20,33 +20,27 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
       .sort(function (x, y) {
         return x.createdTimestamp - y.createdTimestamp;
       })
-      .filter(function (item, index, inputArray) {
-        return inputArray.indexOf(item) == index;
-      });
-    let CN = guild.channels.cache.size;
-    const ChannelsNumber = auditC
       .map((e) => {
-        if (e.action === "CHANNEL_CREATE") {
-          ++CN;
-          return CN;
-        } else {
-          CN - 1;
-          return CN;
-        }
-      })
-      .filter(function (item, index, inputArray) {
-        return inputArray.indexOf(item) == index;
+        e.date = moment(e.createdTimestamp)
+          .locale("ar")
+          .format("MMMM Do YYYY, h:mm:ss a");
+        return e;
       });
-    const labels = auditC
-      .map((e) => moment(e.createdTimestamp).locale("ar").format("LL"))
-      .filter(function (item, index, inputArray) {
-        return inputArray.indexOf(item) == index;
-      });
-    const obj = new Set(ChannelsNumber);
-    const uniqueArrayChannelsNumber = Array.from(obj);
+    const labels = auditC.map((e) => e.date);
+    let CN = guild.channels.cache.size;
+    auditC.forEach((e) => {
+      if (e.action === "CHANNEL_CREATE") CN = CN - 1;
+      else CN = CN + 1;
+    });
+    let ChannelsNumber = [];
+    auditC.forEach((e) => {
+      if (e.action === "CHANNEL_CREATE") CN = CN + 1;
+      else CN = CN - 1;
+      ChannelsNumber.push(CN);
+    });
     res.send({
       labels,
-      data: uniqueArrayChannelsNumber,
+      data: ChannelsNumber,
     });
   } else return res.send({ message: "No Thing here" });
 });

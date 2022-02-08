@@ -276,22 +276,22 @@ export default function MainPage(props) {
                 </svg> */}
             </a>
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-              <li>
+              <li key="Home">
                 <a href="/" className="nav-link px-2 text-white">
                   Home
                 </a>
               </li>
-              <li>
+              <li key="Features">
                 <a href="/" className="nav-link px-2 text-white">
                   Features
                 </a>
               </li>
-              <li>
+              <li key="Pricing">
                 <a href="/" className="nav-link px-2 text-white">
                   Pricing
                 </a>
               </li>
-              <li>
+              <li key="FAQs">
                 <a href="/" className="nav-link px-2 text-white">
                   FAQs
                 </a>
@@ -418,17 +418,17 @@ export default function MainPage(props) {
             <span className="text-muted">© 2021 EXA, Inc</span>
           </div>
           <ul className="nav col-md-4 justify-content-end list-unstyled d-flex">
-            <li className="ms-3">
+            <li key="twitter" className="ms-3">
               <a className="text-muted" href="/">
                 {/*<svg className="bi" width="24" height="24"><use xlink:href="#twitter"></use></svg>*/}
               </a>
             </li>
-            <li className="ms-3">
+            <li key="instagram" className="ms-3">
               <a className="text-muted" href="/">
                 {/*<svg className="bi" width="24" height="24"><use xlink:href="#instagram"></use></svg>*/}
               </a>
             </li>
-            <li className="ms-3">
+            <li key="facebook" className="ms-3">
               <a className="text-muted" href="/">
                 {/*<svg className="bi" width="24" height="24"><use xlink:href="#facebook"></use></svg>*/}
               </a>
