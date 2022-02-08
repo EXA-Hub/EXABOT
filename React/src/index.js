@@ -15,8 +15,6 @@ const options = {
   transition: transitions.SCALE,
 };
 
-console.log(process.env);
-
 const Root = () => (
   <React.StrictMode>
     <AlertProvider template={AlertTemplate} {...options}>
