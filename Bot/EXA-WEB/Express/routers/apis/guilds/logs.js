@@ -11,6 +11,7 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
     "CHANNEL",
     "CHANNEL_OVERWRITE",
     "ROLE",
+    "INVITE",
     "WEBHOOK",
     "EMOJI",
     "INTEGRATION",
@@ -21,8 +22,9 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
   ];
   const routsNames = [
     "غرف",
-    "تغير في إعدادات الغرف",
+    "تغير في صلاحيات الغرف الخاصة",
     "رتب",
+    "دعوات",
     "ملتقطات",
     "تعبيرات",
     "إندماجات",
@@ -55,7 +57,45 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
       return e;
     });
   const labels = auditC.map((e) => e.date);
-  let CN = guild.channels.cache.size;
+  let CN = 0;
+  switch (type) {
+    case "CHANNEL":
+      CN = guild.channels.cache.size;
+      break;
+    case "CHANNEL_OVERWRITE":
+      guild.channels.cache.forEach(
+        (channel) => (CN = CN + channel.permissionOverwrites.cache.size)
+      );
+      break;
+    case "ROLE":
+      CN = guild.roles.cache.size;
+      break;
+    case "INVITE":
+      CN = guild.invites.cache.size;
+      break;
+    case "WEBHOOK":
+      CN = (await guild.fetchWebhooks()).size;
+      break;
+    case "EMOJI":
+      CN = guild.emojis.cache.size;
+      break;
+    case "INTEGRATION":
+      CN = (await guild.fetchIntegrations()).size;
+      break;
+    case "STAGE_INSTANCE":
+      CN = guild.stageInstances.cache.size;
+      break;
+    case "STICKER":
+      CN = guild.stickers.cache.size;
+      break;
+    case "GUILD_SCHEDULED_EVENT":
+      CN = guild.scheduledEvents.cache.size;
+      break;
+    case "THREAD":
+      CN =
+        guild.channels.cache.size - guild.channels.channelCountWithoutThreads;
+      break;
+  }
   auditC.forEach((e) => {
     if (e.action === `${routsTypes[typeIndex]}_CREATE`) CN = CN - 1;
     else CN = CN + 1;
