@@ -1,4 +1,7 @@
-const backend = process.env.NEXT_PUBLIC_API || "http://localhost:2323";
+const backend =
+  process.env.REACT_APP_VERCEL_GIT_REPO_OWNER === "EXA-Hub"
+    ? "https://api.exabot.ml"
+    : "http://localhost:2323";
 module.exports = {
   backend,
   login: `${backend}/api/auth/discord`,
