@@ -1,4 +1,4 @@
-const backend = process.env.API || "http://localhost:2323";
+const backend = process.env.NEXT_PUBLIC_API || "http://localhost:2323";
 module.exports = {
   backend,
   login: `${backend}/api/auth/discord`,
