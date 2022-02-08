@@ -10,6 +10,7 @@ import {
   Col,
 } from "react-bootstrap";
 import MusicCard from "./guildSettings/musicCard";
+import { Switch, useDarkreader } from "react-darkreader";
 import Graphs from "./charts/chart";
 import { useAlert } from "react-alert";
 
@@ -165,6 +166,8 @@ const guildID = params.get("guild");
 export default function MainPage(props) {
   const alert = useAlert();
 
+  const theme = localStorage.getItem("Theme") === "true" ? true : false;
+  const [isDark, { toggle }] = useDarkreader(theme);
   const [userData, setUserData] = useState(null);
   const [guildData, setGuildData] = useState(null);
   const [guilds, setGuilds] = useState(<h1>لا يوجد مجتمعات</h1>);
@@ -302,7 +305,14 @@ export default function MainPage(props) {
                 </a>
               </li>
             </ul>
-            <div className="text-end">
+            <Switch
+              checked={isDark}
+              onChange={(e) => {
+                toggle();
+                localStorage.setItem("Theme", isDark ? false : true);
+              }}
+            />
+            <div className="text-end p-1 m-1">
               {userData ? (
                 <button
                   type="button"

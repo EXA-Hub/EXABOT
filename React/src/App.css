@@ -4,24 +4,7 @@
 }
 @import url(https://fonts.googleapis.com/css?family=Michroma);
 body {
-  /* background-color: rgb(11 15 116), rgb(3 99 158); */
   background: #181a1b;
-  /* background: -moz-linear-gradient(
-    87deg,
-    rgba(4, 93, 157, 1) 0%,
-    rgba(7, 45, 130, 1) 93%
-  );
-  background: -webkit-linear-gradient(
-    87deg,
-    rgba(4, 93, 157, 1) 0%,
-    rgba(7, 45, 130, 1) 93%
-  );
-  background: linear-gradient(
-    87deg,
-    rgba(4, 93, 157, 1) 0%,
-    rgba(7, 45, 130, 1) 93%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#045d9d",endColorstr="#072d82",GradientType=1); */
   font-family: Arial, Helvetica, sans-serif;
 }
 
@@ -101,7 +84,6 @@ body {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2); /* this adds the "card" effect */
   padding: 16px;
   text-align: center;
-  background-color: #202324;
 }
 
 /* Responsive columns - one column layout (vertical) on small screens */

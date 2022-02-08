@@ -198,6 +198,7 @@ export default function MainPage(props) {
             style={{
               width: "80%",
               height: "0rem",
+              color: "rgb(40 44 45)",
             }}
             onChange={(e) => {
               setVolume(e.target.value);
