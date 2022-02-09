@@ -25,9 +25,9 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
     "تغير في صلاحيات الغرف الخاصة",
     "رتب",
     "دعوات",
-    "ملتقطات",
+    "خطافات في الشبكة",
     "تعبيرات",
-    "إندماجات",
+    "تطبيقات",
     "أحداث",
     "ملصقات",
     "أحداث مجدولة",
@@ -60,40 +60,43 @@ router.all("/:guildID/logs/:type?", async (req, res) => {
   let CN = 0;
   switch (type) {
     case "CHANNEL":
-      CN = guild.channels.cache.size;
+      CN = CN + guild.channels.cache.size;
       break;
     case "CHANNEL_OVERWRITE":
-      guild.channels.cache.forEach(
-        (channel) => (CN = CN + channel.permissionOverwrites.cache.size)
-      );
+      guild.channels.cache.forEach((channel) => {
+        if (channel.permissionOverwrites)
+          CN = CN + channel.permissionOverwrites.cache.size;
+      });
       break;
     case "ROLE":
-      CN = guild.roles.cache.size;
+      CN = CN + guild.roles.cache.size;
       break;
     case "INVITE":
-      CN = guild.invites.cache.size;
+      CN = CN + (await guild.invites.fetch()).size;
       break;
     case "WEBHOOK":
-      CN = (await guild.fetchWebhooks()).size;
+      CN = CN + (await guild.fetchWebhooks()).size;
       break;
     case "EMOJI":
-      CN = guild.emojis.cache.size;
+      CN = CN + guild.emojis.cache.size;
       break;
     case "INTEGRATION":
-      CN = (await guild.fetchIntegrations()).size;
+      CN = CN + (await guild.fetchIntegrations()).size;
       break;
     case "STAGE_INSTANCE":
-      CN = guild.stageInstances.cache.size;
+      CN = CN + guild.stageInstances.cache.size;
       break;
     case "STICKER":
-      CN = guild.stickers.cache.size;
+      CN = CN + guild.stickers.cache.size;
       break;
     case "GUILD_SCHEDULED_EVENT":
-      CN = guild.scheduledEvents.cache.size;
+      CN = CN + guild.scheduledEvents.cache.size;
       break;
     case "THREAD":
       CN =
-        guild.channels.cache.size - guild.channels.channelCountWithoutThreads;
+        CN +
+        guild.channels.cache.size -
+        guild.channels.channelCountWithoutThreads;
       break;
   }
   auditC.forEach((e) => {
