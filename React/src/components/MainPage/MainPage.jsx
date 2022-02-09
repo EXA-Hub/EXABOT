@@ -29,7 +29,7 @@ const cards = servers.map((server) => {
   return (
     <div className="column" key={server.title}>
       <Card className="card">
-        <Card.Img variant="top" src={server.image} />
+        <Card.Img variant="top" src={server.image} alt={server.title} />
         <Card.Body>
           <Card.Title>{server.title}</Card.Title>
           <Card.Text>{server.text}</Card.Text>
