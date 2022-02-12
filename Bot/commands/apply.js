@@ -223,9 +223,10 @@ module.exports = {
           : "/" + "apply" + " channel <channel>`";
       if (member.roles.cache.get(rolesDataFile[guild.id]))
         return "**🧐 | أنت بالفعل ضمن طاقم الإدارة**";
-      interaction.reply({ content: "**👍 | جار بدأ التحقيق**" });
-      const channel = guild.channels.cache.get(channelsDataFile[guild.id]);
-      if (channel) {
+      if (interaction)
+        interaction.reply({ content: "**👍 | جار بدأ التحقيق**" });
+      const endChannel = guild.channels.cache.get(channelsDataFile[guild.id]);
+      if (endChannel) {
         const filter = (msg) => msg.author == user;
         channel.send({ content: `${user} \`1\`` }).then((m) => {
           m.edit({ content: `${user}, \`ما هو اسمك?\`` }).then((m) => {
@@ -379,7 +380,7 @@ module.exports = {
                                                     donebtn,
                                                     undonebtn
                                                   );
-                                                channel
+                                                endChannel
                                                   .send({
                                                     embeds: [embed],
                                                     components: [donningrow],
@@ -389,6 +390,74 @@ module.exports = {
                                                       content:
                                                         "**✅ | تم إرسال طلبك بنجاح**",
                                                     });
+                                                    endChannel
+                                                      .awaitMessageComponent({
+                                                        filter: (
+                                                          endInteraction
+                                                        ) =>
+                                                          endInteraction.isButton &&
+                                                          endInteraction.customId.includes(
+                                                            `done${user.id}`
+                                                          ),
+                                                        time:
+                                                          1000 * 60 * 60 * 24,
+                                                        componentType: "BUTTON",
+                                                      })
+                                                      .then(
+                                                        (endInteraction) => {
+                                                          if (
+                                                            !endInteraction.isButton
+                                                          )
+                                                            return;
+                                                          if (
+                                                            !endInteraction.member.permissions.has(
+                                                              "ADMINISTRATOR" ||
+                                                                "MANAGE_ROLES"
+                                                            )
+                                                          )
+                                                            return endInteraction.reply(
+                                                              {
+                                                                content:
+                                                                  "❌ | يجب أن تملك صلاحية `ADMINISTRATOR` أو `MANAGE_ROLES`",
+                                                                ephemeral: true,
+                                                              }
+                                                            );
+                                                          if (
+                                                            endInteraction.customId ==
+                                                            `undone${user.id}`
+                                                          ) {
+                                                            endInteraction.message
+                                                              .delete()
+                                                              .then(() =>
+                                                                endInteraction.channel.send(
+                                                                  `**❌ | ${user} تم رفض تقديمك**`
+                                                                )
+                                                              );
+                                                          }
+                                                          if (
+                                                            endInteraction.customId ==
+                                                            `done${user.id}`
+                                                          ) {
+                                                            const role =
+                                                              guild.roles.cache.get(
+                                                                rolesDataFile[
+                                                                  guild.id
+                                                                ]
+                                                              );
+                                                            endInteraction.message
+                                                              .delete()
+                                                              .then(() => {
+                                                                member.roles
+                                                                  .add(role)
+                                                                  .then(() => {
+                                                                    return endInteraction.channel.send(
+                                                                      `**✅ | ${user} تم قبول تقديمك**`
+                                                                    );
+                                                                  });
+                                                              });
+                                                          }
+                                                        }
+                                                      );
                                                   });
                                               }, 2500);
                                               setTimeout(() => {
@@ -408,28 +477,5 @@ module.exports = {
         });
       }
     }
-    client.on("interactionCreate", (interaction) => {
-      if (!interaction.isButton) return;
-      if (
-        !interaction.member.permissions.has("ADMINISTRATOR" || "MANAGE_ROLES")
-      )
-        return interaction.reply.send(
-          "❌ | يجب أن تملك صلاحية `ADMINISTRATOR` أو `MANAGE_ROLES`",
-          true
-        );
-      if (interaction.customId == `undone${user.id}`) {
-        interaction.message
-          .delete()
-          .then(interaction.channel.send(`**❌ | ${user} تم رفض تقديمك**`));
-      }
-      if (interaction.customId == `done${user.id}`) {
-        const role = guild.roles.cache.get(rolesDataFile[guild.id]);
-        interaction.message.delete().then(() => {
-          member.roles.add(role).then(() => {
-            return interaction.channel.send(`**✅ | ${user} تم قبول تقديمك**`);
-          });
-        });
-      }
-    });
   },
 };
