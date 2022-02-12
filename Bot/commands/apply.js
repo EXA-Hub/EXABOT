@@ -457,7 +457,8 @@ module.exports = {
                                                               });
                                                           }
                                                         }
-                                                      );
+                                                      )
+                                                      .catch(console.error);
                                                   });
                                               }, 2500);
                                               setTimeout(() => {

@@ -1,3 +1,5 @@
+const { Client } = require("discord.js");
+const wok = require("wokcommands");
 module.exports = {
   name: "partner",
   aliases: [],
@@ -15,7 +17,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {Client} client
+   */
   init: (client, instance) => {},
+  /**
+   * @param {wok.ICallbackObject} ICallbackObject
+   *
+   */
   callback: async ({
     guild,
     member,
@@ -324,17 +334,23 @@ module.exports = {
         });
       });
     let firstserverclickerID;
-    client.on("interactionCreate", async (interaction) => {
-      if (!interaction.isButton()) return;
-      if (interaction.customId == `ignore${user.id + channel.id}`) {
-        interaction.reply({
+    client.on("interactionCreate", async (endInteraction) => {
+      if (
+        !endInteraction.isButton() ||
+        channel.id ||
+        user.id ||
+        endInteraction.customId.includes(user.id + channel.id)
+      )
+        return;
+      if (endInteraction.customId == `ignore${user.id + channel.id}`) {
+        endInteraction.reply({
           content: `تم رفض الطلب\nوسيتم إعلام <@!${user.id}>`,
           ephemeral: true,
         });
         user.send({
-          content: `<@!${interaction.user.id}>, ❌ **تم رفض طلب الشراكة الخاص بك**`,
+          content: `<@!${endInteraction.user.id}>, ❌ **تم رفض طلب الشراكة الخاص بك**`,
         });
-        return interaction.message.delete();
+        return endInteraction.message.delete();
       }
       const sharechannel = await client.channels.cache.get(cdata[guild.id]);
       const sharerequest = await client.channels.cache.get(rdata[guild.id]);
@@ -344,7 +360,7 @@ module.exports = {
       const othersharerequest = await client.channels.cache.get(
         rdata[otherGuild.id]
       );
-      if (interaction.customId.startsWith(`accept${user.id + channel.id}`)) {
+      if (endInteraction.customId.startsWith(`accept${user.id + channel.id}`)) {
         let donebtn = new MessageButton()
           .setLabel("قبول")
           .setEmoji("✅")
@@ -359,7 +375,7 @@ module.exports = {
           donebtn,
           undonebtn
         );
-        if (interaction.customId === `accept${user.id + channel.id}here`) {
+        if (endInteraction.customId === `accept${user.id + channel.id}here`) {
           if (shareMessageDonning.includes(`everyone`)) {
             othersharerequest.send({
               content: shareMessageDonning
@@ -374,7 +390,7 @@ module.exports = {
             });
           }
         } else if (
-          interaction.customId === `accept${user.id + channel.id}everyone`
+          endInteraction.customId === `accept${user.id + channel.id}everyone`
         ) {
           if (shareMessageDonning.includes(`here`)) {
             othersharerequest.send({
@@ -395,30 +411,30 @@ module.exports = {
             components: [donningrow],
           });
         }
-        interaction.reply({
+        endInteraction.reply({
           content: `سيتم إرسال رسالة الشراكة على الفور إلى <#${
             cdata[guild.id]
           }>\nوسيتم إعلام <@!${user.id}> بأنك قبلت الطلب الخاصة به`,
           ephemeral: true,
         });
         user.send({
-          content: `<@!${interaction.user.id}>, \🎉 **قد قبل طلب الشراكة الخاص بك**`,
+          content: `<@!${endInteraction.user.id}>, \🎉 **قد قبل طلب الشراكة الخاص بك**`,
         });
         user.send({
           content: `<#${othersharerequest.id}> ***يرجى قبول الشراكة لإنهاء الطلب***`,
         });
-        firstserverclickerID = interaction.user.id;
-        interaction.message.delete();
-      } else if (interaction.customId === `done${user.id + channel.id}`) {
+        firstserverclickerID = endInteraction.user.id;
+        endInteraction.message.delete();
+      } else if (endInteraction.customId === `done${user.id + channel.id}`) {
         try {
-          interaction.message.delete().then(() => {
+          endInteraction.message.delete().then(() => {
             sharechannel.send({
               content: shareMessageDonning.join(" "),
             });
             othersharechannel.send({
               content: Discord.Util.cleanContent(
                 shareMessage[guild.id],
-                interaction.message
+                endInteraction.message
               ),
             });
             const secRoleID = guild.roles.cache.get(rolesData[guild.id]);
@@ -437,14 +453,14 @@ module.exports = {
             const firstserverclicker =
               client.users.cache.get(firstserverclickerID);
             const rolefirstserverclicker =
-              interaction.guild.members.cache.get(firstserverclickerID);
+              endInteraction.guild.members.cache.get(firstserverclickerID);
             firstserverclicker
               .send({
                 content: `> **مبروك: *تم إنهاء طلب الشراكة بنجاح \🥳***`,
               })
               .then(() => {
-                const roleID = interaction.guild.roles.cache.get(
-                  rolesData[interaction.guild.id]
+                const roleID = endInteraction.guild.roles.cache.get(
+                  rolesData[endInteraction.guild.id]
                 );
                 if (roleID) rolefirstserverclicker.roles.add(roleID.id);
                 firstserverclicker.send({
@@ -453,7 +469,7 @@ module.exports = {
                 othersharechannel.send({
                   content: `<@!${firstserverclickerID}> قد حصل على رتبة الشراكة **\@${
                     othersharechannel.guild.roles.cache.get(
-                      rolesData[interaction.guild.id]
+                      rolesData[endInteraction.guild.id]
                     ).name
                   }**`,
                 });
@@ -468,17 +484,17 @@ module.exports = {
           client.users.cache.get(guild.ownerId).send({
             content: "**حاول أحد الطرفين منع البوت من النشر**",
           });
-          client.users.cache.get(interaction.guild.ownerId).send({
+          client.users.cache.get(endInteraction.guild.ownerId).send({
             content: "**حاول أحد الطرفين منع البوت من النشر**",
           });
           console.error(error);
         }
-      } else if (interaction.customId === `undone${user.id + channel.id}`) {
+      } else if (endInteraction.customId === `undone${user.id + channel.id}`) {
         sharerequest.send({
-          content: `تم رفض الشراكة في سيرفر: \`${interaction.guild.name}\``,
+          content: `تم رفض الشراكة في سيرفر: \`${endInteraction.guild.name}\``,
         });
-        interaction.reply({ content: `تم رفض الطلب`, ephemeral: true });
-        interaction.message.delete();
+        endInteraction.reply({ content: `تم رفض الطلب`, ephemeral: true });
+        endInteraction.message.delete();
       }
     });
   },
