@@ -63,7 +63,41 @@ module.exports = {
    *
    * @param {Client} client
    */
-  init: (client, instance) => {},
+  init: (client, instance) => {
+    client.on("interactionCreate", async (interaction) => {
+      if (!interaction.isButton) return;
+      if (!interaction.customId.startsWith("doneApply")) return;
+      const { guild } = interaction;
+      const applierID = interaction.customId
+        .replace("doneApply", "")
+        .replace("undoneApply", "");
+      const member = guild.members.cache.get(applierID);
+      if (
+        !interaction.member.permissions.has("ADMINISTRATOR" || "MANAGE_ROLES")
+      )
+        return interaction.reply({
+          content: "❌ | يجب أن تملك صلاحية `ADMINISTRATOR` أو `MANAGE_ROLES`",
+          ephemeral: true,
+        });
+      if (interaction.customId == `undoneApply${member.id}`)
+        interaction.message
+          .delete()
+          .then(() =>
+            interaction.channel.send(`**❌ | ${member} تم رفض تقديمك**`)
+          );
+      if (interaction.customId == `doneApply${member.id}`) {
+        const rolesDataFile = (await db.get("apply_data/roles")) || {};
+        const role = guild.roles.cache.get(rolesDataFile[guild.id]);
+        interaction.message.delete().then(() => {
+          member.roles.add(role).then(() => {
+            return interaction.channel.send(
+              `**✅ | ${member} تم قبول تقديمك**`
+            );
+          });
+        });
+      }
+    });
+  },
   /**
    * @param {wok.ICallbackObject} ICallbackObject
    *
@@ -359,26 +393,26 @@ module.exports = {
                                                       )}:R>`,
                                                       true
                                                     );
-                                                let donebtn =
+                                                let doneApplybtn =
                                                   new Discord.MessageButton()
                                                     .setStyle("SUCCESS")
                                                     .setLabel("قبول")
                                                     .setEmoji("✅")
                                                     .setCustomId(
-                                                      `done${user.id}`
+                                                      `doneApply${user.id}`
                                                     );
-                                                let undonebtn =
+                                                let undoneApplybtn =
                                                   new Discord.MessageButton()
                                                     .setLabel("رفض")
                                                     .setEmoji("❌")
                                                     .setStyle("DANGER")
                                                     .setCustomId(
-                                                      `undone${user.id}`
+                                                      `undoneApply${user.id}`
                                                     );
                                                 let donningrow =
                                                   new Discord.MessageActionRow().addComponents(
-                                                    donebtn,
-                                                    undonebtn
+                                                    doneApplybtn,
+                                                    undoneApplybtn
                                                   );
                                                 endChannel
                                                   .send({
@@ -390,75 +424,6 @@ module.exports = {
                                                       content:
                                                         "**✅ | تم إرسال طلبك بنجاح**",
                                                     });
-                                                    endChannel
-                                                      .awaitMessageComponent({
-                                                        filter: (
-                                                          endInteraction
-                                                        ) =>
-                                                          endInteraction.isButton &&
-                                                          endInteraction.customId.includes(
-                                                            `done${user.id}`
-                                                          ),
-                                                        time:
-                                                          1000 * 60 * 60 * 24,
-                                                        componentType: "BUTTON",
-                                                      })
-                                                      .then(
-                                                        (endInteraction) => {
-                                                          if (
-                                                            !endInteraction.isButton
-                                                          )
-                                                            return;
-                                                          if (
-                                                            !endInteraction.member.permissions.has(
-                                                              "ADMINISTRATOR" ||
-                                                                "MANAGE_ROLES"
-                                                            )
-                                                          )
-                                                            return endInteraction.reply(
-                                                              {
-                                                                content:
-                                                                  "❌ | يجب أن تملك صلاحية `ADMINISTRATOR` أو `MANAGE_ROLES`",
-                                                                ephemeral: true,
-                                                              }
-                                                            );
-                                                          if (
-                                                            endInteraction.customId ==
-                                                            `undone${user.id}`
-                                                          ) {
-                                                            endInteraction.message
-                                                              .delete()
-                                                              .then(() =>
-                                                                endInteraction.channel.send(
-                                                                  `**❌ | ${user} تم رفض تقديمك**`
-                                                                )
-                                                              );
-                                                          }
-                                                          if (
-                                                            endInteraction.customId ==
-                                                            `done${user.id}`
-                                                          ) {
-                                                            const role =
-                                                              guild.roles.cache.get(
-                                                                rolesDataFile[
-                                                                  guild.id
-                                                                ]
-                                                              );
-                                                            endInteraction.message
-                                                              .delete()
-                                                              .then(() => {
-                                                                member.roles
-                                                                  .add(role)
-                                                                  .then(() => {
-                                                                    return endInteraction.channel.send(
-                                                                      `**✅ | ${user} تم قبول تقديمك**`
-                                                                    );
-                                                                  });
-                                                              });
-                                                          }
-                                                        }
-                                                      )
-                                                      .catch(console.error);
                                                   });
                                               }, 2500);
                                               setTimeout(() => {

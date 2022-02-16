@@ -38,6 +38,6 @@ module.exports = {
     instance,
     interaction,
   }) => {
-    return "السلام عليكم";
+    return `السلام عليكم > ${client.guilds.cache.size}`;
   },
 };
