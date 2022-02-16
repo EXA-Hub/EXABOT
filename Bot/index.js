@@ -67,18 +67,20 @@ client.on("ready", () => {
     botOwners: ["635933198035058700"],
     owners: ["635933198035058700"],
     defaultLanguage: "arabic",
+    delErrMsgCooldown: 5,
     mongoUri: mongoUri,
     typeScript: false,
-    ignoreBots: false,
+    ignoreBots: true,
     ephemeral: true,
     showWarns: true,
-    debug: false,
+    debug: true,
     dbOptions,
   })
     .setCategorySettings(
       require(path.join(__dirname, "data/CategorySettings.json"))
     )
     .setDisplayName(client.user.username)
+    .setColor(config.bot.color.hex)
     .setDefaultPrefix(config.prefix);
   wok.on("databaseConnected", async (connection, state) => {
     console.log(`DataBase ${state}`);

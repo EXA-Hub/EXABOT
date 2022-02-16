@@ -65,13 +65,16 @@ module.exports = {
    */
   init: (client, instance) => {
     client.on("interactionCreate", async (interaction) => {
-      if (!interaction.isButton) return;
-      if (!interaction.customId.startsWith("doneApply")) return;
+      if (!interaction.isButton()) return;
+      if (!interaction.customId.includes("done")) return;
       const { guild } = interaction;
-      const applierID = interaction.customId
-        .replace("doneApply", "")
-        .replace("undoneApply", "");
-      const member = guild.members.cache.get(applierID);
+      const applier = {
+        ID: interaction.customId.replace("done", "").replace("undone", ""),
+        name: interaction.message.embeds[0].fields
+          .filter((field) => field.name === "> `إسمك:`")[0]
+          .value.replace(" ** ", ""),
+      };
+      const member = guild.members.cache.get(applier.ID);
       if (
         !interaction.member.permissions.has("ADMINISTRATOR" || "MANAGE_ROLES")
       )
@@ -79,20 +82,26 @@ module.exports = {
           content: "❌ | يجب أن تملك صلاحية `ADMINISTRATOR` أو `MANAGE_ROLES`",
           ephemeral: true,
         });
-      if (interaction.customId == `undoneApply${member.id}`)
-        interaction.message
-          .delete()
-          .then(() =>
-            interaction.channel.send(`**❌ | ${member} تم رفض تقديمك**`)
-          );
-      if (interaction.customId == `doneApply${member.id}`) {
-        const rolesDataFile = (await db.get("apply_data/roles")) || {};
+      if (interaction.customId.startsWith("undone"))
+        interaction.message.delete().then(() =>
+          interaction.channel.send({
+            content: `**❌ | ${
+              member ? member.user : applier.name
+            } تم رفض تقديمك**`,
+          })
+        );
+      else if (interaction.customId.startsWith("done")) {
+        const rolesDataFile =
+          (await require("../functions/database").get("apply_data/roles")) ||
+          {};
         const role = guild.roles.cache.get(rolesDataFile[guild.id]);
         interaction.message.delete().then(() => {
           member.roles.add(role).then(() => {
-            return interaction.channel.send(
-              `**✅ | ${member} تم قبول تقديمك**`
-            );
+            return interaction.channel.send({
+              content: `**✅ | ${
+                member ? member.user : applier.name
+              } تم قبول تقديمك**`,
+            });
           });
         });
       }
@@ -393,26 +402,26 @@ module.exports = {
                                                       )}:R>`,
                                                       true
                                                     );
-                                                let doneApplybtn =
+                                                let donebtn =
                                                   new Discord.MessageButton()
                                                     .setStyle("SUCCESS")
                                                     .setLabel("قبول")
                                                     .setEmoji("✅")
                                                     .setCustomId(
-                                                      `doneApply${user.id}`
+                                                      `done${user.id}`
                                                     );
-                                                let undoneApplybtn =
+                                                let undonebtn =
                                                   new Discord.MessageButton()
                                                     .setLabel("رفض")
                                                     .setEmoji("❌")
                                                     .setStyle("DANGER")
                                                     .setCustomId(
-                                                      `undoneApply${user.id}`
+                                                      `undone${user.id}`
                                                     );
                                                 let donningrow =
                                                   new Discord.MessageActionRow().addComponents(
-                                                    doneApplybtn,
-                                                    undoneApplybtn
+                                                    donebtn,
+                                                    undonebtn
                                                   );
                                                 endChannel
                                                   .send({
