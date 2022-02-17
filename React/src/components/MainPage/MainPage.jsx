@@ -281,27 +281,39 @@ export default function MainPage(props) {
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li key="Home">
                 <a href="/" className="nav-link px-2 text-white">
-                  Home
+                  الصفحة الرئيسية
                 </a>
               </li>
-              <li key="Features">
-                <a href="/" className="nav-link px-2 text-white">
-                  Features
+              <li key="GitHub">
+                <a
+                  href="https://github.com/EXA-Hub/EXABOT"
+                  className="nav-link px-2 text-white"
+                >
+                  المشروع
                 </a>
               </li>
-              <li key="Pricing">
-                <a href="/" className="nav-link px-2 text-white">
-                  Pricing
+              <li key="Support">
+                <a
+                  href="https://discord.gg/n9AQZ6qjNc"
+                  className="nav-link px-2 text-white"
+                >
+                  الدعم الفني
                 </a>
               </li>
-              <li key="FAQs">
-                <a href="/" className="nav-link px-2 text-white">
-                  FAQs
+              <li key="Studio">
+                <a
+                  href="https://discord.gg/aEkKZQfZuk"
+                  className="nav-link px-2 text-white"
+                >
+                  فريق التطوير
                 </a>
               </li>
               <li>
-                <a href="/" className="nav-link px-2 text-white">
-                  About
+                <a
+                  href="https://discord.gg/e4ewVXcKCs"
+                  className="nav-link px-2 text-white"
+                >
+                  من نحن؟
                 </a>
               </li>
             </ul>
