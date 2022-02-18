@@ -1,5 +1,4 @@
 async function takeCoins(userId, num) {
-  console.log(num);
   const db = require("./database");
   let coins = (await db.get("coins")) || {};
   const userCoins = coins[userId];

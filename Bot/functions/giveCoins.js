@@ -1,5 +1,4 @@
 async function giveCoins(userId, num) {
-  console.log(num);
   const db = require("./database");
   let coins = (await db.get("coins")) || {};
   if (!coins) {
@@ -11,7 +10,7 @@ async function giveCoins(userId, num) {
       coins[userId] = 50 + num;
       db.set("coins", coins);
     } else {
-      coins[userId] = userCoins + num;
+      coins[userId] = userCoins + (num - (num * 5) / 100);
       db.set("coins", coins);
     }
   }
