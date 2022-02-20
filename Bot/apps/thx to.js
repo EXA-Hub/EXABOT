@@ -28,19 +28,26 @@ module.exports = {
     interaction,
   } = data) => {
     const thxMember = guild.members.cache.get(target.id);
-    if (!thxMember) return "**❌ | يرجى تحديد العضو**";
+    if (!thxMember)
+      return interaction.reply({ content: "**❌ | يرجى تحديد العضو**" });
     let thxData = (await db.get("thx")) || {};
     if ((await getCoins(user.id)) < 50)
-      return "**❌ | لا تمتلك عدد كافي من العملات**";
+      return interaction.reply({
+        content: "**❌ | لا تمتلك عدد كافي من العملات**",
+      });
     await takeCoins(user.id, 50);
     if (thxData[thxMember.id]) {
       thxData[thxMember.id] = thxData[thxMember.id] + 1;
       db.set("thx", thxData);
-      return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
+      return interaction.reply({
+        content: `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`,
+      });
     } else {
       thxData[thxMember.id] = 1;
       db.set("thx", thxData);
-      return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
+      return interaction.reply({
+        content: `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`,
+      });
     }
   },
 };
