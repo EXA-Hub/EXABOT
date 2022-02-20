@@ -73,7 +73,7 @@ client.on("ready", () => {
     ignoreBots: true,
     ephemeral: true,
     showWarns: true,
-    debug: true,
+    // debug: true,
     dbOptions,
   })
     .setCategorySettings(
