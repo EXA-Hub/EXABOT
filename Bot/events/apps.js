@@ -79,7 +79,7 @@ module.exports = async (client, instance) => {
       return interaction.reply({
         content: "**💔 | يبدو أن هذا الأمر قد تم حذفه**",
       });
-    isIt.forEach((cmd) => {
+    isIt.forEach(async (cmd) => {
       const data = {
         guild: interaction.member.guild,
         member: interaction.member,
@@ -95,7 +95,7 @@ module.exports = async (client, instance) => {
         instance: instance,
         interaction: interaction,
       };
-      cmd.run(data);
+      await cmd.run(data);
     });
   });
 };

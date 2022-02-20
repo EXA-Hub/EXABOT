@@ -1,5 +1,7 @@
 const { Client, MessageEmbed } = require("discord.js");
+const takeCoins = require("../functions/takeCoins");
 const { ICallbackObject } = require("wokcommands");
+const getCoins = require("../functions/getCoins");
 const db = require("../functions/database");
 const config = require("../data/config");
 module.exports = {
@@ -7,7 +9,7 @@ module.exports = {
   aliases: [],
   category: "أوامـر عـامـة",
   description: "التشكرات",
-  expectedArgs: "<امر> <نوع/عضو> [رقم]",
+  expectedArgs: "<top/to> <عضو/guild/all> [رقم]",
   minArgs: 1,
   maxArgs: 3,
   syntaxError: "× خطأ ×",
@@ -93,14 +95,17 @@ module.exports = {
           guild.members.cache.find((member) => member.displayName === args[1]);
       if (!thxMember) return "**❌ | يرجى تحديد العضو**";
       let thxData = (await db.get("thx")) || {};
+      if ((await getCoins(user.id)) < 50)
+        return "**❌ | لا تمتلك عدد كافي من العملات**";
+      await takeCoins(user.id, 50);
       if (thxData[thxMember.id]) {
         thxData[thxMember.id] = Math.floor(thxData[thxMember.id] + 1);
         db.set("thx", thxData);
-        return `✅ | تم شكر <@!${thxMember.id}> بنجاح`;
+        return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
       } else {
         thxData[thxMember.id] = 1;
         db.set("thx", thxData);
-        return `✅ | تم شكر <@!${thxMember.id}> بنجاح`;
+        return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
       }
     } else if (type === "top") {
       const topType = interaction
