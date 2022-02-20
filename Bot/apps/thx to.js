@@ -6,10 +6,12 @@ const {
   Client,
   Interaction,
 } = require("discord.js");
+const takeCoins = require("../functions/takeCoins");
+const getCoins = require("../functions/getCoins");
 const db = require("../functions/database");
 const WOKcommands = require("wokcommands");
 module.exports = {
-  name: "thx",
+  name: "thx to",
   type: 2,
   /**
    *
@@ -28,14 +30,17 @@ module.exports = {
     const thxMember = guild.members.cache.get(target.id);
     if (!thxMember) return "**❌ | يرجى تحديد العضو**";
     let thxData = (await db.get("thx")) || {};
+    if ((await getCoins(user.id)) < 50)
+      return "**❌ | لا تمتلك عدد كافي من العملات**";
+    await takeCoins(user.id, 50);
     if (thxData[thxMember.id]) {
-      thxData[thxMember.id] = Math.floor(thxData[thxMember.id] + 1);
+      thxData[thxMember.id] = thxData[thxMember.id] + 1;
       db.set("thx", thxData);
-      return `✅ | تم شكر <@!${thxMember.id}> بنجاح`;
+      return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
     } else {
       thxData[thxMember.id] = 1;
       db.set("thx", thxData);
-      return `✅ | تم شكر <@!${thxMember.id}> بنجاح`;
+      return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
     }
   },
 };
