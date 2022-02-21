@@ -235,11 +235,13 @@ module.exports = {
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );
-                                      if (!price || isNaN(price) || price < 0)
+                                      if (!price || isNaN(price) || price < 0) {
                                         channel.send({
                                           content:
                                             "**❌ | يرجى إدخال سعر صحيح**",
                                         });
+                                        return;
+                                      }
                                       const newGood = {
                                         goodName: goodName,
                                         description: description,
@@ -449,11 +451,13 @@ module.exports = {
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );
-                                      if (!price || isNaN(price) || price < 0)
+                                      if (!price || isNaN(price) || price < 0) {
                                         channel.send({
                                           content:
                                             "**❌ | يرجى إدخال سعر صحيح**",
                                         });
+                                        return;
+                                      }
                                       const newGood = {
                                         goodName: goodName,
                                         description: description,
@@ -657,11 +661,13 @@ module.exports = {
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );
-                                      if (!price || isNaN(price) || price < 0)
+                                      if (!price || isNaN(price) || price < 0) {
                                         channel.send({
                                           content:
                                             "**❌ | يرجى إدخال سعر صحيح**",
                                         });
+                                        return;
+                                      }
                                       const newGood = {
                                         goodName: goodName,
                                         description: description,
