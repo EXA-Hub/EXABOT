@@ -14,9 +14,9 @@ module.exports = async (client, instance) => {
   const pathDir = path.join(__dirname, "..", "apps");
   const apps = fs.readdirSync(pathDir);
   const rest = new REST({ version: "9" }).setToken(token);
-  const currentApps = await rest.get(
-    Routes.applicationCommands(client.application.id)
-  );
+  const currentApps = (
+    await rest.get(Routes.applicationCommands(client.application.id))
+  ).filter((app) => app.type === 2 || app.type === 3);
   const commands = apps
     .map((file) => require(path.join(pathDir, file)))
     .filter(
@@ -95,7 +95,8 @@ module.exports = async (client, instance) => {
         instance: instance,
         interaction: interaction,
       };
-      await cmd.run(data);
+      const response = await cmd.run(data);
+      if (response && !interaction.replied) interaction.reply(response);
     });
   });
 };

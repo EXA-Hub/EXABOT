@@ -60,6 +60,13 @@ client.on("ready", () => {
     useUnifiedTopology: true,
   };
   const wok = new WOKCommands(client, {
+    disabledDefaultCommands: [
+      // "requiredrole",
+      // "language",
+      // "command",
+      // "prefix",
+      // "help",
+    ],
     messagesPath: path.join(__dirname, "data/languages/messages.json"),
     commandsDir: path.join(__dirname, "commands"),
     featuresDir: path.join(__dirname, "events"),

@@ -14,52 +14,59 @@ module.exports = (client, instance) => {
     .on("unhandledRejection", async (reason) => {
       console.log(" [antiCrash] :: Unhandled Rejection/Catch");
       console.log(reason);
-      channel.send({
-        content: `[antiCrash] :: Unhandled Rejection/Catch \n\`\`\`${reason}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Unhandled Rejection/Catch \n\`\`\`${reason}\`\`\``,
+        });
     })
     .on("uncaughtException", async (err, origin) => {
       console.log(" [antiCrash] :: Uncaught Exception/Catch");
       console.log(err, origin);
-      channel.send({
-        content: `[antiCrash] :: Uncaught Exception/Catch \n\`\`\`${err.name}: ${err.message}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Uncaught Exception/Catch \n\`\`\`${err.name}: ${err.message}\`\`\``,
+        });
     })
     .on("uncaughtExceptionMonitor", async (err, origin) => {
       console.log(" [antiCrash] :: Uncaught Exception/Catch (MONITOR)");
       console.log(err, origin);
-      channel.send({
-        content: `[antiCrash] :: Uncaught Exception/Catch (MONITOR) \n\`\`\`${err.name}: ${err.message}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Uncaught Exception/Catch (MONITOR) \n\`\`\`${err.name}: ${err.message}\`\`\``,
+        });
     })
     .on("multipleResolves", async (type, promise, reason) => {
       console.log(" [antiCrash] :: Multiple Resolves");
       console.log(type, promise, reason);
-      channel.send({
-        content: `[antiCrash] :: Multiple Resolves \n\`\`\`${reason}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Multiple Resolves \n\`\`\`${reason}\`\`\``,
+        });
     })
     .on("warning", async (warning) => {
       console.log(" [antiCrash] :: Warning");
       console.log(warning);
-      channel.send({
-        content: `[antiCrash] :: Warning \n\`\`\`${warning.name}: ${warning.message}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Warning \n\`\`\`${warning.name}: ${warning.message}\`\`\``,
+        });
     });
   client.oauth2
     .on("debug", (message) => {
       console.log(" [antiCrash] :: Oauth2/Debug");
       console.log(message);
-      channel.send({
-        content: `[antiCrash] :: Oauth2/Debug \n\`\`\`${message}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Oauth2/Debug \n\`\`\`${message}\`\`\``,
+        });
     })
     .on("warn", (message) => {
       console.log(" [antiCrash] :: Oauth2/Warn");
       console.log(message);
-      channel.send({
-        content: `[antiCrash] :: Oauth2/Warn \n\`\`\`${message}\`\`\``,
-      });
+      if (channel)
+        channel.send({
+          content: `[antiCrash] :: Oauth2/Warn \n\`\`\`${message}\`\`\``,
+        });
     });
 };
 

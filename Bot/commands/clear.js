@@ -51,7 +51,14 @@ module.exports = {
     );
     if (isNaN(number)) return `**❌ | عدد غير معروف**`;
     const messagesDeleted = await channel.bulkDelete(number, true);
-    if (messagesDeleted) return `**✅ | تم حذف: \`${messagesDeleted.size}\`**`;
+    if (messagesDeleted)
+      channel
+        .send(`**✅ | تم حذف: \`${messagesDeleted.size}\`**`)
+        .then((msg) => {
+          setTimeout(() => {
+            if (msg && msg.deletable) return msg.delete();
+          }, 3000);
+        });
     return `**❌ | لا يمكنني حذف الرسائل**`;
   },
 };
