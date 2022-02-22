@@ -53,11 +53,8 @@ module.exports = {
     if (content.includes("{{giftCode}}")) {
       const db = require("../functions/database");
       let { gifts } = (await db.get("gifts")) || {};
-      const minGift = 0;
       const maxGift = gifts.length;
-      const randomGift = Math.floor(
-        Math.random() * (+maxGift - +minGift) + +minGift
-      );
+      const randomGift = Math.floor(Math.random() * (+maxGift - +min) + +min);
       console.log(gifts);
       content = content.replace(
         "{{giftCode}}",
@@ -75,6 +72,15 @@ module.exports = {
         path.join(process.cwd(), "data/responses.json"),
         JSON.stringify(responses, 1, 1),
         console.error
+      );
+    }
+    if (content.includes("{{YTZAMPX}}")) {
+      let videos = require("../data/YTZAMPX.json");
+      const maxVid = videos.length;
+      const randomVid = Math.floor(Math.random() * (+maxVid - +min) + +min);
+      content = content.replace(
+        "{{YTZAMPX}}",
+        `https://youtu.be/${videos[randomVid].id}`
       );
     }
     return {

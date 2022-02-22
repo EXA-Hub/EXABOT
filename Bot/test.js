@@ -1,19 +1,11 @@
-const { SlashCommandBuilder } = require("@discordjs/builders");
-
-const data = new SlashCommandBuilder()
-  .setName("info")
-  .setDescription("Get info about a user or a server!")
-  .addSubcommand((subcommand) =>
-    subcommand
-      .setName("user")
-      .setDescription("Info about a user")
-      .addUserOption((option) =>
-        option.setName("target").setDescription("The user")
-      )
-  )
-  .addSubcommand((subcommand) =>
-    subcommand.setName("server").setDescription("Info about the server")
-  )
-  .toJSON();
-
-console.log(data.options[0].options);
+const fs = require("fs");
+const path = require("path");
+(async () => {
+  const usetube = require("usetube");
+  let videos = await usetube.getChannelVideos("UC6vW-VOn6_n-jixi7QEFL5A");
+  fs.writeFileSync(
+    path.join(process.cwd(), "data/YTZAMPX.json"),
+    JSON.stringify(videos),
+    console.error
+  );
+})();

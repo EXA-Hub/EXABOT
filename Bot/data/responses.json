@@ -43,11 +43,6 @@
   "https://cdn.discordapp.com/attachments/728240513441988618/905883237056933968/video0_8_1.mp4",
   "https://tenor.com/view/%D9%85%D8%B1%D8%B3%D9%8A-%D8%A7%D9%84%D8%B2%D9%86%D8%A7%D8%AA%D9%8A-%D9%85%D8%AF%D8%B1%D8%B3%D8%A9-%D8%A7%D9%84%D9%85%D8%B4%D8%A7%D8%BA%D8%A8%D9%8A%D9%86-moursi-gif-20679661",
   "https://cdn.discordapp.com/attachments/728240513441988618/905923867107790898/video0-23-1.mp4",
-  "https://www.youtube.com/watch?v=rMeZ8nxcV3s",
-  "https://www.youtube.com/watch?v=EvF91-jbl9g",
-  "https://www.youtube.com/shorts/4nspx8go0ZM",
-  "https://www.youtube.com/shorts/_V2fsNsHVuM",
-  "https://www.youtube.com/watch?v=H-wprcAo4Bk",
   ".جرب",
   ".تجربة",
   ".مثال",
@@ -61,5 +56,6 @@
   "https://cdn.discordapp.com/attachments/902195455893573632/913115261979209738/150d8c66c0374189.pdf",
   "https://goo.gl/dQ2vrX",
   "https://rkns.link/kd589",
-  "> **🎁هدية: `{{prefix}}gift {{giftCode}}`**"
+  "> **🎁هدية: `{{prefix}}gift {{giftCode}}`**",
+  "{{YTZAMPX}}"
 ]
