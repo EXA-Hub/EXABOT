@@ -13,7 +13,7 @@ module.exports = {
   maxArgs: 3,
   syntaxError: "× خطأ ×",
   permissions: [],
-  //   cooldown: "1h",
+  cooldown: "1h",
   // globalCooldown: '',
   hidden: false,
   ownerOnly: false,

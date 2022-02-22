@@ -69,9 +69,7 @@ module.exports = {
       );
     }
     if (args[0] === "add" && require("../data/config").devs.includes(user.id)) {
-      console.log(text);
       const response = text.replace(`${args[0]} `, "");
-      console.log(response);
       responses.push(response);
       fs.writeFile(
         path.join(process.cwd(), "data/responses.json"),
