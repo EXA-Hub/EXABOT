@@ -1,3 +1,8 @@
+/**
+ *
+ * @param {String} userId
+ * @param {Number} num
+ */
 async function takeCoins(userId, num) {
   const db = require("./database");
   let coins = (await db.get("coins")) || {};

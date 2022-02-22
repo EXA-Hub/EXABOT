@@ -387,7 +387,10 @@ export default function MainPage(props) {
                     حفظ البادئة
                   </Button>
                 </div>
-                <Tab.Container id="left-tabs-example" defaultActiveKey="Data">
+                <Tab.Container
+                  id="left-tabs-example"
+                  defaultActiveKey="MusicCard"
+                >
                   <Row>
                     <Col sm={3}>
                       <Nav variant="pills" className="flex-column">

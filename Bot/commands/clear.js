@@ -52,11 +52,11 @@ module.exports = {
     if (isNaN(number)) return `**❌ | عدد غير معروف**`;
     const messagesDeleted = await channel.bulkDelete(number, true);
     if (messagesDeleted)
-      channel
+      return channel
         .send(`**✅ | تم حذف: \`${messagesDeleted.size}\`**`)
         .then((msg) => {
           setTimeout(() => {
-            if (msg && msg.deletable) return msg.delete();
+            if (msg && msg.deletable) msg.delete();
           }, 3000);
         });
     return `**❌ | لا يمكنني حذف الرسائل**`;

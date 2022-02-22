@@ -90,28 +90,48 @@ module.exports = (client, instance) => {
                   })
                   .setImage(song.thumbnail || config.youtube.music.banner)
                   .setTimestamp();
+                const musicFormatsEmbedVideo = new MessageEmbed().setColor(
+                  config.bot.color.hex
+                );
+                const musicFormatsEmbedAudio = new MessageEmbed().setColor(
+                  config.bot.color.hex
+                );
                 if (song.formats) {
-                  musicMessageEmbed.addFields(
-                    song.formats
-                      .filter((video) => video.hasVideo && video.hasAudio)
-                      .map((video) => {
-                        return {
-                          name: "▶ " + video.qualityLabel,
-                          value: `[رابط التحميل \\✅](${video.url})`,
-                        };
-                      }),
-                    song.formats
-                      .filter((audio) => !audio.hasVideo && audio.hasAudio)
-                      .map((audio) => {
-                        return {
-                          name: "🔉 " + audio.audioQuality,
-                          value: `[رابط التحميل \\✅](${audio.url})`,
-                        };
-                      })
-                  );
+                  try {
+                    musicFormatsEmbedVideo.addFields(
+                      song.formats
+                        .filter((video) => video.hasVideo && video.hasAudio)
+                        .map((video) => {
+                          return {
+                            name: "▶ " + video.qualityLabel,
+                            value: `[رابط التحميل \\✅](${video.url})`,
+                          };
+                        })
+                    );
+                  } catch (error) {
+                    console.error(error);
+                  }
+                  try {
+                    musicFormatsEmbedAudio.addFields(
+                      song.formats
+                        .filter((audio) => !audio.hasVideo && audio.hasAudio)
+                        .map((audio) => {
+                          return {
+                            name: "🔉 " + audio.audioQuality,
+                            value: `[رابط التحميل \\✅](${audio.url})`,
+                          };
+                        })
+                    );
+                  } catch (error) {
+                    console.error(error);
+                  }
                 }
                 message.edit({
-                  embeds: [musicMessageEmbed],
+                  embeds: [
+                    musicFormatsEmbedVideo,
+                    musicFormatsEmbedAudio,
+                    musicMessageEmbed,
+                  ],
                 });
               }
             });

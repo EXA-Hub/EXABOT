@@ -10,6 +10,7 @@ export default function MainPage(props) {
   const [songData, setSongData] = useState(null);
   const [filters, setFilters] = useState(<div></div>);
   const [volume, setVolume] = useState(50);
+  const [displayedContacts, setDisplayedContacts] = useState([]);
 
   function playSong() {
     if (songData) {
@@ -127,21 +128,137 @@ export default function MainPage(props) {
     });
   }, [alert, props.guild.id]);
 
+  let Contact = (data) => {
+    return (
+      <li
+        style={
+          data.lastOne
+            ? {
+                overflow: "hidden",
+                borderBottom: "1px solid #ccc",
+                padding: "0 0 20px",
+                margin: "0",
+              }
+            : {
+                overflow: "hidden",
+                margin: "0 0 20px",
+                borderBottom: "1px solid #ccc",
+                padding: "0 0 20px",
+              }
+        }
+      >
+        <img
+          src={data.image}
+          alt={data.name}
+          style={{
+            float: "left",
+            display: "block",
+            width: "50px",
+            height: "50px",
+            margin: "0 10px 0 0",
+          }}
+        />
+        <span
+          value={data.name}
+          style={{
+            display: "block",
+            width: "100%",
+            fontWeight: "bolder",
+            color: "#999000",
+          }}
+        >
+          {data.name}
+        </span>
+        <span
+          style={{
+            fontWeight: "normal",
+            fontStyle: "italic",
+            color: "#999",
+          }}
+        >
+          {data.artist}
+        </span>
+      </li>
+    );
+  };
+
+  let ContactList = () => {
+    return (
+      <div
+        style={{
+          position: "absolute",
+          width: "50%",
+          margin: "50px auto",
+        }}
+      >
+        <ul
+          style={{
+            listStyleType: "none",
+            position: "absolute",
+            width: "100%",
+          }}
+        >
+          {displayedContacts.map((el, index) => {
+            return (
+              <Button
+                style={{ width: "100%", backgroundColor: "white" }}
+                value={el.id}
+                onClick={(e) => {
+                  setSongData({ songName: e.currentTarget.value });
+                  document.getElementById("searchBar").value =
+                    e.currentTarget.value;
+                }}
+              >
+                <Contact
+                  style={{ width: "100%" }}
+                  key={el.id}
+                  name={el.name}
+                  image={el.image}
+                  artist={el.artist}
+                  lastOne={index === displayedContacts.length - 1}
+                />
+              </Button>
+            );
+          })}
+        </ul>
+      </div>
+    );
+  };
+
   return (
     <Card>
       <h1>نظام الأغاني</h1>
       <div className="input-group mb-3" key="upCard">
         <input
           type="text"
-          className="form-control"
+          id="searchBar"
+          className="form-control search"
           defaultValue="ضع إسم الأغنية"
           onChange={(e) => {
+            setDisplayedContacts([]);
+            (async () => {
+              const { data } = await getData(
+                backend +
+                  `/api/guilds/${props.guild.id}/search/${e.target.value}`
+              );
+              setDisplayedContacts(
+                data.map(({ id, title, artist }) => {
+                  return {
+                    id,
+                    name: title,
+                    artist,
+                    image: `https://i.ytimg.com/vi/${id}/hqdefault.jpg`,
+                  };
+                })
+              );
+            })();
             setSongData({ songName: e.target.value });
           }}
           onKeyPress={(e) => {
             if (e.key === "Enter") playSong();
           }}
         />
+        <ContactList />
         <div className="input-group-append">
           <button
             onClick={playSong}

@@ -9,7 +9,6 @@ const fs = require("fs");
 /**
  * @param {Client} client
  */
-
 module.exports = async (client, instance) => {
   const pathDir = path.join(__dirname, "..", "apps");
   const apps = fs.readdirSync(pathDir);
