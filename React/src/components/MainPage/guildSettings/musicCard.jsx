@@ -195,7 +195,7 @@ export default function MainPage(props) {
           style={{
             listStyleType: "none",
             position: "absolute",
-            width: "100%",
+            width: "350px",
           }}
         >
           {displayedContacts.map((el, index) => {
@@ -207,6 +207,7 @@ export default function MainPage(props) {
                   setSongData({ songName: e.currentTarget.value });
                   document.getElementById("searchBar").value =
                     e.currentTarget.value;
+                  setDisplayedContacts([]);
                 }}
               >
                 <Contact

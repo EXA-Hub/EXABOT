@@ -133,3 +133,7 @@ body {
 .flick {
   animation: flicker 1s ease-in-out infinite alternate;
 }
+
+span.flick {
+  font-variant-caps: all-petite-caps;
+}
