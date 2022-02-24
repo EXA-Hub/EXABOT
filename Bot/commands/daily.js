@@ -31,7 +31,7 @@ module.exports = {
   }) => {
     const min = 200;
     const max = 1000;
-    const daily = Math.floor(Math.random() * (+max - +min) + +min);
+    const daily = Math.random() * (+max - +min) + +min;
     const giveCoins = require("../functions/giveCoins");
     giveCoins(user.id, daily);
     return `**🏧 | مبروك لقد حصلت على ${daily} عملة ذهبية 🪙**`;

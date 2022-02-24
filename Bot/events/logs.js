@@ -5,6 +5,9 @@ const Discord = require("discord.js");
  */
 
 module.exports = async (client, instance) => {
+  console.log(
+    `${client.channels.cache.size} channels on ${client.guilds.cache.size} servers, for a total of ${client.users.cache.size} users.`
+  );
   const db = require("../functions/database");
   const config = require("../data/config");
 

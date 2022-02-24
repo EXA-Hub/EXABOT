@@ -2,12 +2,12 @@ const { ContextMenuCommandBuilder } = require("@discordjs/builders");
 const { Routes } = require("discord-api-types/v9");
 const { token } = require("../data/config").bot;
 const { REST } = require("@discordjs/rest");
-const { Client } = require("discord.js");
+const { client } = require("../index");
 const path = require("path");
 const fs = require("fs");
 
 /**
- * @param {Client} client
+ * @param {client} client
  */
 module.exports = async (client, instance) => {
   const pathDir = path.join(__dirname, "..", "apps");

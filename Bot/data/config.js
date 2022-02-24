@@ -79,5 +79,6 @@ module.exports = {
     success: "☑️",
     repeat: "🔁",
     error: "❌",
+    loading: "<a:8685325406617108681:946479057170751539>",
   },
 };

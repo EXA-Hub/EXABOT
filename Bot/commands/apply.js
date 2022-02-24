@@ -1,4 +1,4 @@
-const { Client } = require("discord.js");
+const { client } = require("../index");
 const wok = require("wokcommands");
 module.exports = {
   name: "apply",
@@ -61,7 +61,7 @@ module.exports = {
   ],
   /**
    *
-   * @param {Client} client
+   * @param {client} client
    */
   init: (client, instance) => {
     client.on("interactionCreate", async (interaction) => {

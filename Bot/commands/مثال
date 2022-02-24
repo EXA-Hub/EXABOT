@@ -1,4 +1,4 @@
-// const { Client } = require("discord.js");
+// const { client } = require("../index");
 // const { ICallbackObject } = require("wokcommands");
 // module.exports = {
 //   name: "",
@@ -34,7 +34,7 @@
 //   ],
 //   /**
 //    *
-//    * @param {Client} client
+//    * @param {client} client
 //    */
 //   init: (client, instance) => {},
 //   /**

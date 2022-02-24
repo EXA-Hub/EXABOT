@@ -1,8 +1,115 @@
 require("dotenv").config();
 const path = require("path");
+const DisTube = require("distube");
 const Discord = require("discord.js");
 const config = require("./data/config");
-const client = new Discord.Client({
+const { connection } = require("mongoose");
+const WOKCommands = require("wokcommands");
+const discordBackup = require("discord-backup");
+const DiscordOauth2 = require("discord-oauth2");
+const { SpotifyPlugin } = require("@distube/spotify");
+const { SoundCloudPlugin } = require("@distube/soundcloud");
+const GiveawayManagerWithOwnDatabase =
+  require("./functions/GiveawayManagerWithOwnDatabase")(connection);
+
+const { url, redirect_url } = config.dashboard.url;
+const { dbName, dbUsername, dbPassword, dbEndPoint } = config.database;
+const intoDataBase = `${dbUsername}:${dbPassword}@${dbName}.${dbEndPoint}`;
+const mongoUri = `mongodb+srv://${intoDataBase}?retryWrites=true&w=majority`;
+const oauth2Data = {
+  clientId: config.bot.client.id,
+  clientSecret: config.bot.client.secret,
+  redirectUri: `${url + redirect_url}`,
+};
+
+class Client extends Discord.Client {
+  constructor(options) {
+    super(options);
+    discordBackup.setStorageFolder(path.join(process.cwd(), "data/backups/"));
+    this._backup = discordBackup;
+    this._emotes = config.emojis;
+    this._config = config;
+    this._distube = new DisTube.default(this, {
+      plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
+      emitNewSongOnly: true,
+      leaveOnEmpty: true,
+      leaveOnFinish: true,
+      leaveOnStop: true,
+      savePreviousSongs: true,
+      searchSongs: 10,
+      searchCooldown: 60,
+      emptyCooldown: 3,
+      nsfw: false,
+      emitAddListWhenCreatingQueue: true,
+      emitAddSongWhenCreatingQueue: true,
+      youtubeDL: false,
+    });
+    this._oauth2 = new DiscordOauth2(oauth2Data);
+    this._mongo = connection;
+    this._giveawaysManager = new GiveawayManagerWithOwnDatabase(this, {
+      storage: path.join(__dirname, "data/giveaways.json"),
+      endedGiveawaysLifetime: 24 * 60 * 60 * 1000,
+      forceUpdateEvery: 60 * 1000,
+      default: {
+        botsCanWin: false,
+        exemptPermissions: ["ADMINISTRATOR"],
+        embedColor: "#FF0000",
+        embedColorEnd: config.bot.color.hex,
+        reaction: "🎉",
+        lastChance: {
+          enabled: true,
+          content: "⚠️ **أخر فرصة للفوز** ⚠️",
+          threshold: 5000,
+          embedColor: "#ffff00",
+        },
+      },
+    });
+  }
+  get backup() {
+    return this._backup;
+  }
+  set backup(backup) {
+    this._backup = backup;
+  }
+  get emotes() {
+    return this._emotes;
+  }
+  set emotes(emotes) {
+    this._emotes = emotes;
+  }
+  get config() {
+    return this._config;
+  }
+  set config(config) {
+    this._config = config;
+  }
+  get distube() {
+    return this._distube;
+  }
+  set distube(distube) {
+    this._distube = distube;
+  }
+  get oauth2() {
+    return this._oauth2;
+  }
+  set oauth2(oauth2) {
+    this._oauth2 = oauth2;
+  }
+  get mongo() {
+    return this._mongo;
+  }
+  set mongo(mongo) {
+    this._mongo = mongo;
+  }
+  get giveawaysManager() {
+    return this._giveawaysManager;
+  }
+  set oauth2(giveawaysManager) {
+    this._giveawaysManager = giveawaysManager;
+  }
+}
+
+const client = new Client({
   intents: 32767,
   presence: {
     status: "online",
@@ -20,46 +127,16 @@ const client = new Discord.Client({
   },
 });
 
-const { dbName, dbUsername, dbPassword, dbEndPoint } = config.database;
-const intoDataBase = `${dbUsername}:${dbPassword}@${dbName}.${dbEndPoint}`;
-const mongoUri = `mongodb+srv://${intoDataBase}?retryWrites=true&w=majority`;
 // https://www.npmjs.com/package/discord-logs
 require("discord-logs")(client);
-const WOKCommands = require("wokcommands");
-const DisTube = require("distube");
-const { SoundCloudPlugin } = require("@distube/soundcloud");
-const { SpotifyPlugin } = require("@distube/spotify");
-client.emotes = config.emojis;
-client.distube = new DisTube.default(client, {
-  plugins: [new SoundCloudPlugin(), new SpotifyPlugin()],
-  emitNewSongOnly: true,
-  leaveOnEmpty: true,
-  leaveOnFinish: true,
-  leaveOnStop: true,
-  savePreviousSongs: true,
-  searchSongs: 10,
-  searchCooldown: 60,
-  emptyCooldown: 3,
-  nsfw: false,
-  emitAddListWhenCreatingQueue: true,
-  emitAddSongWhenCreatingQueue: true,
-  youtubeDL: false,
-});
-const DiscordOauth2 = require("discord-oauth2");
-const { url, redirect_url } = config.dashboard.url;
-const oauth2Data = {
-  clientId: config.bot.client.id,
-  clientSecret: config.bot.client.secret,
-  redirectUri: `${url + redirect_url}`,
-};
-client.oauth2 = new DiscordOauth2(oauth2Data);
+
 client.on("ready", () => {
   const dbOptions = {
     keepAlive: false,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   };
-  const wok = new WOKCommands(client, {
+  new WOKCommands(client, {
     disabledDefaultCommands: [
       // "requiredrole",
       // "language",
@@ -89,34 +166,7 @@ client.on("ready", () => {
     .setDisplayName(client.user.username)
     .setColor(config.bot.color.hex)
     .setDefaultPrefix(config.prefix);
-  wok.on("databaseConnected", async (connection, state) => {
-    console.log(`DataBase ${state}`);
-    client.mongo = await connection;
-    const GiveawayManagerWithOwnDatabase =
-      require("./functions/GiveawayManagerWithOwnDatabase")(connection);
-    client.giveawaysManager = new GiveawayManagerWithOwnDatabase(client, {
-      storage: path.join(__dirname, "data/giveaways.json"),
-      endedGiveawaysLifetime: 24 * 60 * 60 * 1000,
-      forceUpdateEvery: 60 * 1000,
-      default: {
-        botsCanWin: false,
-        exemptPermissions: ["ADMINISTRATOR"],
-        embedColor: "#FF0000",
-        embedColorEnd: config.bot.color.hex,
-        reaction: "🎉",
-        lastChance: {
-          enabled: true,
-          content: "⚠️ **أخر فرصة للفوز** ⚠️",
-          threshold: 5000,
-          embedColor: "#ffff00",
-        },
-      },
-    });
-  });
 });
 
 client.login(config.bot.token);
-
-module.exports = {
-  client,
-};
+module.exports = { client };

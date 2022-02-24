@@ -32,6 +32,7 @@
     "discord-anti-spam": "^2.7.2",
     "discord-api-types": "^0.26.0",
     "discord-autorole-badges": "^2.0.1",
+    "discord-backup": "^3.0.1",
     "discord-giveaways": "^5.0.1",
     "discord-inv": "^1.1.0",
     "discord-logs": "^2.0.1",
