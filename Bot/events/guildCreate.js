@@ -7,7 +7,7 @@ module.exports = (client, instance) => {
   client.on("guildCreate", async (guild) => {
     const { MessageEmbed } = require("discord.js");
     const { stripIndents } = require("common-tags");
-    const botOwner = await client.users.fetch(config.owner);
+    const botOwner = client.users.cache.get(config.owner);
     const guildOwner = guild.members.cache.get(guild.ownerID);
     const [bots, users] = guild.members.cache.partition(
       (member) => member.user.bot
@@ -43,17 +43,19 @@ module.exports = (client, instance) => {
         true
       );
     }
-    botOwner.send(embedMsg);
+    botOwner.send({ embeds: [embedMsg] });
     if (users.size < "250") {
-      (await guild.fetchOwner()).user.send(
-        "> أنا أسف يجب أن يضم سيرفر 250 عضو لكي أنضم\nهذا أقل عدد ممكن للبوتات غير الموثقة"
-      );
       guild.leave();
+      (await guild.fetchOwner()).user.send({
+        content: `إسم السيرفر: ${guild.name}\n> أنا أسف يجب أن يضم سيرفر 250 عضو لكي أنضم\nهذا أقل عدد ممكن للبوتات غير الموثقة`,
+      });
     } else if (guildOwner) {
       const num = users.size * 50;
       const giveCoins = require("../../functions/giveCoins");
       giveCoins(guildOwner.id, num);
-      guildOwner.send(`**🪙 مبروك لقد حصلت على ${num} عملة ذهبية 🥳**`);
+      guildOwner.send({
+        content: `**🪙 مبروك لقد حصلت على ${num} عملة ذهبية 🥳**`,
+      });
     }
   });
 };

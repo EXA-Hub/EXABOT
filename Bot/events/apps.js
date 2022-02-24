@@ -35,6 +35,14 @@ module.exports = async (client, instance) => {
         .toJSON()
     );
   if (commands.length > 0) {
+    currentApps.forEach(async (cmd) => {
+      await rest
+        .delete(Routes.applicationCommand(cmd.application_id, cmd.id))
+        .then(() =>
+          console.log("Successfully deleted old application command.")
+        )
+        .catch(console.error);
+    });
     await rest
       .put(Routes.applicationCommands(client.application.id), {
         body: commands,

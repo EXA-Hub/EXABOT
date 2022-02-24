@@ -74,7 +74,7 @@ module.exports = {
       const code = message
         ? args[2]
         : interaction.options.getInteger("رمز_الهدية_الجديدة");
-      if (gifts.find((gift) => gift.code === code) || code === "add")
+      if (!code || gifts.find((gift) => gift.code === code) || code === "add")
         return "**❌ | رمز خطأ**";
       await takeCoins(user.id, gift);
       gifts.push({ gift, code });
@@ -82,7 +82,6 @@ module.exports = {
       return `😇 مبروك لقد أضفت \`${gift}\`🪙 عملة ذهبية 🥳`;
     } else {
       const gift = gifts.find((gift) => gift.code === giftCode);
-      console.log(giftCode);
       if (!gift) return "**❌ | رمز خطأ**";
       gifts = gifts.filter((gift) => gift.code !== giftCode);
       await db.set("gifts", { gifts });

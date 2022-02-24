@@ -17,7 +17,7 @@ module.exports = {
   hidden: false,
   ownerOnly: false,
   testOnly: false,
-  guildOnly: true,
+  guildOnly: false,
   slash: "both",
   /**
    *
@@ -46,10 +46,7 @@ module.exports = {
     const random = Math.floor(Math.random() * (+max - +min) + +min);
     let content = responses[random]
       .toString()
-      .replace(
-        "{{prefix}}",
-        message ? instance.getPrefix(message.guild) || "." : "/"
-      );
+      .replace("{{prefix}}", message ? instance.getPrefix(guild) || "." : "/");
     if (content.includes("{{giftCode}}")) {
       const db = require("../functions/database");
       let { gifts } = (await db.get("gifts")) || {};
