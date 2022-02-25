@@ -104,7 +104,7 @@ class Client extends Discord.Client {
   get giveawaysManager() {
     return this._giveawaysManager;
   }
-  set oauth2(giveawaysManager) {
+  set giveawaysManager(giveawaysManager) {
     this._giveawaysManager = giveawaysManager;
   }
 }

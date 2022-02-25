@@ -45,7 +45,14 @@ module.exports = async (client, instance) => {
     });
     await rest
       .put(Routes.applicationCommands(client.application.id), {
-        body: commands,
+        body: apps
+          .map((file) => require(path.join(pathDir, file)))
+          .map((cmd) =>
+            new ContextMenuCommandBuilder()
+              .setName(cmd.name)
+              .setType(cmd.type === "message" ? 3 : 2)
+              .toJSON()
+          ),
       })
       .then(() => console.log("Successfully registered application commands."))
       .catch(console.error);

@@ -1,7 +1,7 @@
-const Discord = require("discord.js");
+const { client } = require("../index");
 
 /**
- * @param {Discord.Client} client
+ * @param {client} client
  */
 
 module.exports = async (client, instance) => {
