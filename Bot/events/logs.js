@@ -11,23 +11,20 @@ module.exports = async (client, instance) => {
   const db = require("../functions/database");
   const config = require("../data/config");
 
-  //   client.on("messageCreate", async (message) => {
-  //     if (!message.guild) return;
-  // const logsCheck = (await db.get("logs_on-off")) || {};
-  // const logsChannel = (await db.get("logs_channels")) || {};
-  //     if (!logsCheck[message.guild.id] || logsCheck[message.guild.id] == "off")
-  //       return;
-  //     if (!logsChannel[message.guild.id]) return;
-  //     const owner = client.users.cache.get(config.owner);
-  //     const logChannel = message.guild.channels.cache.get(
-  //       logsChannel[message.guild.id]
-  //     );
-  //     const logEmbed = new Discord.MessageEmbed().setTimestamp().setFooter({
-  //       text: `Bot Developer: ${owner.tag}`,
-  //       iconURL: owner.avatarURL({ dynamic: true }),
-  //     });
-  //     // return logChannel.send({embeds:[logEmbed]});
+  // client.on("", async (exa) => {
+  //   if (!exa) return;
+  //   const logsCheck = (await db.get("logs_on-off")) || {};
+  //   const logsChannel = (await db.get("logs_channels")) || {};
+  //   if (!logsCheck[exa.id] || logsCheck[exa.id] == "off") return;
+  //   if (!logsChannel[exa.id]) return;
+  //   const owner = client.users.cache.get(config.owner);
+  //   const logChannel = exa.channels.cache.get(logsChannel[exa.id]);
+  //   const logEmbed = new Discord.MessageEmbed().setTimestamp().setFooter({
+  //     text: `Bot Developer: ${owner.tag}`,
+  //     iconURL: owner.avatarURL({ dynamic: true }),
   //   });
+  //   return logChannel.send({ embeds: [logEmbed] });
+  // });
 
   client.on("channelCreate", async (channel) => {
     if (!channel.guild) return;

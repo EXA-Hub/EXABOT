@@ -166,7 +166,7 @@ module.exports = {
           Array.isArray(targetUserSellerShop.items) &&
           targetUserSellerShop.items.length > 0
         ) {
-          targetUserSellerShop.items.forEach((item) => {
+          targetUserSellerShop.items.forEach((item, index) => {
             shopItemsEmbed.addField(
               item.goodName,
               item.description + `\nالسعر: \`${item.price}\`🪙`,
@@ -312,10 +312,10 @@ module.exports = {
             Array.isArray(targetUserSellerShop.items) &&
             targetUserSellerShop.items.length > 0
           ) {
-            targetUserSellerShop.items.forEach((item) => {
+            targetUserSellerShop.items.forEach((item, index) => {
               row.addComponents(
                 new MessageButton()
-                  .setCustomId("deleteItem " + item.goodName)
+                  .setCustomId(`deleteItem ${item.goodName} ${index}`)
                   .setLabel(item.goodName)
                   .setStyle("DANGER")
                   .setEmoji("❌")
@@ -371,7 +371,7 @@ module.exports = {
             Array.isArray(targetUserSellerShop.items) &&
             targetUserSellerShop.items.length > 0
           ) {
-            targetUserSellerShop.items.forEach((item) => {
+            targetUserSellerShop.items.forEach((item, index) => {
               shopItemsEmbed.addField(
                 item.goodName,
                 item.description + `\nالسعر: \`${item.price}\`🪙`,
@@ -532,10 +532,10 @@ module.exports = {
             Array.isArray(serverSellerShop.items) &&
             serverSellerShop.items.length > 0
           ) {
-            serverSellerShop.items.forEach((item) => {
+            serverSellerShop.items.forEach((item, index) => {
               row.addComponents(
                 new MessageButton()
-                  .setCustomId("deleteItem " + item.goodName)
+                  .setCustomId(`deleteItem ${item.goodName} ${index}`)
                   .setLabel(item.goodName)
                   .setStyle("DANGER")
                   .setEmoji("❌")
@@ -590,7 +590,7 @@ module.exports = {
             Array.isArray(serverSellerShop.items) &&
             serverSellerShop.items.length > 0
           ) {
-            serverSellerShop.items.forEach((item) => {
+            serverSellerShop.items.forEach((item, index) => {
               shopItemsEmbed.addField(
                 item.goodName,
                 item.description + `\nالسعر: \`${item.price}\`🪙`,
@@ -734,11 +734,11 @@ module.exports = {
             Array.isArray(botSellerShop.items) &&
             botSellerShop.items.length > 0
           ) {
-            botSellerShop.items.forEach((item) => {
+            botSellerShop.items.forEach((item, index) => {
               row.addComponents(
                 new MessageButton()
-                  .setCustomId("deleteItem " + item.goodName)
-                  .setLabel(item.goodName)
+                  .setCustomId(`deleteItem ${item.goodName} ${index}`)
+                  .setLabel(`${item.goodName}`)
                   .setStyle("DANGER")
                   .setEmoji("❌")
               );
@@ -812,7 +812,7 @@ module.exports = {
         Array.isArray(botSellerShop.items) &&
         botSellerShop.items.length > 0
       ) {
-        botSellerShop.items.forEach((item) => {
+        botSellerShop.items.forEach((item, index) => {
           shopEmbed.addField(
             item.goodName,
             item.description + `\nالسعر: \`${item.price}\`🪙`,
