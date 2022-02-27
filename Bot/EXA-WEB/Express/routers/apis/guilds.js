@@ -24,7 +24,9 @@ router.all("/", async (req, res) => {
 
 router.all("/:guildID", async (req, res) => {
   const { guildID } = req.params;
-  const guild = req.user.guilds.find((guild) => guild.id === guildID);
+  const discordGuild = client.guilds.cache.get(guildID);
+  let guild = req.user.guilds.find((guild) => guild.id === guildID);
+  guild.memberCount = discordGuild.memberCount;
   res.send(guild);
 });
 

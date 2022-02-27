@@ -246,6 +246,7 @@ export default function MainPage(props) {
         `/api/guilds/${guildID}/prefix/set?prefix=${guildSettingsData.prefix}`
     )
       .then(({ data }) => {
+        setGuildSettingsData({ prefix: data });
         alert.show("تم بنجاح", {
           timeout: 5000,
           type: "success",
