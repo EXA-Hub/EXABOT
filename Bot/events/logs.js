@@ -1,4 +1,4 @@
-const { MessageEmbed, TextChannel } = require("discord.js");
+const { MessageEmbed, TextChannel, Guild } = require("discord.js");
 const { client } = require("../index");
 /**
  *
@@ -45,18 +45,26 @@ module.exports = async (client, instance) => {
   );
   const db = require("../functions/database");
   const config = require("../data/config");
+  const owner = client.users.cache.get(config.owner);
+  /**
+   *
+   * @param {Guild} guild
+   * @returns
+   */
+  const getLogChannel = async (guild) => {
+    if (!guild) return false;
+    const logsCheck = (await db.get("logs_on-off")) || {};
+    const logsChannel = (await db.get("logs_channels")) || {};
+    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return false;
+    if (!logsChannel[guild.id]) return false;
+    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    return logChannel;
+  };
 
   client.on("channelCreate", async (channel) => {
     if (!channel.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[channel.guild.id] || logsCheck[channel.guild.id] == "off")
-      return;
-    if (!logsChannel[channel.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = channel.guild.channels.cache.get(
-      logsChannel[channel.guild.id]
-    );
+    const logChannel = await getLogChannel(channel.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setColor("#0099ff")
       .setTitle("تم إنشاء قناة")
@@ -72,15 +80,8 @@ module.exports = async (client, instance) => {
 
   client.on("channelDelete", async (channel) => {
     if (!channel.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[channel.guild.id] || logsCheck[channel.guild.id] == "off")
-      return;
-    if (!logsChannel[channel.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = channel.guild.channels.cache.get(
-      logsChannel[channel.guild.id]
-    );
+    const logChannel = await getLogChannel(channel.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setColor("RED")
       .setTitle("تم حذف قناة")
@@ -102,18 +103,8 @@ module.exports = async (client, instance) => {
       oldChannel.type === newChannel.type
     )
       return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (
-      !logsCheck[oldChannel.guild.id] ||
-      logsCheck[oldChannel.guild.id] == "off"
-    )
-      return;
-    if (!logsChannel[oldChannel.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = oldChannel.guild.channels.cache.get(
-      logsChannel[oldChannel.guild.id]
-    );
+    const logChannel = await getLogChannel(oldChannel.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTitle("تعديل على قناة")
       .setURL(config.support.server.invite.link)
@@ -139,15 +130,8 @@ module.exports = async (client, instance) => {
 
   client.on("emojiCreate", async (emoji) => {
     if (!emoji.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[emoji.guild.id] || logsCheck[emoji.guild.id] == "off")
-      return;
-    if (!logsChannel[emoji.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = emoji.guild.channels.cache.get(
-      logsChannel[emoji.guild.id]
-    );
+    const logChannel = await getLogChannel(emoji.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTitle("تم إضافة إيموجي")
       .setColor("#0099ff")
@@ -164,15 +148,8 @@ module.exports = async (client, instance) => {
 
   client.on("emojiDelete", async (emoji) => {
     if (!emoji.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[emoji.guild.id] || logsCheck[emoji.guild.id] == "off")
-      return;
-    if (!logsChannel[emoji.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = emoji.guild.channels.cache.get(
-      logsChannel[emoji.guild.id]
-    );
+    const logChannel = await getLogChannel(emoji.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTitle("تم حذف إيموجي")
       .setColor("RED")
@@ -189,15 +166,8 @@ module.exports = async (client, instance) => {
 
   client.on("emojiUpdate", async (oldEmoji, newEmoji) => {
     if (!oldEmoji.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[oldEmoji.guild.id] || logsCheck[oldEmoji.guild.id] == "off")
-      return;
-    if (!logsChannel[oldEmoji.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = oldEmoji.guild.channels.cache.get(
-      logsChannel[oldEmoji.guild.id]
-    );
+    const logChannel = await getLogChannel(oldEmoji.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTitle(`تعديل على إيموجي ${newEmoji}`)
       .setURL(config.support.server.invite.link)
@@ -213,12 +183,8 @@ module.exports = async (client, instance) => {
   });
 
   client.on("guildBanAdd", async (guild, user) => {
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setColor("RED")
@@ -237,12 +203,8 @@ module.exports = async (client, instance) => {
   });
 
   client.on("guildBanRemove", async (guild, user) => {
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setColor("BLUE")
@@ -262,22 +224,9 @@ module.exports = async (client, instance) => {
 
   client.on("messageDelete", async (message) => {
     if (!message.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[message.guild.id] || logsCheck[message.guild.id] == "off")
-      return;
-    if (!logsChannel[message.guild.id]) return;
-    if (!message.author) return;
-    if (
-      message.author.id == client.user.id &&
-      message.channel.id == logsChannel[message.guild.id]
-    )
-      return;
+    const logChannel = await getLogChannel(message.guild);
+    if (!logChannel) return;
     // if (message.channel.id === message.guild.systemChannel.id) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = message.guild.channels.cache.get(
-      logsChannel[message.guild.id]
-    );
     const logEmbed = new MessageEmbed()
       .setColor("RED")
       .setTitle("تم حذف رسالة")
@@ -295,17 +244,10 @@ module.exports = async (client, instance) => {
     return webhook(logChannel, logEmbed);
   });
 
-  client.on("guildMemberUnboost", async (member) => {
+  client.on("guildMemberBoost", async (member) => {
     if (!member.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[member.guild.id] || logsCheck[member.guild.id] == "off")
-      return;
-    if (!logsChannel[member.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = member.guild.channels.cache.get(
-      logsChannel[member.guild.id]
-    );
+    const logChannel = await getLogChannel(member.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setColor("LUMINOUS_VIVID_PINK")
@@ -318,17 +260,10 @@ module.exports = async (client, instance) => {
     return webhook(logChannel, logEmbed);
   });
 
-  client.on("guildMemberBoost", async (member) => {
+  client.on("guildMemberUnboost", async (member) => {
     if (!member.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[member.guild.id] || logsCheck[member.guild.id] == "off")
-      return;
-    if (!logsChannel[member.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = member.guild.channels.cache.get(
-      logsChannel[member.guild.id]
-    );
+    const logChannel = await getLogChannel(member.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -345,15 +280,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildMemberRoleAdd", async (member, role) => {
     if (!member.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[member.guild.id] || logsCheck[member.guild.id] == "off")
-      return;
-    if (!logsChannel[member.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = member.guild.channels.cache.get(
-      logsChannel[member.guild.id]
-    );
+    const logChannel = await getLogChannel(member.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -367,15 +295,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildMemberRoleRemove", async (member, role) => {
     if (!member.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[member.guild.id] || logsCheck[member.guild.id] == "off")
-      return;
-    if (!logsChannel[member.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = member.guild.channels.cache.get(
-      logsChannel[member.guild.id]
-    );
+    const logChannel = await getLogChannel(member.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -391,15 +312,8 @@ module.exports = async (client, instance) => {
     "guildMemberNicknameUpdate",
     async (member, oldNickname, newNickname) => {
       if (!member.guild) return;
-      const logsCheck = (await db.get("logs_on-off")) || {};
-      const logsChannel = (await db.get("logs_channels")) || {};
-      if (!logsCheck[member.guild.id] || logsCheck[member.guild.id] == "off")
-        return;
-      if (!logsChannel[member.guild.id]) return;
-      const owner = client.users.cache.get(config.owner);
-      const logChannel = member.guild.channels.cache.get(
-        logsChannel[member.guild.id]
-      );
+      const logChannel = await getLogChannel(member.guild);
+      if (!logChannel) return;
       const logEmbed = new MessageEmbed()
         .setTimestamp()
         .setFooter({
@@ -420,16 +334,8 @@ module.exports = async (client, instance) => {
   );
 
   client.on("guildBoostLevelUp", async (guild, oldLevel, newLevel) => {
-    if (!message.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[message.guild.id] || logsCheck[message.guild.id] == "off")
-      return;
-    if (!logsChannel[message.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = message.guild.channels.cache.get(
-      logsChannel[message.guild.id]
-    );
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -445,12 +351,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildBoostLevelDown", async (guild, oldLevel, newLevel) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -466,12 +368,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildBannerAdd", async (guild, bannerURL) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -486,12 +384,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildAfkChannelAdd", async (guild, afkChannel) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -506,12 +400,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildVanityURLAdd", async (guild, vanityURL) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -525,12 +415,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildVanityURLRemove", async (guild, vanityURL) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -546,12 +432,8 @@ module.exports = async (client, instance) => {
     "guildVanityURLUpdate",
     async (guild, oldVanityURL, newVanityURL) => {
       if (!guild) return;
-      const logsCheck = (await db.get("logs_on-off")) || {};
-      const logsChannel = (await db.get("logs_channels")) || {};
-      if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-      if (!logsChannel[guild.id]) return;
-      const owner = client.users.cache.get(config.owner);
-      const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+      const logChannel = await getLogChannel(guild);
+      if (!logChannel) return;
       const logEmbed = new MessageEmbed()
         .setTimestamp()
         .setFooter({
@@ -568,12 +450,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildFeaturesUpdate", async (oldGuild, newGuild) => {
     if (!oldGuild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[oldGuild.id] || logsCheck[oldGuild.id] == "off") return;
-    if (!logsChannel[oldGuild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = oldGuild.channels.cache.get(logsChannel[oldGuild.id]);
+    const logChannel = await getLogChannel(oldGuild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -589,12 +467,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildOwnerUpdate", async (oldGuild, newGuild) => {
     if (!oldGuild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[oldGuild.id] || logsCheck[oldGuild.id] == "off") return;
-    if (!logsChannel[oldGuild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = oldGuild.channels.cache.get(logsChannel[oldGuild.id]);
+    const logChannel = await getLogChannel(oldGuild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -611,12 +485,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildPartnerAdd", async (guild) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -634,12 +504,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildPartnerRemove", async (guild) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -657,12 +523,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildVerificationAdd", async (guild) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -680,12 +542,8 @@ module.exports = async (client, instance) => {
 
   client.on("guildVerificationRemove", async (guild) => {
     if (!guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[guild.id] || logsCheck[guild.id] == "off") return;
-    if (!logsChannel[guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = guild.channels.cache.get(logsChannel[guild.id]);
+    const logChannel = await getLogChannel(guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -703,15 +561,8 @@ module.exports = async (client, instance) => {
 
   client.on("messagePinned", async (message) => {
     if (!message.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[message.guild.id] || logsCheck[message.guild.id] == "off")
-      return;
-    if (!logsChannel[message.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = message.guild.channels.cache.get(
-      logsChannel[message.guild.id]
-    );
+    const logChannel = await getLogChannel(message.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
@@ -731,15 +582,8 @@ module.exports = async (client, instance) => {
 
   client.on("messageContentEdited", async (message, oldContent, newContent) => {
     if (!message.guild) return;
-    const logsCheck = (await db.get("logs_on-off")) || {};
-    const logsChannel = (await db.get("logs_channels")) || {};
-    if (!logsCheck[message.guild.id] || logsCheck[message.guild.id] == "off")
-      return;
-    if (!logsChannel[message.guild.id]) return;
-    const owner = client.users.cache.get(config.owner);
-    const logChannel = message.guild.channels.cache.get(
-      logsChannel[message.guild.id]
-    );
+    const logChannel = await getLogChannel(message.guild);
+    if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
       .setFooter({
