@@ -84,7 +84,7 @@ module.exports = {
         true
       )
       .addField("مجموع عدد الدعوات:", `${inviteCount}`, true)
-      .addField("الرتب:", `${roles}`, true)
+      .addField("الرتب:", `${roles}`, false)
       .addField("الحالة:", `${statusFull}`, true)
       .setThumbnail(targetUser.avatarURL({ dynamic: true, size: 1024 }))
       .setFooter({

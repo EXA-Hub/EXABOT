@@ -21,7 +21,7 @@ const Root = () => (
       {/* <BrowserRouter>
     <Routes>
       <Route path="/:guildID?">
-      
+
       </Route>
     </Routes>
   </BrowserRouter> */}

@@ -8,7 +8,7 @@ module.exports = (client, instance) => {
     const { MessageEmbed } = require("discord.js");
     const { stripIndents } = require("common-tags");
     const botOwner = client.users.cache.get(config.owner);
-    const guildOwner = guild.members.cache.get(guild.ownerID);
+    const guildOwner = await guild.fetchOwner();
     const [bots, users] = guild.members.cache.partition(
       (member) => member.user.bot
     );

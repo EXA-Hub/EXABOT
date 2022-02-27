@@ -5,7 +5,7 @@ import { useAlert } from "react-alert";
 const { backend } = require("../../../data");
 const { getData } = require("../../api/getData");
 
-export default function MainPage(props) {
+export default function MusicCard(props) {
   const alert = useAlert();
   const [songData, setSongData] = useState(null);
   const [filters, setFilters] = useState(<div></div>);
@@ -106,6 +106,7 @@ export default function MainPage(props) {
         Object.keys(data).map((filter) => {
           return (
             <FormCheck
+              key={filter}
               type="switch"
               label={filter}
               value={filter}
@@ -131,6 +132,7 @@ export default function MainPage(props) {
   let Contact = (data) => {
     return (
       <li
+        key={data.key}
         style={
           data.lastOne
             ? {
@@ -148,6 +150,7 @@ export default function MainPage(props) {
         }
       >
         <img
+          key={data.key}
           src={data.image}
           alt={data.name}
           style={{
@@ -159,6 +162,7 @@ export default function MainPage(props) {
           }}
         />
         <span
+          key={data.key}
           value={data.name}
           style={{
             display: "block",
@@ -170,6 +174,7 @@ export default function MainPage(props) {
           {data.name}
         </span>
         <span
+          key={`${data.key}2`}
           style={{
             fontWeight: "normal",
             fontStyle: "italic",
@@ -192,6 +197,7 @@ export default function MainPage(props) {
         }}
       >
         <ul
+          key={`searchUl`}
           style={{
             listStyleType: "none",
             position: "absolute",
@@ -201,8 +207,9 @@ export default function MainPage(props) {
           {displayedContacts.map((el, index) => {
             return (
               <Button
-                style={{ width: "100%", backgroundColor: "white" }}
+                key={el.id}
                 value={el.id}
+                style={{ width: "100%", backgroundColor: "white" }}
                 onClick={(e) => {
                   setSongData({ songName: e.currentTarget.value });
                   document.getElementById("searchBar").value =
@@ -260,12 +267,13 @@ export default function MainPage(props) {
           }}
         />
         <ContactList />
-        <div className="input-group-append">
+        <div className="input-group-append" key="upCard">
           <button
             onClick={playSong}
             className="btn btn-outline-secondary"
             id="button-addon2"
             type="button"
+            key="play"
           >
             بحث
           </button>
@@ -274,6 +282,7 @@ export default function MainPage(props) {
               spv("stop");
             }}
             className="ms-2 mt-1"
+            key="stop"
           >
             إيقاف
           </Button>
@@ -282,6 +291,7 @@ export default function MainPage(props) {
               spv("pause");
             }}
             className="ms-2 mt-1"
+            key="pause"
           >
             إيقاف مؤقت
           </Button>
@@ -290,6 +300,7 @@ export default function MainPage(props) {
               spv("skip");
             }}
             className="ms-2 mt-1"
+            key="skip"
           >
             تخطي
           </Button>
@@ -340,9 +351,15 @@ export default function MainPage(props) {
               spv(`loop?mode=${e.target.value}`);
             }}
           >
-            <option value="0">التكرار متوقف</option>
-            <option value="1">تكرار الأغنية</option>
-            <option value="2">تكرار القائمة</option>
+            <option value="0" key="0">
+              التكرار متوقف
+            </option>
+            <option value="1" key="1">
+              تكرار الأغنية
+            </option>
+            <option value="2" key="2">
+              تكرار القائمة
+            </option>
           </Form.Select>
         </h6>
       </div>

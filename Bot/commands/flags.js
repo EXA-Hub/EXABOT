@@ -8,7 +8,7 @@ module.exports = {
   maxArgs: 1,
   syntaxError: "",
   permissions: ["ADMINISTRATOR"],
-  cooldown: "1m",
+  cooldown: "1h",
   // globalCooldown: '',
   hidden: false,
   ownerOnly: false,

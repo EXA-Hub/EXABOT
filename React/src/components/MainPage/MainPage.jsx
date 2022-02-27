@@ -10,6 +10,7 @@ import {
   Col,
 } from "react-bootstrap";
 import MusicCard from "./guildSettings/musicCard";
+import WelcomeCard from "./guildSettings/welcomeCard";
 import { Switch, useDarkreader } from "react-darkreader";
 import Graphs from "./charts/charts";
 import { useAlert } from "react-alert";
@@ -280,12 +281,13 @@ export default function MainPage(props) {
             </a>
             <ul className="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
               <li key="Home">
-                <a href="/" className="nav-link px-2 text-white">
+                <a key="Home" href="/" className="nav-link px-2 text-white">
                   الصفحة الرئيسية
                 </a>
               </li>
               <li key="GitHub">
                 <a
+                  key="GitHub"
                   href="https://github.com/EXA-Hub/EXABOT"
                   className="nav-link px-2 text-white"
                 >
@@ -294,6 +296,7 @@ export default function MainPage(props) {
               </li>
               <li key="Support">
                 <a
+                  key="Support"
                   href="https://discord.gg/n9AQZ6qjNc"
                   className="nav-link px-2 text-white"
                 >
@@ -302,14 +305,16 @@ export default function MainPage(props) {
               </li>
               <li key="Studio">
                 <a
+                  key="Studio"
                   href="https://discord.gg/aEkKZQfZuk"
                   className="nav-link px-2 text-white"
                 >
                   فريق التطوير
                 </a>
               </li>
-              <li>
+              <li key="who">
                 <a
+                  key="who"
                   href="https://discord.gg/e4ewVXcKCs"
                   className="nav-link px-2 text-white"
                 >
@@ -387,32 +392,52 @@ export default function MainPage(props) {
                     حفظ البادئة
                   </Button>
                 </div>
-                <Tab.Container id="left-tabs-example" defaultActiveKey="Data">
+                <Tab.Container
+                  id="left-tabs-example"
+                  defaultActiveKey="welcomeCard"
+                  key="TabContainer"
+                >
                   <Row>
-                    <Col sm={3}>
+                    <Col sm={3} key="sm3">
                       <Nav variant="pills" className="flex-column">
-                        <Nav.Item>
-                          <Nav.Link eventKey="Data">معلومات المجتمع</Nav.Link>
+                        <Nav.Item key="data">
+                          <Nav.Link eventKey="Data" key="data">
+                            معلومات المجتمع
+                          </Nav.Link>
                         </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="MusicCard">الموسيقى</Nav.Link>
+                        <Nav.Item key="MusicCard">
+                          <Nav.Link eventKey="MusicCard" key="MusicCard">
+                            الموسيقى
+                          </Nav.Link>
                         </Nav.Item>
-                        <Nav.Item>
-                          <Nav.Link eventKey="second">آخر</Nav.Link>
+                        <Nav.Item key="welcomeCard">
+                          <Nav.Link eventKey="welcomeCard" key="welcomeCard">
+                            تعديل الترحيب
+                          </Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item key="second">
+                          <Nav.Link eventKey="second" key="second">
+                            آخر
+                          </Nav.Link>
                         </Nav.Item>
                       </Nav>
                     </Col>
-                    <Col sm={9}>
-                      <Tab.Content>
-                        <Tab.Pane eventKey="Data">
+                    <Col sm={9} key="sm9">
+                      <Tab.Content key="TabContent">
+                        <Tab.Pane eventKey="Data" key="data">
                           <Graphs guild={guildData} />
                         </Tab.Pane>
-                        <Tab.Pane eventKey="MusicCard">
+                        <Tab.Pane eventKey="MusicCard" key="MusicCard">
                           <div key="MusicCard">
                             <MusicCard guild={guildData} />
                           </div>
                         </Tab.Pane>
-                        <Tab.Pane eventKey="second">مرحبا</Tab.Pane>
+                        <Tab.Pane eventKey="welcomeCard" key="welcomeCard">
+                          <WelcomeCard guild={guildData} user={userData} />
+                        </Tab.Pane>
+                        <Tab.Pane eventKey="second" key="second">
+                          مرحبا
+                        </Tab.Pane>
                       </Tab.Content>
                     </Col>
                   </Row>

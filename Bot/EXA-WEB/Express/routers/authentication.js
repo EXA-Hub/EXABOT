@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const { client } = require("../../..");
 const { react } = require("../../../data/config").dashboard;
 
 const router = Router();
@@ -24,6 +25,11 @@ router.get("/", async (req, res) => {
     userId: req.user.userId,
     discordTag: req.user.discordTag,
     coins: await require("../../../functions/getCoins")(req.user.userId),
+    avatarURL: client.users.cache.get(req.user.userId)
+      ? client.users.cache.get(req.user.userId).avatarURL({
+          format: "jpg",
+        })
+      : client.user.avatarURL({ format: "jpg" }),
   });
 });
 

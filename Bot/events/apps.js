@@ -47,6 +47,13 @@ module.exports = async (client, instance) => {
       .put(Routes.applicationCommands(client.application.id), {
         body: apps
           .map((file) => require(path.join(pathDir, file)))
+          .filter(
+            (x) =>
+              x.type === "message" ||
+              x.type === "user" ||
+              x.type === 3 ||
+              x.type === 2
+          )
           .map((cmd) =>
             new ContextMenuCommandBuilder()
               .setName(cmd.name)

@@ -8,7 +8,7 @@ const { getData } = require("../../api/getData");
 function render(types, props) {
   if (types) {
     return Object.keys(types).map((type) => (
-      <Carousel.Item>
+      <Carousel.Item key={type}>
         <Chart guild={props.guild} type={type} name={types[type]} />
       </Carousel.Item>
     ));

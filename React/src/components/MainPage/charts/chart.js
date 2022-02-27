@@ -55,7 +55,7 @@ export default class LineChart extends Component {
 
   render() {
     return (
-      <Card>
+      <Card key={this.props.type}>
         معلومات المجتمع: {this.props.guild.name}
         <div>
           <canvas id="myChart" ref={this.chartRef} />
