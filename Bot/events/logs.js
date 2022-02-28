@@ -2,8 +2,8 @@ const { MessageEmbed, TextChannel, Guild } = require("discord.js");
 const { client } = require("../index");
 /**
  *
- * @param {Channel} logChannel
- * @param {TextChannel} logEmbed
+ * @param {MessageEmbed} logEmbed
+ * @param {TextChannel} logChannel
  */
 const webhook = (logChannel, logEmbed) => {
   const bot = client.user;
@@ -13,7 +13,7 @@ const webhook = (logChannel, logEmbed) => {
       if (webhooks.size < 1) {
         logChannel
           .createWebhook(bot.username, {
-            avatar: bot.iconURL({ dynamic: true }),
+            avatar: bot.avatarURL({ dynamic: true }),
             reason: "Logs channel",
           })
           .then((webhook) => {

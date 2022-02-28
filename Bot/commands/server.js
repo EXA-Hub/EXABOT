@@ -115,7 +115,7 @@ module.exports = {
         `<t:${Math.floor(guild.createdTimestamp / 1000)}:R>`,
         true
       )
-      .setImage(guild.bannerURL({ format: "png", size: "2048" }))
+      .setImage(guild.bannerURL({ format: "png", size: 2048 }))
       .setAuthor({
         name: user.tag,
         iconURL: user.avatarURL(),
