@@ -1,9 +1,8 @@
 import React, { Component } from "react";
 import { Image as KonvaImage, Stage, Layer, Text } from "react-konva";
 import TransformerComponent from "./helpers/transformer";
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import useImage from "use-image";
-import jimp from "jimp";
 
 const welcomeTextHint = "{{name}} {{tag}} {{discordTag}} {{memberCount}}";
 const BackgroundImage = ({ data }) => {
@@ -51,6 +50,22 @@ export default class welcomeCard extends Component {
         fill: "#ffff00",
       },
     },
+  };
+  getImageSize = async (url) => {
+    const img = new Image();
+    img.src = url;
+    if (img)
+      img.addEventListener("load", (e) => {
+        const { width, height } = e.currentTarget;
+        if (width && height) {
+          let state = this.state;
+          state.data.StageData.width = width;
+          state.data.StageData.height = height;
+          this.setState();
+          return true;
+        }
+      });
+    else return false;
   };
   handleStageClick = (e) => {
     let state = this.state;
@@ -214,23 +229,16 @@ export default class welcomeCard extends Component {
         <div className="input-group mb-3">
           <input
             value={this.state.data.StageData.background}
-            style={{ color: "white" }}
+            style={{ color: "WHITE" }}
             onChange={(e) => {
-              if (!e.target.value || e.target.value.length < 0) return;
+              if (!e.target.value || e.target.value.length < 0)
+                return (e.target.style.color = "RED");
               state.data.StageData.background = e.target.value;
               this.setState(state);
-              jimp
-                .read(e.target.value)
-                .then((img) => {
-                  if (!img) return (e.target.style.color = "RED");
-                  state.data.StageData.height = img.bitmap.height;
-                  state.data.StageData.width = img.bitmap.width;
-                  e.target.style.color = "white";
-                  this.setState(state);
-                })
-                .catch((err) => {
-                  if (err) return (e.target.style.color = "RED");
-                });
+              this.getImageSize(e.target.value).then((sized) => {
+                if (!sized) e.target.style.color = "WHITE";
+                else e.target.style.color = "RED";
+              });
             }}
             type="text"
             className="form-control"
@@ -436,6 +444,14 @@ export default class welcomeCard extends Component {
               id="welcomeTextHelp"
             />
             <span className="input-group-text" id="basic-addon2">
+              <input
+                type="color"
+                value={state.data.TextData.fill}
+                onChange={(e) => {
+                  state.data.TextData.fill = e.currentTarget.value;
+                  this.setState(state);
+                }}
+              />
               "نص الترحيب"
             </span>
           </div>
@@ -443,14 +459,7 @@ export default class welcomeCard extends Component {
             {welcomeTextHint}
           </small>
         </div>
-        <input
-          type="color"
-          value={state.data.TextData.fill}
-          onChange={(e) => {
-            state.data.TextData.fill = e.currentTarget.value;
-            this.setState(state);
-          }}
-        />
+        <Button variant="primary">حفظ.</Button>
       </Card>
     );
   }
