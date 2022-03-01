@@ -54,18 +54,16 @@ export default class welcomeCard extends Component {
   getImageSize = async (url) => {
     const img = new Image();
     img.src = url;
-    if (img)
-      img.addEventListener("load", (e) => {
-        const { width, height } = e.currentTarget;
-        if (width && height) {
-          let state = this.state;
-          state.data.StageData.width = width;
-          state.data.StageData.height = height;
-          this.setState();
-          return true;
-        }
-      });
-    else return false;
+    img.addEventListener("load", (e) => {
+      const { width, height } = e.currentTarget;
+      if (width && height) {
+        let state = this.state;
+        state.data.StageData.width = width;
+        state.data.StageData.height = height;
+        this.setState();
+        return true;
+      }
+    });
   };
   handleStageClick = (e) => {
     let state = this.state;
@@ -132,7 +130,7 @@ export default class welcomeCard extends Component {
     };
     return (
       <Card>
-        <div>
+        <div className="container">
           <Stage
             onClick={this.handleStageClick}
             width={this.state.data.StageData.width}
@@ -220,8 +218,11 @@ export default class welcomeCard extends Component {
                 const imageUrl = URL.createObjectURL(image);
                 if (!imageUrl || imageUrl.length < 0) return;
                 state.data.StageData.background = imageUrl;
-                e.target.style.color = "white";
                 this.setState(state);
+                this.getImageSize(imageUrl).then((sized) => {
+                  if (!sized) e.target.style.color = "WHITE";
+                  else e.target.style.color = "RED";
+                });
               } else e.target.style.color = "RED";
             }}
           />
