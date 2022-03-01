@@ -3,6 +3,7 @@ import { Image as KonvaImage, Stage, Layer, Text } from "react-konva";
 import TransformerComponent from "./helpers/transformer";
 import { Card } from "react-bootstrap";
 import useImage from "use-image";
+import jimp from "jimp";
 
 const welcomeTextHint = "{{name}} {{tag}} {{discordTag}} {{memberCount}}";
 const BackgroundImage = ({ data }) => {
@@ -65,18 +66,11 @@ export default class welcomeCard extends Component {
       ? this.props.user.discordTag
       : "EXA-BOT™#1076";
     const [name, tag] = discordTag.split("#");
-    const img = new Image();
-    img.src = state.data.StageData.background;
-    if (img.width && img.height) {
-      state.data.StageData.height = img.height;
-      state.data.StageData.width = img.width;
-      this.setState(state);
-    }
     const AvatarImg = () => {
       const { AvatarData } = this.state.data;
       const [image] = useImage(this.state.data.AvatarData.url);
-      // if (this.state.data.AvatarData.circle)
-      //   image.className = "circular--square";
+      if (this.state.data.AvatarData.circle && image)
+        image.className = "circular--square";
       return (
         <KonvaImage
           name="Avatar"
@@ -211,15 +205,8 @@ export default class welcomeCard extends Component {
                 const imageUrl = URL.createObjectURL(image);
                 if (!imageUrl || imageUrl.length < 0) return;
                 state.data.StageData.background = imageUrl;
+                e.target.style.color = "white";
                 this.setState(state);
-                const [img] = new Image();
-                img.src = imageUrl;
-                if (img.width && img.height) {
-                  state.data.StageData.height = img.height;
-                  state.data.StageData.width = img.width;
-                  this.setState(state);
-                  e.target.style.color = "white";
-                }
               } else e.target.style.color = "RED";
             }}
           />
@@ -232,14 +219,18 @@ export default class welcomeCard extends Component {
               if (!e.target.value || e.target.value.length < 0) return;
               state.data.StageData.background = e.target.value;
               this.setState(state);
-              const img = new Image();
-              img.src = e.target.value;
-              if (img.width && img.height) {
-                state.data.StageData.height = this.height;
-                state.data.StageData.width = this.width;
-                e.target.style.color = "white";
-                this.setState(state);
-              }
+              jimp
+                .read(e.target.value)
+                .then((img) => {
+                  if (!img) return (e.target.style.color = "RED");
+                  state.data.StageData.height = img.bitmap.height;
+                  state.data.StageData.width = img.bitmap.width;
+                  e.target.style.color = "white";
+                  this.setState(state);
+                })
+                .catch((err) => {
+                  if (err) return (e.target.style.color = "RED");
+                });
             }}
             type="text"
             className="form-control"
