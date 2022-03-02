@@ -20,7 +20,7 @@ const BackgroundImage = ({ data }) => {
 
 export default class welcomeCard extends Component {
   state = {
-    selectedShapeName: "",
+    selectedShapeName: "Avatar",
     data: {
       StageData: {
         width: 720,
@@ -103,21 +103,18 @@ export default class welcomeCard extends Component {
                   : this.state.data.AvatarData.height || 128) / 2
               : this.state.data.AvatarData.height,
           }}
-          x={
+          x={this.state.data.AvatarData.x}
+          y={this.state.data.AvatarData.y}
+          offset={
             this.state.data.AvatarData.circle
-              ? this.state.data.AvatarData.x +
-                ((this.state.data.AvatarData.width || 128) *
-                  this.state.data.AvatarData.scaleX) /
-                  2
-              : this.state.data.AvatarData.x
-          }
-          y={
-            this.state.data.AvatarData.circle
-              ? this.state.data.AvatarData.y +
-                ((this.state.data.AvatarData.height || 128) *
-                  this.state.data.AvatarData.scaleY) /
-                  2
-              : this.state.data.AvatarData.y
+              ? {
+                  x: 0,
+                  y: 0,
+                }
+              : {
+                  x: parseInt(this.state.data.AvatarData.width) / 2,
+                  y: parseInt(this.state.data.AvatarData.height) / 2,
+                }
           }
           width={this.state.data.AvatarData.width || 128}
           height={this.state.data.AvatarData.height || 128}
@@ -129,44 +126,25 @@ export default class welcomeCard extends Component {
             const { x, y } = e.target.attrs;
             Object.keys({ x, y }).forEach((key) => {
               const avatarData = {
-                x: this.state.data.AvatarData.circle
-                  ? x -
-                    ((this.state.data.AvatarData.width || 128) *
-                      this.state.data.AvatarData.scaleX) /
-                      2
-                  : x,
-                y: this.state.data.AvatarData.circle
-                  ? y -
-                    ((this.state.data.AvatarData.height || 128) *
-                      this.state.data.AvatarData.scaleY) /
-                      2
-                  : y,
+                x,
+                y,
               };
               AvatarData[key] = avatarData[key];
             });
             this.setState(state.data);
           }}
           onTransformEnd={(e) => {
-            const { x, y, width, height, rotation, scaleX, scaleY } =
-              e.target.attrs;
+            const { x, y, rotation, scaleX, scaleY } = e.target.attrs;
             Object.keys({
               x,
               y,
-              width,
-              height,
               scaleX,
               scaleY,
               rotation,
             }).forEach((key) => {
               const avatarData = {
-                x: this.state.data.AvatarData.circle
-                  ? x - ((width || 128) * scaleX) / 2
-                  : x,
-                y: this.state.data.AvatarData.circle
-                  ? y - ((height || 128) * scaleY) / 2
-                  : y,
-                width,
-                height,
+                x,
+                y,
                 scaleX,
                 scaleY,
                 rotation,
@@ -385,15 +363,7 @@ export default class welcomeCard extends Component {
                 id="circleSwitch"
                 checked={this.state.data.AvatarData.circle}
                 onChange={(e) => {
-                  state.data.AvatarData.x = this.state.data.AvatarData.circle
-                    ? this.state.data.AvatarData.x
-                    : this.state.data.AvatarData.x;
-                  state.data.AvatarData.y = this.state.data.AvatarData.circle
-                    ? this.state.data.AvatarData.y
-                    : this.state.data.AvatarData.y;
-
                   state.data.AvatarData.circle = e.target.checked;
-                  state.data.AvatarData.rotation = 0;
                   this.setState(state);
                 }}
               />
