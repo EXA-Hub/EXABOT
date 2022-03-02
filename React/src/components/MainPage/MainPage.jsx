@@ -337,7 +337,7 @@ export default function MainPage(props) {
                   className="btn btn-outline-danger me-2"
                   onClick={logoutUrl}
                 >
-                  Logout
+                  تسجيل الخروج
                 </button>
               ) : (
                 <button
@@ -345,7 +345,7 @@ export default function MainPage(props) {
                   className="btn btn-outline-success me-2"
                   onClick={loginUrl}
                 >
-                  Login
+                  تسجيل الدخول
                 </button>
               )}
             </div>
