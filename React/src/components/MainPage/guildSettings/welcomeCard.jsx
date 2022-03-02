@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { Image as KonvaImage, Stage, Layer, Text } from "react-konva";
+import { Image as KonvaImage, Stage, Layer, Text, Circle } from "react-konva";
 import TransformerComponent from "./helpers/transformer";
-import { Card, Button } from "react-bootstrap";
+import { Card, Button, Form } from "react-bootstrap";
 import useImage from "use-image";
 
 const welcomeTextHint = "{{name}} {{tag}} {{discordTag}} {{memberCount}}";
@@ -9,9 +9,9 @@ const BackgroundImage = ({ data }) => {
   const [image] = useImage(data.background);
   return (
     <KonvaImage
-      image={image}
       x={0}
       y={0}
+      fillPatternImage={image}
       width={image ? image.width : data.width || 720}
       height={image ? image.height : data.height || 480}
     />
@@ -36,6 +36,8 @@ export default class welcomeCard extends Component {
         y: 120,
         width: 128,
         height: 128,
+        scaleX: 1,
+        scaleY: 1,
         rotation: 0,
         circle: true,
       },
@@ -82,29 +84,63 @@ export default class welcomeCard extends Component {
     const AvatarImg = () => {
       const { AvatarData } = this.state.data;
       const [image] = useImage(this.state.data.AvatarData.url);
-      if (this.state.data.AvatarData.circle && image)
-        image.className = "circular--square";
+      const Shape = this.state.data.AvatarData.circle ? Circle : KonvaImage;
       return (
-        <KonvaImage
+        <Shape
           name="Avatar"
           draggable
           image={image}
-          x={this.state.data.AvatarData.x}
-          y={this.state.data.AvatarData.y}
+          fillPatternImage={image}
+          fillPatternOffset={{
+            x: this.state.data.AvatarData.circle
+              ? (image
+                  ? image.width
+                  : this.state.data.AvatarData.width || 128) / 2
+              : this.state.data.AvatarData.width,
+            y: this.state.data.AvatarData.circle
+              ? (image
+                  ? image.height
+                  : this.state.data.AvatarData.height || 128) / 2
+              : this.state.data.AvatarData.height,
+          }}
+          x={
+            this.state.data.AvatarData.circle
+              ? this.state.data.AvatarData.x +
+                ((this.state.data.AvatarData.width || 128) *
+                  this.state.data.AvatarData.scaleX) /
+                  2
+              : this.state.data.AvatarData.x
+          }
+          y={
+            this.state.data.AvatarData.circle
+              ? this.state.data.AvatarData.y +
+                ((this.state.data.AvatarData.height || 128) *
+                  this.state.data.AvatarData.scaleY) /
+                  2
+              : this.state.data.AvatarData.y
+          }
           width={this.state.data.AvatarData.width || 128}
           height={this.state.data.AvatarData.height || 128}
+          scaleX={this.state.data.AvatarData.scaleX}
+          scaleY={this.state.data.AvatarData.scaleY}
           rotation={this.state.data.AvatarData.rotation}
           cornerRadius={20}
           onDragEnd={(e) => {
-            const { x, y, width, height, rotation, scaleX, scaleY } =
-              e.target.attrs;
-            Object.keys({ x, y, width, height, rotation }).forEach((key) => {
+            const { x, y } = e.target.attrs;
+            Object.keys({ x, y }).forEach((key) => {
               const avatarData = {
-                x,
-                y,
-                width: width * scaleX,
-                height: height * scaleY,
-                rotation,
+                x: this.state.data.AvatarData.circle
+                  ? x -
+                    ((this.state.data.AvatarData.width || 128) *
+                      this.state.data.AvatarData.scaleX) /
+                      2
+                  : x,
+                y: this.state.data.AvatarData.circle
+                  ? y -
+                    ((this.state.data.AvatarData.height || 128) *
+                      this.state.data.AvatarData.scaleY) /
+                      2
+                  : y,
               };
               AvatarData[key] = avatarData[key];
             });
@@ -113,12 +149,26 @@ export default class welcomeCard extends Component {
           onTransformEnd={(e) => {
             const { x, y, width, height, rotation, scaleX, scaleY } =
               e.target.attrs;
-            Object.keys({ x, y, width, height, rotation }).forEach((key) => {
+            Object.keys({
+              x,
+              y,
+              width,
+              height,
+              scaleX,
+              scaleY,
+              rotation,
+            }).forEach((key) => {
               const avatarData = {
-                x,
-                y,
-                width: width * scaleX,
-                height: height * scaleY,
+                x: this.state.data.AvatarData.circle
+                  ? x - ((width || 128) * scaleX) / 2
+                  : x,
+                y: this.state.data.AvatarData.circle
+                  ? y - ((height || 128) * scaleY) / 2
+                  : y,
+                width,
+                height,
+                scaleX,
+                scaleY,
                 rotation,
               };
               AvatarData[key] = avatarData[key];
@@ -130,15 +180,15 @@ export default class welcomeCard extends Component {
     };
     return (
       <Card>
-        <div className="container">
+        <div>
           <Stage
             onClick={this.handleStageClick}
             width={this.state.data.StageData.width}
             height={this.state.data.StageData.height}
-            className="container"
             style={{
               position: "relative",
               userSelect: "none",
+              left: `max(50% - ${this.state.data.StageData.width} / 2)`,
             }}
           >
             <Layer>
@@ -165,7 +215,6 @@ export default class welcomeCard extends Component {
                 }}
                 rotation={this.state.data.TextData.rotation}
                 onTransformEnd={(e) => {
-                  console.log(e.target.attrs);
                   const { x, y, scaleX, scaleY, rotation } = e.target.attrs;
                   Object.keys({ x, y, scaleX, scaleY, rotation }).forEach(
                     (key) => {
@@ -283,11 +332,11 @@ export default class welcomeCard extends Component {
         </div>
         <div className="input-group mb-3">
           <input
-            value={this.state.data.AvatarData.width}
+            value={this.state.data.AvatarData.scaleX}
             onChange={(e) => {
               const value = parseInt(e.target.value);
-              state.data.AvatarData.width =
-                value || state.data.AvatarData.width;
+              state.data.AvatarData.scaleX =
+                value || state.data.AvatarData.scaleX;
               this.setState(state);
             }}
             type="number"
@@ -295,16 +344,16 @@ export default class welcomeCard extends Component {
             placeholder="عرض لصورة العضو"
           />
           <span className="input-group-text" id="basic-addon2">
-            "عرض لصورة العضو"
+            "عرض صورة العضو"
           </span>
         </div>
         <div className="input-group mb-3">
           <input
-            value={this.state.data.AvatarData.height}
+            value={this.state.data.AvatarData.scaleY}
             onChange={(e) => {
               const value = parseInt(e.target.value);
-              state.data.AvatarData.height =
-                value || state.data.AvatarData.height;
+              state.data.AvatarData.scaleY =
+                value || state.data.AvatarData.scaleY;
               this.setState(state);
             }}
             type="number"
@@ -312,7 +361,7 @@ export default class welcomeCard extends Component {
             placeholder="طول لصورة العضو"
           />
           <span className="input-group-text" id="basic-addon2">
-            "طول لصورة العضو"
+            "طول صورة العضو"
           </span>
         </div>
         <div className="input-group mb-3">
@@ -329,7 +378,27 @@ export default class welcomeCard extends Component {
             placeholder="محور لصورة العضو"
           />
           <span className="input-group-text" id="basic-addon2">
-            "محور لصورة العضو"
+            <Form>
+              <Form.Check
+                label=" "
+                type="switch"
+                id="circleSwitch"
+                checked={this.state.data.AvatarData.circle}
+                onChange={(e) => {
+                  state.data.AvatarData.x = this.state.data.AvatarData.circle
+                    ? this.state.data.AvatarData.x
+                    : this.state.data.AvatarData.x;
+                  state.data.AvatarData.y = this.state.data.AvatarData.circle
+                    ? this.state.data.AvatarData.y
+                    : this.state.data.AvatarData.y;
+
+                  state.data.AvatarData.circle = e.target.checked;
+                  state.data.AvatarData.rotation = 0;
+                  this.setState(state);
+                }}
+              />
+            </Form>
+            "محور صورة العضو"
           </span>
         </div>
         <div className="input-group mb-3">
