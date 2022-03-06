@@ -395,7 +395,7 @@ export default function MainPage(props) {
                 </div>
                 <Tab.Container
                   id="left-tabs-example"
-                  defaultActiveKey="welcomeCard"
+                  defaultActiveKey="data"
                   key="TabContainer"
                 >
                   <Row>

@@ -7,15 +7,15 @@ module.exports = (client, instance) => {
     const { guild } = member;
     const mute = require("../functions/mute");
     const db = require("../functions/database");
+    const welcome = require("../functions/welcome");
     const getCoins = require("../functions/getCoins");
     const takeCoins = require("../functions/takeCoins");
     const giveCoins = require("../functions/giveCoins");
     const saveMutedDataFile = (await db.get("muted")) || {};
-    const welcome = require("../functions/welcome").default;
     const welcomeGiftData = (await db.get("welcomeGiftData")) || {};
     const avatar =
-      member.user.avatarURL({ dynamic: true, format: "png" }) ||
-      client.user.avatarURL({ dynamic: true, format: "png" });
+      member.user.avatarURL({ dynamic: false, format: "png", size: 4096 }) ||
+      client.user.avatarURL({ dynamic: false, format: "png", size: 4096 });
     welcome(
       client,
       member.guild.id,
