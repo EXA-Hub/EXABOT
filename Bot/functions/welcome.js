@@ -1,5 +1,44 @@
-async function welcome(client, guildID, tag, name, avatar) {
+async function welcome(
+  client,
+  guildID,
+  tag,
+  name,
+  avatar,
+  discordTag,
+  memberCount
+) {
   const db = require("./database");
+  let data = await db.get(`${guildID}/welcomeImageData`);
+  if (Object.keys(data) === 0)
+    data = {
+      StageData: {
+        width: 720,
+        height: 480,
+        background:
+          "https://cdn.discordapp.com/attachments/865036175705112596/919683698851479592/20191115_213644.png",
+      },
+      AvatarData: {
+        url: avatar,
+        x: 60,
+        y: 120,
+        width: 128,
+        height: 128,
+        scaleX: 1,
+        scaleY: 1,
+        rotation: 0,
+        circle: true,
+      },
+      TextData: {
+        text: tag,
+        x: 60,
+        y: 120,
+        fontSize: 12,
+        rotation: 0,
+        scaleX: 1,
+        scaleY: 1,
+        fill: "#ffff00",
+      },
+    };
   const { MessageEmbed } = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
@@ -16,15 +55,14 @@ async function welcome(client, guildID, tag, name, avatar) {
           .replace("{{name}}", name)
           .replace("{{memberCount}}", guild.memberCount)
           .replace("{{tag}}", tag);
-        const username = name;
-        const avatarURL =
-          avatar ||
-          client.user.avatarURL({ dynamic: true, size: 128, format: "png" });
-        let url = `https://exa-bot-api.exacom.repl.co/welcome/1?tag=${encodeURI(
-          tag
-        )}&name=${encodeURI(username)}&memberCount=${encodeURI(
-          guild.memberCount
-        )}&avatar=${encodeURI(avatarURL)}`;
+        let url = `https://exa-bot-api.exacom.repl.co/welcome/data?data=${JSON.stringify(
+          data
+        ).toString()}&member=${JSON.stringify({
+          memberCount,
+          discordTag,
+          name,
+          tag,
+        }).toString()}`;
         const welcomeEmbed = new MessageEmbed()
           .setImage(url)
           .setColor(require("../data/config").bot.color.hex)
@@ -35,4 +73,4 @@ async function welcome(client, guildID, tag, name, avatar) {
   } else return;
 }
 
-module.exports = welcome;
+export default welcome;

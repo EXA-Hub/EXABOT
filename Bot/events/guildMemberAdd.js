@@ -1,16 +1,17 @@
-const Discord = require("discord.js");
+const { client } = require("../index");
 /**
- * @param {Discord.Client} client
+ * @param {client} client
  */
 module.exports = (client, instance) => {
   client.on("guildMemberAdd", async (member) => {
+    const { guild } = member;
     const mute = require("../functions/mute");
     const db = require("../functions/database");
-    const welcome = require("../functions/welcome");
     const getCoins = require("../functions/getCoins");
     const takeCoins = require("../functions/takeCoins");
     const giveCoins = require("../functions/giveCoins");
     const saveMutedDataFile = (await db.get("muted")) || {};
+    const welcome = require("../functions/welcome").default;
     const welcomeGiftData = (await db.get("welcomeGiftData")) || {};
     const avatar =
       member.user.avatarURL({ dynamic: true, size: 128, format: "png" }) ||
@@ -20,7 +21,9 @@ module.exports = (client, instance) => {
       member.guild.id,
       member.user.discriminator,
       member.user.username,
-      avatar
+      avatar,
+      member.user.tag,
+      guild.memberCount
     );
     if (
       saveMutedDataFile &&
