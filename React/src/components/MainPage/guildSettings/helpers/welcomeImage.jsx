@@ -141,7 +141,6 @@ export default class welcomeCard extends Component {
             style={{
               position: "relative",
               userSelect: "none",
-              left: `max(50% - ${this.state.data.StageData.width} / 2)`,
             }}
           >
             <Layer>
