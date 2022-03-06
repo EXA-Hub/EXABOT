@@ -31,8 +31,6 @@ async function welcome(client, guildID, tag, name, avatar, memberCount) {
         fill: "#ffff00",
       },
     };
-  data.TextData.text = encodeURI(data.TextData.text);
-  data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
   const { MessageEmbed } = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
@@ -49,6 +47,7 @@ async function welcome(client, guildID, tag, name, avatar, memberCount) {
           .replace("{{name}}", name)
           .replace("{{memberCount}}", guild.memberCount)
           .replace("{{tag}}", tag);
+        data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
         let url = `https://exa-bot-api.exacom.repl.co/welcome/data?data=${JSON.stringify(
           data
         )
