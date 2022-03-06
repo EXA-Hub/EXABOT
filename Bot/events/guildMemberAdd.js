@@ -22,7 +22,6 @@ module.exports = (client, instance) => {
       member.user.discriminator,
       member.user.username,
       avatar,
-      member.user.tag,
       guild.memberCount
     );
     if (

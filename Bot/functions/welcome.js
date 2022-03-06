@@ -1,12 +1,4 @@
-async function welcome(
-  client,
-  guildID,
-  tag,
-  name,
-  avatar,
-  discordTag,
-  memberCount
-) {
+async function welcome(client, guildID, tag, name, avatar, memberCount) {
   const db = require("./database");
   let data = await db.get(`${guildID}/welcomeImageData`);
   if (Object.keys(data) === 0)
@@ -64,7 +56,6 @@ async function welcome(
           .replace(" ", "")
           .replace("#", "")}&member=${JSON.stringify({
           memberCount,
-          discordTag,
           name,
           tag,
         })
