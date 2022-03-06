@@ -133,7 +133,7 @@ export default class welcomeCard extends Component {
     };
     return (
       <Card>
-        <div>
+        <div dir="rtl">
           <Stage
             onClick={this.handleStageClick}
             width={this.state.data.StageData.width}
@@ -146,7 +146,6 @@ export default class welcomeCard extends Component {
           >
             <Layer>
               <BackgroundImage data={this.state.data.StageData} />
-              <AvatarImg />
               <Text
                 name="text"
                 draggable
@@ -161,7 +160,9 @@ export default class welcomeCard extends Component {
                 fontSize={TextData.fontSize}
                 scaleX={TextData.scaleX}
                 scaleY={TextData.scaleY}
+                fontFamily="sans"
                 onDragEnd={(e) => {
+                  console.log(e);
                   state.data.TextData.x = e.target.attrs.x;
                   state.data.TextData.y = e.target.attrs.y;
                   this.setState(state);
@@ -184,6 +185,7 @@ export default class welcomeCard extends Component {
                   this.setState(state.data);
                 }}
               />
+              <AvatarImg />
               <TransformerComponent
                 selectedShapeName={this.state.selectedShapeName}
               />

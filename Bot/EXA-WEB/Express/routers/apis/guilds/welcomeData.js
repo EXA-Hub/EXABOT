@@ -9,6 +9,7 @@ router.all("/:guildID/welcome", async (req, res) => {
     const welcomeImageData = await db.get(`${guildID}/welcomeImageData`);
     return res.send(welcomeImageData);
   } else {
+    console.log(JSON.stringify(req.body));
     await db.set(`${guildID}/welcomeImageData`, req.body);
     res.send({ message: "تم بتجاح" });
   }
