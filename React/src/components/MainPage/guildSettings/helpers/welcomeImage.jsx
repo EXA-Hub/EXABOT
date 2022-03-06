@@ -140,7 +140,7 @@ export default class welcomeCard extends Component {
             height={this.state.data.StageData.height}
             style={{
               transform: "translate(-50%, -50%)",
-              position: "absolute",
+              // position: "absolute",
               height: "50%",
               width: "40%",
               left: "50%",
