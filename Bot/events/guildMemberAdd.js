@@ -14,8 +14,8 @@ module.exports = (client, instance) => {
     const welcome = require("../functions/welcome").default;
     const welcomeGiftData = (await db.get("welcomeGiftData")) || {};
     const avatar =
-      member.user.avatarURL({ dynamic: true, size: 128, format: "png" }) ||
-      client.user.avatarURL({ dynamic: true, size: 128, format: "png" });
+      member.user.avatarURL({ dynamic: true, format: "png" }) ||
+      client.user.avatarURL({ dynamic: true, format: "png" });
     welcome(
       client,
       member.guild.id,

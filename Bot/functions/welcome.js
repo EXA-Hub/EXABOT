@@ -39,6 +39,8 @@ async function welcome(
         fill: "#ffff00",
       },
     };
+  data.TextData.text = encodeURI(data.TextData.text);
+  data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
   const { MessageEmbed } = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
@@ -57,14 +59,20 @@ async function welcome(
           .replace("{{tag}}", tag);
         let url = `https://exa-bot-api.exacom.repl.co/welcome/data?data=${JSON.stringify(
           data
-        ).toString()}&member=${JSON.stringify({
+        )
+          .toString()
+          .replace(" ", "")
+          .replace("#", "")}&member=${JSON.stringify({
           memberCount,
           discordTag,
           name,
           tag,
-        }).toString()}`;
+        })
+          .toString()
+          .replace(" ", "")
+          .replace("#", "")}`;
         const welcomeEmbed = new MessageEmbed()
-          .setImage(url)
+          .setImage(encodeURI(url))
           .setColor(require("../data/config").bot.color.hex)
           .setTitle(welcomeMessage);
         channel.send({ embeds: [welcomeEmbed] });
@@ -73,4 +81,4 @@ async function welcome(
   } else return;
 }
 
-export default welcome;
+module.exports = welcome;

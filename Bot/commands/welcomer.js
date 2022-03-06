@@ -245,7 +245,9 @@ module.exports = {
             guild.id,
             user.discriminator,
             user.username,
-            user.avatarURL({ dynamic: true, size: 128, format: "png" })
+            user.avatarURL({ dynamic: false, format: "png" }),
+            member.user.tag,
+            guild.memberCount
           );
         } catch (e) {
           console.log(e);
