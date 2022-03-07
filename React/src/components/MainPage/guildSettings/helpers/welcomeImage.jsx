@@ -133,19 +133,11 @@ export default class welcomeCard extends Component {
     };
     return (
       <Card>
-        <div dir="rtl">
+        <div dir="rtl" className="pt-25" align="center">
           <Stage
             onClick={this.handleStageClick}
             width={this.state.data.StageData.width}
             height={this.state.data.StageData.height}
-            style={{
-              transform: "translate(-50%, -50%)",
-              position: "relative",
-              height: "50%",
-              width: "40%",
-              left: "50%",
-              top: "50%",
-            }}
           >
             <Layer>
               <BackgroundImage data={this.state.data.StageData} />

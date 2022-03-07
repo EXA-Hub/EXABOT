@@ -129,6 +129,8 @@ const client = new Client({
 
 // https://www.npmjs.com/package/discord-logs
 require("discord-logs")(client);
+// https://github.com/Mateo-tem/discord-modals/blob/master/DOCS.md
+require("discord-modals")(client);
 
 client.on("ready", () => {
   const dbOptions = {

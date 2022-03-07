@@ -46,10 +46,12 @@ module.exports = {
     instance,
     interaction,
   }) => {
+    if (interaction) interaction.reply({ content: "**✅ | جار التنفيذ**" });
     const number = parseInt(
       (interaction ? interaction.options.getNumber("عدد") : args[0]) || 50
     );
-    if (isNaN(number)) return `**❌ | عدد غير معروف**`;
+    if (isNaN(number))
+      return channel.send({ content: `**❌ | عدد غير معروف**` });
     const messagesDeleted = await channel.bulkDelete(number, true);
     if (messagesDeleted)
       return channel
@@ -59,6 +61,6 @@ module.exports = {
             if (msg && msg.deletable) msg.delete();
           }, 3000);
         });
-    return `**❌ | لا يمكنني حذف الرسائل**`;
+    return channel.send({ content: `**❌ | لا يمكنني حذف الرسائل**` });
   },
 };
