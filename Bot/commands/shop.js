@@ -195,7 +195,9 @@ module.exports = {
                 .awaitMessages({
                   filter,
                   max: 1,
+                  dispose: true,
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                   errors: ["الزمن"],
                 })
                 .then((setNameMsg) => {
@@ -211,7 +213,9 @@ module.exports = {
                           .awaitMessages({
                             filter,
                             max: 1,
+                            dispose: true,
                             time: 60 * 1000,
+                            idle: 60 * 1000,
                             errors: ["الزمن"],
                           })
                           .then((setDescriptionMsg) => {
@@ -226,7 +230,9 @@ module.exports = {
                                     .awaitMessages({
                                       filter,
                                       max: 1,
+                                      dispose: true,
                                       time: 60 * 1000,
+                                      idle: 60 * 1000,
                                       errors: ["الزمن"],
                                     })
                                     .then((setPriceMsg) => {
@@ -335,6 +341,7 @@ module.exports = {
                   filter: btnFilter,
                   componentType: "BUTTON",
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                 })
                 .then((btnInteraction) => {
                   if (
@@ -411,7 +418,9 @@ module.exports = {
                 .awaitMessages({
                   filter,
                   max: 1,
+                  dispose: true,
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                   errors: ["الزمن"],
                 })
                 .then((setNameMsg) => {
@@ -427,7 +436,9 @@ module.exports = {
                           .awaitMessages({
                             filter,
                             max: 1,
+                            dispose: true,
                             time: 60 * 1000,
+                            idle: 60 * 1000,
                             errors: ["الزمن"],
                           })
                           .then((setDescriptionMsg) => {
@@ -442,7 +453,9 @@ module.exports = {
                                     .awaitMessages({
                                       filter,
                                       max: 1,
+                                      dispose: true,
                                       time: 60 * 1000,
+                                      idle: 60 * 1000,
                                       errors: ["الزمن"],
                                     })
                                     .then((setPriceMsg) => {
@@ -555,6 +568,7 @@ module.exports = {
                   filter: btnFilter,
                   componentType: "BUTTON",
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                 })
                 .then((btnInteraction) => {
                   if (
@@ -621,7 +635,9 @@ module.exports = {
                 .awaitMessages({
                   filter,
                   max: 1,
+                  dispose: true,
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                   errors: ["الزمن"],
                 })
                 .then((setNameMsg) => {
@@ -637,7 +653,9 @@ module.exports = {
                           .awaitMessages({
                             filter,
                             max: 1,
+                            dispose: true,
                             time: 60 * 1000,
+                            idle: 60 * 1000,
                             errors: ["الزمن"],
                           })
                           .then((setDescriptionMsg) => {
@@ -652,7 +670,9 @@ module.exports = {
                                     .awaitMessages({
                                       filter,
                                       max: 1,
+                                      dispose: true,
                                       time: 60 * 1000,
+                                      idle: 60 * 1000,
                                       errors: ["الزمن"],
                                     })
                                     .then((setPriceMsg) => {
@@ -757,6 +777,7 @@ module.exports = {
                   filter: btnFilter,
                   componentType: "BUTTON",
                   time: 60 * 1000,
+                  idle: 60 * 1000,
                 })
                 .then((btnInteraction) => {
                   if (

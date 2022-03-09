@@ -47,8 +47,16 @@ async function welcome(client, guildID, tag, name, avatar, memberCount) {
           .replace("{{name}}", name)
           .replace("{{memberCount}}", guild.memberCount)
           .replace("{{tag}}", tag);
-        data.AvatarData.url = encodeURI(avatar);
-        data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
+        if (
+          data &&
+          data.TextData &&
+          data.AvatarData &&
+          data.TextData.fill &&
+          data.AvatarData.url
+        ) {
+          data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
+          data.AvatarData.url = encodeURI(avatar);
+        }
         let url = `https://exa-bot-api.exacom.repl.co/welcome/data?data=${JSON.stringify(
           data
         )

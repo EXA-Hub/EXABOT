@@ -139,7 +139,9 @@ module.exports = {
                       .awaitMessages({
                         filter,
                         max: 1,
+                        dispose: true,
                         time: 60 * 1000,
+                        idle: 60 * 1000,
                         errors: ["الزمن"],
                       })
                       .then((m) => {
@@ -196,7 +198,9 @@ module.exports = {
                     .awaitMessages({
                       filter,
                       max: 1,
+                      dispose: true,
                       time: 60 * 1000,
+                      idle: 60 * 1000,
                       errors: ["الزمن"],
                     })
                     .then((m) => {
@@ -233,7 +237,9 @@ module.exports = {
                             .awaitMessages({
                               filter,
                               max: 1,
+                              dispose: true,
                               time: 60 * 1000,
+                              idle: 60 * 1000,
                               errors: ["الزمن"],
                             })
                             .then((msg) => {
@@ -279,7 +285,9 @@ module.exports = {
                     .awaitMessages({
                       filter,
                       max: 1,
+                      dispose: true,
                       time: 60 * 1000,
+                      idle: 60 * 1000,
                       errors: ["الزمن"],
                     })
                     .then(async (m) => {
@@ -315,7 +323,7 @@ module.exports = {
                             wantedChannel.id
                           );
                           wantedChannel.send({
-                            content: "**✅ | هذه الأن روم الإستقبال**",
+                            content: "**✅ | هذه الأن غرفة الإستقبال**",
                           });
                         } else
                           return channel.send({
@@ -355,7 +363,7 @@ module.exports = {
                         return channel.send({
                           allowedMentions: { repliedUser: false },
                           content:
-                            "**👀 | لم تقم الادارة بتحديد روم الاستقبال**",
+                            "**👀 | لم تقم الادارة بتحديد غرفة الاستقبال**",
                         });
                     });
                 });

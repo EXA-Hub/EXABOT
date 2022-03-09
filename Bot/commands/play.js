@@ -1,7 +1,7 @@
 module.exports = {
   name: "play",
   aliases: ["p"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "تشغيل أغنية",
   expectedArgs: "<الأغنية>",
   minArgs: 1,

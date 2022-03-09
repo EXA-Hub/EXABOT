@@ -1,7 +1,7 @@
 module.exports = {
   name: "resume",
   aliases: ["resume", "unpause"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "إعادة تشغيل المحتوى",
   // expectedArgs: '',
   // minArgs: 0,

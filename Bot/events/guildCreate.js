@@ -5,6 +5,16 @@ const Discord = require("discord.js");
 module.exports = (client, instance) => {
   const config = require("../data/config");
   client.on("guildCreate", async (guild) => {
+    if (!require("../data/guilds").includes(guild.id))
+      return guild.leave().then(async (g) => {
+        (await g.fetchOwner()).user.send({
+          content:
+            `إسم السيرفر: ` +
+            guild.name +
+            `\n> أنا أسف يجب شراء باقة من خادم الدعم\n` +
+            config.support.server.invite.link,
+        });
+      });
     const { MessageEmbed } = require("discord.js");
     const { stripIndents } = require("common-tags");
     const botOwner = client.users.cache.get(config.owner);
@@ -44,14 +54,9 @@ module.exports = (client, instance) => {
       );
     }
     botOwner.send({ embeds: [embedMsg] });
-    if (users.size < "250") {
-      guild.leave();
-      (await guild.fetchOwner()).user.send({
-        content: `إسم السيرفر: ${guild.name}\n> أنا أسف يجب أن يضم سيرفر 250 عضو لكي أنضم\nهذا أقل عدد ممكن للبوتات غير الموثقة`,
-      });
-    } else if (guildOwner) {
+    if (guildOwner) {
       const num = users.size * 50;
-      const giveCoins = require("../../functions/giveCoins");
+      const giveCoins = require("../functions/giveCoins");
       giveCoins(guildOwner.id, num);
       guildOwner.send({
         content: `**🪙 مبروك لقد حصلت على ${num} عملة ذهبية 🥳**`,

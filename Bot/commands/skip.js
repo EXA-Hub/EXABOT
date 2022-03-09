@@ -1,7 +1,7 @@
 module.exports = {
   name: "skip",
   aliases: [],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "تخطى محتوى ما",
   // expectedArgs: '',
   // minArgs: 0,

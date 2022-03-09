@@ -9,6 +9,7 @@ const discordBackup = require("discord-backup");
 const DiscordOauth2 = require("discord-oauth2");
 const { SpotifyPlugin } = require("@distube/spotify");
 const { SoundCloudPlugin } = require("@distube/soundcloud");
+const { TempChannelsManager } = require("@hunteroi/discord-temp-channels");
 const GiveawayManagerWithOwnDatabase =
   require("./functions/GiveawayManagerWithOwnDatabase")(connection);
 
@@ -64,6 +65,7 @@ class Client extends Discord.Client {
         },
       },
     });
+    this._temps = new TempChannelsManager(this);
   }
   get backup() {
     return this._backup;
@@ -107,6 +109,12 @@ class Client extends Discord.Client {
   set giveawaysManager(giveawaysManager) {
     this._giveawaysManager = giveawaysManager;
   }
+  get temps() {
+    return this._temps;
+  }
+  set temps(temps) {
+    this._temps = temps;
+  }
 }
 
 const client = new Client({
@@ -132,7 +140,19 @@ require("discord-logs")(client);
 // https://github.com/Mateo-tem/discord-modals/blob/master/DOCS.md
 require("discord-modals")(client);
 
-client.on("ready", () => {
+client.on("ready", async () => {
+  (await client.guilds.fetch()).forEach(async (guild) => {
+    if (require("./data/guilds").includes(guild.id)) return;
+    guild = await guild.fetch();
+    guild.leave();
+    (await guild.fetchOwner()).user.send({
+      content:
+        `إسم السيرفر: ` +
+        guild.name +
+        `\n> أنا أسف يجب شراء باقة من خادم الدعم\n` +
+        config.support.server.invite.link,
+    });
+  });
   const dbOptions = {
     keepAlive: false,
     useNewUrlParser: true,
@@ -159,7 +179,7 @@ client.on("ready", () => {
     ignoreBots: true,
     ephemeral: true,
     showWarns: true,
-    // debug: true,
+    debug: true,
     dbOptions,
   })
     .setCategorySettings(

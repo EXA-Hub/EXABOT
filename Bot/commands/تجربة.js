@@ -52,7 +52,6 @@ module.exports = {
       let { gifts } = (await db.get("gifts")) || {};
       const maxGift = gifts.length;
       const randomGift = Math.floor(Math.random() * (+maxGift - +min) + +min);
-      console.log(gifts);
       content = content.replace(
         "{{giftCode}}",
         gifts[randomGift]

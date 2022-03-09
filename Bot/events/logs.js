@@ -593,8 +593,8 @@ module.exports = async (client, instance) => {
       .setColor("YELLOW")
       .setTitle("تغير في محتوى الرسالة")
       .setURL(message.url)
-      .addField("⚙️ المحتوى القديم:", oldContent)
-      .addField("🚀 المحتوى الجديد:", newContent);
+      .addField("⚙️ المحتوى القديم:", `${oldContent}`)
+      .addField("🚀 المحتوى الجديد:", `${newContent}`);
     return webhook(logChannel, logEmbed);
   });
 };

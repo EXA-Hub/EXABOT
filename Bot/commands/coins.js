@@ -1,3 +1,6 @@
+const zampx = require("zampx");
+const { client } = require("../index");
+const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "coins",
   aliases: ["c", "coin"],
@@ -41,8 +44,15 @@ module.exports = {
       type: 6,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -159,11 +169,17 @@ module.exports = {
             });
           return `**${targetUser} 🏧 | مبروك لقد حصلت على ${gifted} عملة ذهبية 🪙**`;
         } else {
-          const targetUserCoins = await getCoins(targetUser.id);
+          const targetUserCoins = zampx.numberFormatter(
+            Math.floor(await getCoins(targetUser.id)),
+            1
+          );
           return `**🏧 | عملات ${targetUser} الأن هي \`${targetUserCoins}\` عملة ذهبية 🪙**`;
         }
       } else {
-        const userCoins = await getCoins(user.id);
+        const userCoins = zampx.numberFormatter(
+          Math.floor(await getCoins(user.id)),
+          1
+        );
         return `**🏧 | أنت تمتلك \`${userCoins}\` عملة ذهبية 🪙**`;
       }
     }

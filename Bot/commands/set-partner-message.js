@@ -35,7 +35,14 @@ module.exports = {
     const db = require("../functions/database");
     const filter = (msg) => msg.author == user;
     channel
-      .awaitMessages({ filter, max: 1, time: 60 * 1000, errors: ["الزمن"] })
+      .awaitMessages({
+        filter,
+        max: 1,
+        dispose: true,
+        time: 60 * 1000,
+        idle: 60 * 1000,
+        errors: ["الزمن"],
+      })
       .then(async (m1) => {
         m1 = m1.first();
         const arg = m1.content;

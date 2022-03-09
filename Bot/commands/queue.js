@@ -1,7 +1,7 @@
 module.exports = {
   name: "queue",
   aliases: ["q"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "الأغاني الحالية",
   // expectedArgs: '',
   // minArgs: 0,

@@ -224,7 +224,9 @@ module.exports = {
             .awaitMessages({
               filter,
               max: 1,
+              dispose: true,
               time: 60 * 1000,
+              idle: 60 * 1000,
               errors: ["الزمن"],
             })
             .then(async (m1) => {
@@ -297,7 +299,14 @@ module.exports = {
         else channel.send({ content: "**👍 | أرسل عدد العملات**" });
         const filter = (msg) => msg.author == user;
         channel
-          .awaitMessages({ filter, max: 1, time: 60 * 1000, errors: ["الزمن"] })
+          .awaitMessages({
+            filter,
+            max: 1,
+            dispose: true,
+            time: 60 * 1000,
+            idle: 60 * 1000,
+            errors: ["الزمن"],
+          })
           .then(async (msg) => {
             msg = msg.first();
             const coins = parseInt(msg.content);

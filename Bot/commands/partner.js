@@ -56,11 +56,11 @@ module.exports = {
     if (!rdata[guild.id]) {
       channel.send({
         content:
-          `يرجى تحديد روم إستقبال الطلبات في هذا السيرفر` +
+          `يرجى تحديد غرفة إستقبال الطلبات في هذا السيرفر` +
           "\n" +
           `الطريقة: **${
             message ? prefix : "/"
-          }set-partner-channels <ايدي الروم> request**`,
+          }set-partner-channels <ايدي الغرفة> request**`,
         allowedMentions: { repliedUser: false },
       });
       return;
@@ -68,11 +68,11 @@ module.exports = {
     if (!cdata[guild.id]) {
       channel.send({
         content:
-          `يرجى تحديد روم النشر في هذا السيرفر` +
+          `يرجى تحديد غرفة النشر في هذا السيرفر` +
           "\n" +
           `الطريقة: **${
             message ? prefix : "/"
-          }set-partner-channels <ايدي الروم> channel**`,
+          }set-partner-channels <ايدي الغرفة> channel**`,
         allowedMentions: { repliedUser: false },
       });
       return;
@@ -142,6 +142,7 @@ module.exports = {
         const fcollector = memberChannel.createMessageCollector({
           filter,
           max: 1,
+          dispose: true,
           time: 30000,
         });
         fcollector.on("collect", (m) => {
@@ -173,11 +174,11 @@ module.exports = {
                   otherGuildExist = false;
                   return memberChannel.send({
                     content:
-                      `يرجى تحديد روم النشر في سيرفرك` +
+                      `يرجى تحديد غرفة النشر في سيرفرك` +
                       "\n" +
                       `الطريقة: **${
                         message ? prefix : "/"
-                      }set-partner-channels <ايدي الروم> channel**`,
+                      }set-partner-channels <ايدي الغرفة> channel**`,
                   });
                 }
                 if (!rolesData[otherGuild.id]) {
@@ -274,6 +275,7 @@ module.exports = {
                       const scollector = memberchannel.createMessageCollector({
                         filter,
                         max: 1,
+                        dispose: true,
                         time: 30000,
                       });
                       scollector.on("collect", (m) => {

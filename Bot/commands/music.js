@@ -4,7 +4,7 @@ const wok = require("wokcommands");
 module.exports = {
   name: "music",
   aliases: [],
-  category: "الإعـدادات",
+  category: "الـمـوسـيـقـى",
   description: "التحكم في الغرف الموسيقية في المجتمع",
   expectedArgs: "<run/end>",
   minArgs: 1,

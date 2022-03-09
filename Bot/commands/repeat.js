@@ -1,7 +1,7 @@
 module.exports = {
   name: "repeat",
   aliases: ["loop", "rp"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "repeatشغل تراكي على الـ",
   expectedArgs: "<off/song/queue>",
   minArgs: 1,

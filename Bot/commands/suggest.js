@@ -1,3 +1,5 @@
+const { client } = require("../index");
+const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "suggest",
   aliases: ["sug"],
@@ -23,8 +25,15 @@ module.exports = {
       type: 3,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -52,7 +61,7 @@ module.exports = {
     const invitebtn = new MessageButton()
       .setURL(config.support.server.invite.link)
       .setStyle("LINK")
-      .setLabel("روم الإقتراحات");
+      .setLabel("غرفة الإقتراحات");
     let sugembed = new MessageEmbed()
       .setTimestamp()
       .setColor(config.bot.color.hex)
@@ -71,11 +80,18 @@ module.exports = {
         .awaitMessages({
           filter,
           max: 1,
+          dispose: true,
           time: 60 * 1000,
+          idle: 60 * 1000,
           errors: ["الزمن"],
         })
         .then((msg) => {
           msg = msg.first();
+          if (!msg || !msg.concat)
+            return channel.send({
+              content: "**💢 | تم إلغاء العملية**",
+              components: [btns],
+            });
           sugchannel
             .send({ embeds: [sugembed.setDescription(msg.content)] })
             .then((msg) => {

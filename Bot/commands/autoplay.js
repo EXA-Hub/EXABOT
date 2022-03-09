@@ -3,7 +3,7 @@ const wok = require("wokcommands");
 module.exports = {
   name: "autoplay",
   aliases: ["ap"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "تشغيل الأغنية التالية تلقائيا حسب الإقتراحات",
   // expectedArgs: '',
   // minArgs: 0,

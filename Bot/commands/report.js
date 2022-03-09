@@ -52,7 +52,7 @@ module.exports = {
     const invitebtn = new MessageButton()
       .setURL(config.support.server.invite.link)
       .setStyle("LINK")
-      .setLabel("روم الإقتراحات");
+      .setLabel("غرفة الإقتراحات");
     const reportinvite = await channel
       .createInvite({
         maxAge: 0, // 0 = infinite expiration
@@ -83,7 +83,9 @@ module.exports = {
         .awaitMessages({
           filter,
           max: 1,
+          dispose: true,
           time: 60 * 1000,
+          idle: 60 * 1000,
           errors: ["الزمن"],
         })
         .then((msg) => {

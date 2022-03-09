@@ -165,6 +165,7 @@ module.exports = {
                       ["-تأكيد", "إلغاء"].includes(m.content),
                     time: 60000,
                     max: 1,
+                    dispose: true,
                   });
                   collector.on("collect", (m) => {
                     const confirm = m.content === "-تأكيد";

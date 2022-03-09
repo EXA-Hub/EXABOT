@@ -1,7 +1,7 @@
 module.exports = {
   name: "volume",
   aliases: ["v", "set", "set-volume"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "تغيير الصوت",
   expectedArgs: "<رقم>",
   minArgs: 1,

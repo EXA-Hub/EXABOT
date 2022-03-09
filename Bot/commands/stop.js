@@ -1,7 +1,7 @@
 module.exports = {
   name: "stop",
   aliases: ["disconnect", "leave"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "إيقاف تشغيل المحتوى",
   // expectedArgs: '',
   // minArgs: 0,

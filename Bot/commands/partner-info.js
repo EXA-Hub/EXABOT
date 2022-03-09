@@ -44,9 +44,9 @@ module.exports = {
         url: config.support.server.invite.link,
       })
       .setDescription(
-        `<#${request[guild.id]}> **روم طلبات الشراكة**\n<#${
+        `<#${request[guild.id]}> **غرفة طلبات الشراكة**\n<#${
           channels[guild.id]
-        }> **روم إعلانات ونشر الشراكة**\n<@&${
+        }> **غرفة إعلانات ونشر الشراكة**\n<@&${
           role[guild.id]
         }> **رتبة الشركاء**\n**رسالة الشراكة:**\n\`\`\`${
           partner_message[guild.id]

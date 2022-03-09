@@ -13,7 +13,7 @@ keys.forEach((key, i) =>
 module.exports = {
   name: "filters",
   aliases: ["filter"],
-  category: "أوامـر عـامـة",
+  category: "الـمـوسـيـقـى",
   description: "تغيير فلاتر الصوت",
   expectedArgs: `<off/\`\`\`${filtersMap}\`\`\`>`,
   minArgs: 0,

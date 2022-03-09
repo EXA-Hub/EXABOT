@@ -94,7 +94,9 @@ module.exports = {
             .awaitMessages({
               filter,
               max: 1,
+              dispose: true,
               time: 60 * 1000,
+              idle: 60 * 1000,
               errors: ["الزمن"],
             })
             .then((m1) => {
@@ -114,7 +116,9 @@ module.exports = {
                       .awaitMessages({
                         filter,
                         max: 1,
+                        dispose: true,
                         time: 60 * 1000,
+                        idle: 60 * 1000,
                         errors: ["الزمن"],
                       })
                       .then((m3) => {
@@ -134,7 +138,9 @@ module.exports = {
                                 .awaitMessages({
                                   filter,
                                   max: 1,
+                                  dispose: true,
                                   time: 60 * 1000,
+                                  idle: 60 * 1000,
                                   errors: ["الزمن"],
                                 })
                                 .then((m5) => {
@@ -152,7 +158,9 @@ module.exports = {
                                           .awaitMessages({
                                             filter,
                                             max: 1,
+                                            dispose: true,
                                             time: 60 * 1000,
+                                            idle: 60 * 1000,
                                             errors: ["الزمن"],
                                           })
                                           .then((m7) => {
@@ -241,7 +249,9 @@ module.exports = {
             .awaitMessages({
               filter,
               max: 1,
+              dispose: true,
               time: 60 * 1000,
+              idle: 60 * 1000,
               errors: ["الزمن"],
             })
             .then((msg) => {
@@ -285,7 +295,9 @@ module.exports = {
             .awaitMessages({
               filter,
               max: 1,
+              dispose: true,
               time: 60 * 1000,
+              idle: 60 * 1000,
               errors: ["الزمن"],
             })
             .then((msg) => {
@@ -320,7 +332,9 @@ module.exports = {
             .awaitMessages({
               filter,
               max: 1,
+              dispose: true,
               time: 60 * 1000,
+              idle: 60 * 1000,
               errors: ["الزمن"],
             })
             .then((msg) => {

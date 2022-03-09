@@ -66,9 +66,11 @@ function sendApply(user, endChannel, channel, data) {
       components: [donningRow],
     })
     .then(() => {
-      channel.send({
-        content: "**✅ | تم إرسال طلبك بنجاح**",
-      });
+      if (endChannel.id === channel) return;
+      else
+        return channel.send({
+          content: "**✅ | تم إرسال طلبك بنجاح**",
+        });
     });
 }
 module.exports = {
@@ -81,7 +83,7 @@ module.exports = {
   maxArgs: 2,
   syntaxError: "",
   permissions: [],
-  // cooldown: '6h',
+  cooldown: "6h",
   // globalCooldown: '',
   hidden: false,
   ownerOnly: false,
@@ -479,7 +481,9 @@ module.exports = {
               .awaitMessages({
                 filter,
                 max: 1,
+                dispose: true,
                 time: 60 * 1000,
+                idle: 60 * 1000,
                 errors: ["الزمن"],
               })
               .then((m1) => {
@@ -495,7 +499,9 @@ module.exports = {
                     .awaitMessages({
                       filter,
                       max: 1,
+                      dispose: true,
                       time: 60 * 1000,
+                      idle: 60 * 1000,
                       errors: ["الزمن"],
                     })
                     .then((m2) => {
@@ -511,7 +517,9 @@ module.exports = {
                           .awaitMessages({
                             filter,
                             max: 1,
+                            dispose: true,
                             time: 60 * 1000,
+                            idle: 60 * 1000,
                             errors: ["الزمن"],
                           })
                           .then((m3) => {
@@ -531,7 +539,9 @@ module.exports = {
                                   .awaitMessages({
                                     filter,
                                     max: 1,
+                                    dispose: true,
                                     time: 60 * 1000,
+                                    idle: 60 * 1000,
                                     errors: ["الزمن"],
                                   })
                                   .then((m4) => {
@@ -548,7 +558,9 @@ module.exports = {
                                           .awaitMessages({
                                             filter,
                                             max: 1,
+                                            dispose: true,
                                             time: 60 * 1000,
+                                            idle: 60 * 1000,
                                             errors: ["الزمن"],
                                           })
                                           .then((m5) => {
