@@ -22,9 +22,26 @@ let tempChannelData = {
     client.users.cache.get(dav)
   ),
   childPermissionOverwriteOptions: {
+    VIEW_CHANNEL: true,
     SEND_MESSAGES: true,
-    EMBED_LINKS: null,
-    ATTACH_FILES: false,
+    EMBED_LINKS: false,
+    ATTACH_FILES: true,
+    READ_MESSAGE_HISTORY: true,
+    MENTION_EVERYONE: false,
+    MANAGE_MESSAGES: false,
+    SEND_TTS_MESSAGES: true,
+    ADD_REACTIONS: true,
+    SEND_MESSAGES_IN_THREADS: true,
+    MANAGE_THREADS: false,
+    USE_EXTERNAL_EMOJIS: true,
+    USE_PRIVATE_THREADS: true,
+    USE_PUBLIC_THREADS: true,
+    USE_EXTERNAL_STICKERS: true,
+    CREATE_PRIVATE_THREADS: true,
+    CREATE_PUBLIC_THREADS: true,
+    USE_APPLICATION_COMMANDS: true,
+    MANAGE_CHANNELS: true,
+    MANAGE_WEBHOOKS: false,
   },
 };
 module.exports = {
@@ -201,11 +218,12 @@ module.exports = {
             ? textChannelAsThreadParent.id
             : null,
         });
+        await db.set("temp-channels", { data });
         tempChannelData.childCategory = childCategory.id;
         tempChannelData.childMaxUsers = childMaxUsers;
         if (textChannelAsThreadParent)
-          tempChannelData.textChannelAsThreadParent = textChannelAsThreadParent;
-        await db.set("temp-channels", { data });
+          tempChannelData.textChannelAsThreadParent =
+            textChannelAsThreadParent.id;
         client.temps.registerChannel(channelID.id, tempChannelData);
         return "**✅ | تم إنشاء الغرفة**";
       default:

@@ -27,9 +27,26 @@ module.exports = async (client, instance) => {
       client.users.cache.get(dav)
     ),
     childPermissionOverwriteOptions: {
+      VIEW_CHANNEL: true,
       SEND_MESSAGES: true,
-      EMBED_LINKS: null,
-      ATTACH_FILES: false,
+      EMBED_LINKS: false,
+      ATTACH_FILES: true,
+      READ_MESSAGE_HISTORY: true,
+      MENTION_EVERYONE: false,
+      MANAGE_MESSAGES: false,
+      SEND_TTS_MESSAGES: true,
+      ADD_REACTIONS: true,
+      SEND_MESSAGES_IN_THREADS: true,
+      MANAGE_THREADS: false,
+      USE_EXTERNAL_EMOJIS: true,
+      USE_PRIVATE_THREADS: true,
+      USE_PUBLIC_THREADS: true,
+      USE_EXTERNAL_STICKERS: true,
+      CREATE_PRIVATE_THREADS: true,
+      CREATE_PUBLIC_THREADS: true,
+      USE_APPLICATION_COMMANDS: true,
+      MANAGE_CHANNELS: true,
+      MANAGE_WEBHOOKS: false,
     },
   };
   let { data } = await db.get("temp-channels");
