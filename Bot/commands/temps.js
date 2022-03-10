@@ -3,39 +3,11 @@ const { MessageEmbed } = require("discord.js");
 const db = require("../functions/database");
 const config = require("../data/config");
 const { client } = require("../index");
-/**
-client.temps.channels;
-client.temps.unregisterChannel("");
-client.temps.registerChannel("", {
-  childCategory: "",
-  // إختياري
-  childMaxUsers: 3,
-  // textChannelAsThreadParent: "",
-  //   ثوابت
-  threadArchiveDuration: "MAX",
-  childAutoDeleteIfEmpty: true,
-  childAutoDeleteIfOwnerLeaves: false,
-  childTextFormat: (str, count) => `#${count} - ${str}`,
-  childTextFormatRegex: /^#\d+ \-/,
-  childVoiceFormat: (str, count) => `#${count} - ${str}`,
-  childVoiceFormatRegex: /^#\d+ \-/,
-  childBitrate: 64,
-  childCanBeRenamed: true,
-  childOverwriteRolesAndUsers: config.devs.map((dav) =>
-    client.users.cache.get(dav)
-  ),
-  childPermissionOverwriteOptions: {
-    SEND_MESSAGES: true,
-    EMBED_LINKS: null,
-    ATTACH_FILES: false,
-  },
-});
- */
 let tempChannelData = {
   childCategory: "",
   // إختياري
   childMaxUsers: 3,
-  textChannelAsThreadParent: null,
+  // textChannelAsThreadParent: "",
   // ثوابت
   threadArchiveDuration: "MAX",
   childAutoDeleteIfEmpty: true,
@@ -234,8 +206,7 @@ module.exports = {
         if (textChannelAsThreadParent)
           tempChannelData.textChannelAsThreadParent = textChannelAsThreadParent;
         await db.set("temp-channels", { data });
-        client.temps.registerChannel(channelID, tempChannelData);
-        client.temps.registerChannel(channelID, tempChannelData);
+        client.temps.registerChannel(channelID.id, tempChannelData);
         return "**✅ | تم إنشاء الغرفة**";
       default:
         return `× ${
