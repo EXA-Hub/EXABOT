@@ -1,6 +1,6 @@
 module.exports = {
   name: "partner-info",
-  aliases: ["pi"],
+  aliases: ["معلومات-الشراكات", "pi", "partner-info"],
   category: "أوامـر عـامـة",
   description: "معلومات الشراكة في السيرفر",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

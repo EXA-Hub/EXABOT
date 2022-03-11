@@ -1,6 +1,6 @@
 module.exports = {
   name: "emojify",
-  aliases: [],
+  aliases: ["رمز", "رمز-تعبير", "تعبير", "emojify"],
   category: "الألـعـاب",
   description: "تحويل الكلام لإيموجي",
   expectedArgs: "<كلام>",
@@ -43,8 +43,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

@@ -3,7 +3,7 @@ const config = require("../data/config");
 const wok = require("wokcommands");
 module.exports = {
   name: "music",
-  aliases: [],
+  aliases: ["غني", "موسيقى", "مزكها", "مزيكا", "music"],
   category: "الـمـوسـيـقـى",
   description: "التحكم في الغرف الموسيقية في المجتمع",
   expectedArgs: "<run/end>",

@@ -7,7 +7,6 @@ const {
   Interaction,
 } = require("discord.js");
 const WOKcommands = require("wokcommands");
-
 module.exports = {
   name: "معلومات الشخص",
   type: "user",
@@ -15,7 +14,7 @@ module.exports = {
    *
    * @param {{guild: Guild,member: GuildMember,user: User,target: { type: String, id: String },channel: Channel,client: Client,instance: WOKcommands,interaction: Interaction}} data
    */
-  run: ({
+  run: async ({
     guild,
     member,
     user,
@@ -48,7 +47,9 @@ module.exports = {
       .map((r) => `<@&${r.id}> |`)
       .join(` `);
 
-    let inviteCount = 0;
+    let inviteCount = (await guild.invites.fetch()).map(
+      (invite) => invite.inviterId === user.id
+    ).length;
 
     if (status.includes("dnd")) statusFull = ":red_circle: | DND";
     if (status.includes("offline")) statusFull = ":black_circle: | Offline";

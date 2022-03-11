@@ -1,6 +1,6 @@
 module.exports = {
   name: "skip",
-  aliases: [],
+  aliases: ["تخطى", "skip"],
   category: "الـمـوسـيـقـى",
   description: "تخطى محتوى ما",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

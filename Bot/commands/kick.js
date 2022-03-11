@@ -1,6 +1,6 @@
 module.exports = {
   name: "kick",
-  aliases: [],
+  aliases: ["طرد", "kick"],
   category: "الإداريـة",
   description: "طرد العضو",
   expectedArgs: "<@Member> <Reason>",
@@ -23,8 +23,15 @@ module.exports = {
       type: 6,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

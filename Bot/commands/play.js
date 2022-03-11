@@ -1,6 +1,6 @@
 module.exports = {
   name: "play",
-  aliases: ["p"],
+  aliases: ["غني", "شغل", "تشغيل", "p", "play"],
   category: "الـمـوسـيـقـى",
   description: "تشغيل أغنية",
   expectedArgs: "<الأغنية>",
@@ -24,8 +24,15 @@ module.exports = {
       type: 3,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

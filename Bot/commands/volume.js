@@ -1,6 +1,8 @@
+const { client } = require("../index");
+const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "volume",
-  aliases: ["v", "set", "set-volume"],
+  aliases: ["صوت", "v", "set", "set-volume", "volume"],
   category: "الـمـوسـيـقـى",
   description: "تغيير الصوت",
   expectedArgs: "<رقم>",
@@ -41,8 +43,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

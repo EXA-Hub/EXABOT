@@ -1,6 +1,6 @@
 module.exports = {
   name: "unban",
-  aliases: [],
+  aliases: ["فك-حظر", "unban"],
   category: "الإداريـة",
   description: "فك حظر عضو من دخول السيرفر",
   // expectedArgs: '',
@@ -29,8 +29,15 @@ module.exports = {
       type: 3,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

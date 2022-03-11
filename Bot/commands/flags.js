@@ -1,6 +1,6 @@
 module.exports = {
   name: "flags",
-  aliases: ["flag"],
+  aliases: ["شارات", "flag", "flags"],
   category: "الإعـدادات",
   description: "تحديد رتب للحسابات النادرة",
   expectedArgs: "<delete/create>",
@@ -33,8 +33,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

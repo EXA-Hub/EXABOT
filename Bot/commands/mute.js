@@ -1,6 +1,6 @@
 module.exports = {
   name: "mute",
-  aliases: [],
+  aliases: ["صمت", "mute"],
   category: "الإداريـة",
   description: "حظر شخص كتابيا وتحديد رتبة الحظر",
   expectedArgs: "<رتبة/عضو>",
@@ -41,8 +41,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

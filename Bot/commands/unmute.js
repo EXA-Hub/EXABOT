@@ -1,6 +1,6 @@
 module.exports = {
   name: "unmute",
-  aliases: [],
+  aliases: ["تكلم", "فك-صمت", "unmute"],
   category: "الإداريـة",
   description: "فك حظر شخص كتابيا حذف رتبة الحظر",
   expectedArgs: "<رتبة/عضو>",
@@ -29,8 +29,15 @@ module.exports = {
       type: 8,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

@@ -1,6 +1,6 @@
 module.exports = {
   name: "antilink",
-  aliases: [],
+  aliases: ["منع-الروابط", "منع-الرابط", "antilink"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات حماية الروابط",
   expectedArgs: "<on/off/info/allowed> [@role]",
@@ -47,8 +47,15 @@ module.exports = {
       type: 8,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

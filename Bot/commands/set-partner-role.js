@@ -1,6 +1,6 @@
 module.exports = {
   name: "set-partner-role",
-  aliases: ["spr"],
+  aliases: ["رتبة-الشراكات", "spr", "set-partner-role"],
   category: "الإعـدادات",
   description: "تحديد رتبة الشراكة في السيرفر",
   expectedArgs: "<رتبة>",
@@ -23,8 +23,15 @@ module.exports = {
       type: 8,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

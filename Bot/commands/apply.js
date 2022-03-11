@@ -75,7 +75,7 @@ function sendApply(user, endChannel, channel, data) {
 }
 module.exports = {
   name: "apply",
-  aliases: [],
+  aliases: ["قدم", "apply"],
   category: "أوامـر عـامـة",
   description: "للتقديم في المجتمع",
   expectedArgs: "[on/off/channel/role/info/button] [roleId/channelId]",
@@ -488,6 +488,7 @@ module.exports = {
               })
               .then((m1) => {
                 m1 = m1.first();
+                if (!m1 || !m1.content) return;
                 var name = m1.content;
                 m1.delete();
                 m.edit(`${user} \`2\``).then((m) => {
@@ -506,6 +507,7 @@ module.exports = {
                     })
                     .then((m2) => {
                       m2 = m2.first();
+                      if (!m2 || !m2.content) return;
                       var age = m2.content;
                       m2.delete();
                       channel.send({ content: `${user} \`3\`` }).then((m) => {
@@ -524,6 +526,7 @@ module.exports = {
                           })
                           .then((m3) => {
                             m3 = m3.first();
+                            if (!m3 || !m3.content) return;
                             var ask = m3.content;
                             m3.delete();
                             channel
@@ -546,6 +549,7 @@ module.exports = {
                                   })
                                   .then((m4) => {
                                     m4 = m4.first();
+                                    if (!m4 || !m4.content) return;
                                     var ask2 = m4.content;
                                     m4.delete();
                                     channel
@@ -565,6 +569,7 @@ module.exports = {
                                           })
                                           .then((m5) => {
                                             m5 = m5.first();
+                                            if (!m5 || !m5.content) return;
                                             var ask3 = m5.content;
                                             m5.delete();
                                             m.edit({

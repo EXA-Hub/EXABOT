@@ -1,6 +1,6 @@
 module.exports = {
   name: "snakegame",
-  aliases: ["sgame", "snake"],
+  aliases: ["الحنش", "الثعبان", "sgame", "snake", "snakegame"],
   category: "الألـعـاب",
   description: "لعبة الثعبان والتفاح",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

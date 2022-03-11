@@ -1,6 +1,6 @@
 module.exports = {
   name: "set-partner-channels",
-  aliases: ["spc"],
+  aliases: ["غرفة-الشراكات", "spc", "set-partner-channels"],
   category: "الإعـدادات",
   description: "تحديد قنوات الشراكة في السيرفر",
   expectedArgs: "<قناة> <نوعها>",
@@ -39,8 +39,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

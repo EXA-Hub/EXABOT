@@ -6,7 +6,7 @@ const db = require("../functions/database");
 const config = require("../data/config");
 module.exports = {
   name: "thx",
-  aliases: [],
+  aliases: ["شكر", "thx"],
   category: "أوامـر عـامـة",
   description: "التشكرات",
   expectedArgs: "<top/to> <عضو/guild/all> [رقم]",

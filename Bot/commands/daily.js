@@ -1,6 +1,6 @@
 module.exports = {
   name: "daily",
-  aliases: ["d"],
+  aliases: ["يومي", "يومية", "d", "daily"],
   category: "أوامـر عـامـة",
   description: "أحصل على جائزتك اليومية",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

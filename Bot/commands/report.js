@@ -1,6 +1,6 @@
 module.exports = {
   name: "report",
-  aliases: [],
+  aliases: ["شكو", "بلغ", "report"],
   category: "أوامر خـاصـة",
   description: "الإبلاغ على خطأ في البوت",
   expectedArgs: "<الإبلاغ>",
@@ -23,8 +23,15 @@ module.exports = {
       type: 3,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -90,6 +97,7 @@ module.exports = {
         })
         .then((msg) => {
           msg = msg.first();
+          if (!msg || !msg.content) return;
           reportchannel
             .send({ embeds: [reportembed.setDescription(msg.content)] })
             .then((msg) => {

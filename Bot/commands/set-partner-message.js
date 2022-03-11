@@ -1,6 +1,6 @@
 module.exports = {
   name: "set-partner-message",
-  aliases: ["spm"],
+  aliases: ["رسالة-الشراكات", "spm", "set-partner-message"],
   category: "الإعـدادات",
   description: "تحديد رسالة الشراكة للسيرفر",
   expectedArgs: "<الرسالة>",
@@ -16,8 +16,15 @@ module.exports = {
   guildOnly: true,
   slash: "both",
   options: [],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -45,6 +52,7 @@ module.exports = {
       })
       .then(async (m1) => {
         m1 = m1.first();
+        if (!m1 || !m1.content) return;
         const arg = m1.content;
         const datafile = (await db.get("partner_message")) || {};
         datafile[guild.id] = arg;

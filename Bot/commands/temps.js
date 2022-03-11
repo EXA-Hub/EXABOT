@@ -46,7 +46,7 @@ let tempChannelData = {
 };
 module.exports = {
   name: "temps",
-  aliases: ["temp"],
+  aliases: ["مؤقت", "temp", "temps"],
   category: "الإداريـة",
   description: "صنع وحذف الغرف المؤقتة",
   expectedArgs: "<create/remove/show> [صوتية] [جامعة] [عدد الضيوف] [غرفة]",
@@ -55,7 +55,7 @@ module.exports = {
   syntaxError: "× خطأ ×",
   permissions: ["MANAGE_CHANNELS", "ADMINISTRATOR"],
   // cooldown: "",
-  //   globalCooldown: "1h",
+  globalCooldown: "1h",
   hidden: false,
   ownerOnly: false,
   testOnly: false,

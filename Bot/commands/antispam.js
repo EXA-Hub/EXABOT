@@ -1,6 +1,6 @@
 module.exports = {
   name: "antispam",
-  aliases: [],
+  aliases: ["منع-المزعج", "antispam"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات حماية الإزعاج",
   expectedArgs: "<on/off/info/allowed> [@role]",
@@ -47,8 +47,15 @@ module.exports = {
       type: 8,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

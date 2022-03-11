@@ -1,6 +1,6 @@
 module.exports = {
   name: "logs",
-  aliases: ["log"],
+  aliases: ["تدوين", "دون", "log", "logs"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات التدوين",
   expectedArgs: "<on/off/info/channel> [channel]",
@@ -47,8 +47,15 @@ module.exports = {
       type: 7,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

@@ -2,7 +2,7 @@ const { Client } = require("discord.js");
 const wok = require("wokcommands");
 module.exports = {
   name: "welcomer",
-  aliases: ["welcome"],
+  aliases: ["ترحيب", "رحب", "welcome", "welcomer"],
   category: "الإداريـة",
   description: "التحكم في إعدادات الترحيب",
   expectedArgs: "<on/off/info/test/message/channel> [channel]",
@@ -232,6 +232,7 @@ module.exports = {
             .then(async (m1) => {
               msg1.delete();
               m1 = m1.first();
+              if (!m1 || !m1.content) return;
               const arg = m1.content;
               const datafile = (await db.get("welcome_message")) || {};
               datafile[guild.id] = arg;
@@ -309,6 +310,7 @@ module.exports = {
           })
           .then(async (msg) => {
             msg = msg.first();
+            if (!msg || !msg.content) return;
             const coins = parseInt(msg.content);
             if (Number.isNaN(coins))
               return channel.send({

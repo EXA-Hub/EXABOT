@@ -1,6 +1,6 @@
 module.exports = {
   name: "stop",
-  aliases: ["disconnect", "leave"],
+  aliases: ["اخرج", "قف", "disconnect", "leave", "stop"],
   category: "الـمـوسـيـقـى",
   description: "إيقاف تشغيل المحتوى",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

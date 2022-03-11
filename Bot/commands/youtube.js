@@ -2,7 +2,7 @@ const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "youtube",
-  aliases: ["yt"],
+  aliases: ["يوتيوب", "قناة", "مقاطع", "مقطع", "yt", "youtube"],
   category: "أوامـر عـامـة",
   description: "الأوامر المتعلقة باليوتيوب",
   // expectedArgs: '',
@@ -146,6 +146,7 @@ module.exports = {
                       })
                       .then((m) => {
                         m = m.first();
+                        if (!m || !m.content) return;
                         const voice =
                           guild.channels.cache.get(m.content) ||
                           guild.channels.cache.find(
@@ -205,6 +206,7 @@ module.exports = {
                     })
                     .then((m) => {
                       m = m.first();
+                      if (!m || !m.content) return;
                       m.delete();
                       const selectedVChannel =
                         guild.channels.cache.get(m.content) ||
@@ -244,6 +246,7 @@ module.exports = {
                             })
                             .then((msg) => {
                               msg = msg.first();
+                              if (!msg || !msg.content) return;
                               xMsg.delete();
                               msg.delete();
                               const YTID = msg.content;
@@ -280,7 +283,7 @@ module.exports = {
                   allowedMentions: { repliedUser: false },
                   embeds: [YouTuberEmbed],
                 })
-                .then((x) => {
+                .then(() => {
                   return interaction.message.channel
                     .awaitMessages({
                       filter,
@@ -292,6 +295,7 @@ module.exports = {
                     })
                     .then(async (m) => {
                       m = m.first();
+                      if (!m || !m.content) return;
                       m.delete();
                       const wantedChannelData = await db.get(
                         `YouTube_data/apply_${guild.id}`

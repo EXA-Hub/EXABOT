@@ -2,7 +2,7 @@ const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "suggest",
-  aliases: ["sug"],
+  aliases: ["اقترح", "sug", "suggest"],
   category: "أوامر خـاصـة",
   description: "أرسل أفكارك وإقتراحاتك وآراءك لمبرمجين وإدارة البوت",
   expectedArgs: "<الإقتراح>",

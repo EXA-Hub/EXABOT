@@ -3,7 +3,7 @@ const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "coins",
-  aliases: ["c", "coin"],
+  aliases: ["عملة", "c", "coin", "coins"],
   category: "أوامـر عـامـة",
   description: "أمر العملة",
   expectedArgs: "[@user/top]",

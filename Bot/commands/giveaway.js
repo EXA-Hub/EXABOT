@@ -1,6 +1,6 @@
 module.exports = {
   name: "giveaway",
-  aliases: ["gv"],
+  aliases: ["جوائز", "جائزة", "gv", "giveaway"],
   category: "الألـعـاب",
   description: "أمر بدأ الجيف أواي",
   expectedArgs: "<start/reroll/delete/end>",
@@ -41,8 +41,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -101,6 +108,7 @@ module.exports = {
             })
             .then((m1) => {
               m1 = m1.first();
+              if (!m1 || !m1.content) return;
               const giveawayChannel =
                 m1.guild.channels.cache.get(m1.content) ||
                 m1.guild.channels.cache.find(
@@ -123,6 +131,7 @@ module.exports = {
                       })
                       .then((m3) => {
                         m3 = m3.first();
+                        if (!m3 || !m3.content) return;
                         const gift = m3.content;
                         if (gift) {
                           const timeEmbed = new MessageEmbed()
@@ -145,6 +154,7 @@ module.exports = {
                                 })
                                 .then((m5) => {
                                   m5 = m5.first();
+                                  if (!m5 || !m5.content) return;
                                   const ms = require("ms");
                                   const time = ms(m5.content);
                                   if (time) {
@@ -165,6 +175,7 @@ module.exports = {
                                           })
                                           .then((m7) => {
                                             m7 = m7.first();
+                                            if (!m7 || !m7.content) return;
                                             const winners = parseInt(
                                               m7.content
                                             );
@@ -257,6 +268,7 @@ module.exports = {
             .then((msg) => {
               x.delete();
               msg = msg.first();
+              if (!msg || !msg.content) return;
               client.giveawaysManager
                 .reroll(msg.content, {
                   messages: {
@@ -303,6 +315,7 @@ module.exports = {
             .then((msg) => {
               x.delete();
               msg = msg.first();
+              if (!msg || !msg.content) return;
               client.giveawaysManager
                 .delete(msg.content)
                 .then(() => {
@@ -340,6 +353,7 @@ module.exports = {
             .then((msg) => {
               x.delete();
               msg = msg.first();
+              if (!msg || !msg.content) return;
               client.giveawaysManager
                 .end(msg.content)
                 .then(() => {

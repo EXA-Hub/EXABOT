@@ -1,6 +1,6 @@
 module.exports = {
   name: "nickname",
-  aliases: ["nick"],
+  aliases: ["اسم_مستعار", "لقب", "nick", "nickname"],
   category: "الإداريـة",
   description: "أمر تغيير الإسم الظاهري!",
   expectedArgs: "[@user] <nickName>",
@@ -29,8 +29,15 @@ module.exports = {
       type: 6,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

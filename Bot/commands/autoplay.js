@@ -2,7 +2,7 @@ const { Client } = require("discord.js");
 const wok = require("wokcommands");
 module.exports = {
   name: "autoplay",
-  aliases: ["ap"],
+  aliases: ["تلقائي", "ap", "تشغيل-تلقائي", "autoplay"],
   category: "الـمـوسـيـقـى",
   description: "تشغيل الأغنية التالية تلقائيا حسب الإقتراحات",
   // expectedArgs: '',

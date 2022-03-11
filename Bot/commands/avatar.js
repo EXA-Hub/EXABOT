@@ -1,6 +1,6 @@
 module.exports = {
   name: "avatar",
-  aliases: ["a"],
+  aliases: ["صور", "صورة", "a", "avatar"],
   category: "أوامـر عـامـة",
   description: "الحصول على صورة حساب عضو ما",
   // expectedArgs: '',
@@ -23,8 +23,15 @@ module.exports = {
       type: 6,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

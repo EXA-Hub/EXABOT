@@ -5,7 +5,7 @@ const giveCoins = require("../functions/giveCoins");
 const takeCoins = require("../functions/takeCoins");
 module.exports = {
   name: "gifts",
-  aliases: ["gift"],
+  aliases: ["هدايا", "هدية", "gift", "gifts"],
   category: "أوامـر عـامـة",
   description: "الحصول على هدية مجانا بإستعمال رمز خاص",
   expectedArgs: "<رمز الهدية/add> [هدية خاصة بك] [رمز الهدية]",

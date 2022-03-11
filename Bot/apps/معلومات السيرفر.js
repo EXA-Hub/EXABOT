@@ -7,15 +7,14 @@ const {
   Interaction,
 } = require("discord.js");
 const WOKcommands = require("wokcommands");
-
 module.exports = {
   name: "معلومات السيرفر",
   type: "message",
   /**
    *
-   * @param {{guild: Guild,member: GuildMember,user: User,target: { type: String, id: String },channel: Channel,client: Client,instance: WOKcommands,interaction: Interaction}} data
+   * @param {{guild: Guild,member: GuildMember,user: User,target: { type: String, id: String },channel: Channel,client: client,instance: WOKcommands,interaction: Interaction}} data
    */
-  run: ({
+  run: async ({
     guild,
     member,
     user,
@@ -43,8 +42,12 @@ module.exports = {
       return hours + ":" + minutes + ":" + seconds; // Return is HH : MM : SS
     }
 
+    const invites = await guild.invites.fetch();
     let inviteUsesCount = 0;
-    let inviteCount = 0;
+    invites.forEach(
+      (invite) => (inviteUsesCount = inviteUsesCount + invite.uses)
+    );
+    let inviteCount = invites.size;
 
     const config = require("../data/config.js");
     const { MessageEmbed } = require("discord.js");

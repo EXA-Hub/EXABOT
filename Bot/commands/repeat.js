@@ -1,6 +1,6 @@
 module.exports = {
   name: "repeat",
-  aliases: ["loop", "rp"],
+  aliases: ["كرر", "loop", "rp", "repeat"],
   category: "الـمـوسـيـقـى",
   description: "repeatشغل تراكي على الـ",
   expectedArgs: "<off/song/queue>",
@@ -37,8 +37,15 @@ module.exports = {
       ],
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

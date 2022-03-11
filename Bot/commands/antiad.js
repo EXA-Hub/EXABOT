@@ -1,6 +1,6 @@
 module.exports = {
   name: "antiad",
-  aliases: [],
+  aliases: ["منع-الدعوات", "antiad"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات مانع الدعوات",
   expectedArgs: "<on/off/info/allowed> [@role]",
@@ -47,8 +47,15 @@ module.exports = {
       type: 8,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

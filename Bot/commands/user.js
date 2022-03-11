@@ -1,6 +1,6 @@
 module.exports = {
   name: "user",
-  aliases: [],
+  aliases: ["مستخدم", "user"],
   category: "أوامـر عـامـة",
   description: "معلومات عضو ما!",
   // expectedArgs: '',
@@ -23,8 +23,15 @@ module.exports = {
       type: 6,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -55,7 +62,9 @@ module.exports = {
       .map((r) => `<@&${r.id}> |`)
       .join(` `);
 
-    let inviteCount = 0;
+    let inviteCount = (await guild.invites.fetch()).map(
+      (invite) => invite.inviterId === user.id
+    ).length;
 
     if (status.includes("dnd")) statusFull = ":red_circle: | DND";
     if (status.includes("offline")) statusFull = ":black_circle: | Offline";

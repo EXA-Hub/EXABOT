@@ -2,7 +2,7 @@ const { Client, MessageActionRow, MessageButton } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "shop",
-  aliases: ["s"],
+  aliases: ["محل", "متجر", "s", "shop"],
   category: "أوامـر عـامـة",
   description: "متجر البوت المعتمد",
   // expectedArgs: '',
@@ -203,6 +203,7 @@ module.exports = {
                 .then((setNameMsg) => {
                   setNameMessage.delete();
                   setNameMsg = setNameMsg.first();
+                  if (!setNameMessage || !setNameMsg.content) return;
                   const goodName = setNameMsg.content;
                   if (goodName) {
                     setNameMsg.delete();
@@ -221,6 +222,11 @@ module.exports = {
                           .then((setDescriptionMsg) => {
                             setDescriptionMeessage.delete();
                             setDescriptionMsg = setDescriptionMsg.first();
+                            if (
+                              !setDescriptionMeessage ||
+                              !setDescriptionMeessage.content
+                            )
+                              return;
                             const description = setDescriptionMsg.content;
                             if (description) {
                               channel
@@ -238,6 +244,8 @@ module.exports = {
                                     .then((setPriceMsg) => {
                                       setPriceMessage.delete();
                                       setPriceMsg = setPriceMsg.first();
+                                      if (!setPriceMsg || !setPriceMsg.content)
+                                        return;
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );
@@ -426,6 +434,7 @@ module.exports = {
                 .then((setNameMsg) => {
                   setNameMessage.delete();
                   setNameMsg = setNameMsg.first();
+                  if (!setNameMessage || !setNameMsg.content) return;
                   const goodName = setNameMsg.content;
                   if (goodName) {
                     setNameMsg.delete();
@@ -444,6 +453,11 @@ module.exports = {
                           .then((setDescriptionMsg) => {
                             setDescriptionMeessage.delete();
                             setDescriptionMsg = setDescriptionMsg.first();
+                            if (
+                              !setDescriptionMeessage ||
+                              !setDescriptionMeessage.content
+                            )
+                              return;
                             const description = setDescriptionMsg.content;
                             if (description) {
                               channel
@@ -461,6 +475,8 @@ module.exports = {
                                     .then((setPriceMsg) => {
                                       setPriceMessage.delete();
                                       setPriceMsg = setPriceMsg.first();
+                                      if (!setPriceMsg || !setPriceMsg.content)
+                                        return;
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );
@@ -643,6 +659,7 @@ module.exports = {
                 .then((setNameMsg) => {
                   setNameMessage.delete();
                   setNameMsg = setNameMsg.first();
+                  if (!setNameMessage || !setNameMsg.content) return;
                   const goodName = setNameMsg.content;
                   if (goodName) {
                     setNameMsg.delete();
@@ -661,6 +678,11 @@ module.exports = {
                           .then((setDescriptionMsg) => {
                             setDescriptionMeessage.delete();
                             setDescriptionMsg = setDescriptionMsg.first();
+                            if (
+                              !setDescriptionMeessage ||
+                              !setDescriptionMeessage.content
+                            )
+                              return;
                             const description = setDescriptionMsg.content;
                             if (description) {
                               channel
@@ -678,6 +700,8 @@ module.exports = {
                                     .then((setPriceMsg) => {
                                       setPriceMessage.delete();
                                       setPriceMsg = setPriceMsg.first();
+                                      if (!setPriceMsg || !setPriceMsg.content)
+                                        return;
                                       const price = Number.parseInt(
                                         setPriceMsg.content
                                       );

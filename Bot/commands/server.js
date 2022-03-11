@@ -1,6 +1,6 @@
 module.exports = {
   name: "server",
-  aliases: [],
+  aliases: ["خادم", "مجتمع", "server"],
   category: "أوامـر عـامـة",
   description: "معلومات السيرفر!",
   // expectedArgs: '',
@@ -15,8 +15,15 @@ module.exports = {
   testOnly: false,
   guildOnly: true,
   slash: "both",
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
@@ -47,8 +54,12 @@ module.exports = {
       return hours + ":" + minutes + ":" + seconds; // Return is HH : MM : SS
     }
 
+    const invites = await guild.invites.fetch();
     let inviteUsesCount = 0;
-    let inviteCount = 0;
+    invites.forEach(
+      (invite) => (inviteUsesCount = inviteUsesCount + invite.uses)
+    );
+    let inviteCount = invites.size;
 
     const config = require("../data/config.js");
     const { MessageEmbed } = require("discord.js");

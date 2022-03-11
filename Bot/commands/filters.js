@@ -12,7 +12,7 @@ keys.forEach((key, i) =>
 );
 module.exports = {
   name: "filters",
-  aliases: ["filter"],
+  aliases: ["صفي", "رشح", "filter", "filters"],
   category: "الـمـوسـيـقـى",
   description: "تغيير فلاتر الصوت",
   expectedArgs: `<off/\`\`\`${filtersMap}\`\`\`>`,
@@ -36,8 +36,15 @@ module.exports = {
       choices: result,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,

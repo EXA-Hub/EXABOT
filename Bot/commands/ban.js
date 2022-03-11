@@ -1,6 +1,6 @@
 module.exports = {
   name: "ban",
-  aliases: [],
+  aliases: ["حظر", "ban"],
   category: "الإداريـة",
   description: "حظر عضو من دخول السيرفر",
   expectedArgs: "<@Member> <Reason>",
@@ -29,8 +29,15 @@ module.exports = {
       type: 3,
     },
   ],
+  /**
+   *
+   * @param {client} client
+   */
   init: (client, instance) => {},
-  callback: async ({
+  /**
+   * @param {ICallbackObject} ICallbackObject
+   *
+   */ callback: async ({
     guild,
     member,
     user,
