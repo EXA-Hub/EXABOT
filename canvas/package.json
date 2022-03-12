@@ -1,0 +1,20 @@
+{
+  "name": "canvas",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "canvacord": "^5.2.3",
+    "canvas": "^2.9.0",
+    "express": "^4.17.3",
+    "lodash": "^4.17.21",
+    "text2png": "^2.3.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}

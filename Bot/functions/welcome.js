@@ -69,7 +69,7 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
           data.TextData.fill = encodeURI(data.TextData.fill).replace("#", "");
           data.AvatarData.url = encodeURI(avatar);
         }
-        let url = `https://exa-bot-api.exacom.repl.co/welcome/data?data=${JSON.stringify(
+        let url = `https://canvas.exabot.ml/welcome/data?data=${JSON.stringify(
           data
         )
           .toString()
@@ -82,11 +82,8 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
           .toString()
           .replace(" ", "")
           .replace("#", "")}`;
-        const welcomeEmbed = new MessageEmbed()
-          .setImage(encodeURI(url))
-          .setColor(require("../data/config").bot.color.hex)
-          .setTitle(welcomeMessage);
-        channel.send({ embeds: [welcomeEmbed] });
+        const image = new Discord.MessageAttachment(encodeURI(url));
+        channel.send({ content: welcomeMessage, files: [image] });
       } else return;
     } else return;
   } else return;

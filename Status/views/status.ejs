@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>EXA-BOT™#الحالة</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous" />
+
+  <meta name="og:title" property="og:title" content="EXA-BOT™" />
+  <meta name="robots" content="index, follow" />
+  <meta name="description" content="EXA-BOT™ أفضل بوت عربي بلا منازع" />
+  <meta property="og:url" content="https://exabot.vercel.app/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="EXA-BOT™" />
+  <meta property="og:description" content="أفضل بوت عربي بلا منازع" />
+  <meta property="og:image"
+    content="https://images-ext-2.discordapp.net/external/b4L2F4OA2eg4hIo2p4pED6FQdtoR4q6fYz4PDMslS88/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/865052410841792532/c9d03e1001a8cee703e486f810623533.webp?width=473&height=473" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta property="twitter:domain" content="https" />
+  <meta property="twitter:url" content="https://exabot.vercel.app/" />
+  <meta name="twitter:title" content="EXA-BOT™" />
+  <meta name="twitter:description" content="أفضل بوت عربي بلا منازع" />
+  <meta name="twitter:image"
+    content="https://images-ext-2.discordapp.net/external/b4L2F4OA2eg4hIo2p4pED6FQdtoR4q6fYz4PDMslS88/%3Fsize%3D1024/https/cdn.discordapp.com/avatars/865052410841792532/c9d03e1001a8cee703e486f810623533.webp?width=473&height=473" />
+  <meta name="theme-color" content="#092D82" />
+  <meta content="video" property="og:type" />
+  <meta property="og:video"
+    content="https://cdn.discordapp.com/attachments/645949303495327748/880212103758229594/video.webm" />
+  <meta property="og:video:url"
+    content="https://cdn.discordapp.com/attachments/645949303495327748/880212103758229594/video.webm" />
+  <meta property="og:video:type" content="video/mp4" />
+  <meta property="og:video:width" content="1920" />
+  <meta name="keywords" content="Discord bot, Moderation bot, Music bot, بوت ديسكورد" />
+  <meta property="og:video:height" content="1080" />
+  <link rel="icon" href="./EXA.png" type="image/x-icon" />
+  <meta name="google-site-verification" content="MVNj_ry0TYSMFOZLYoW06IKU8PwQufjWR3-5KLvO-tw" />
+
+</head>
+
+
+<body>
+  <style>
+    #title {
+      margin: auto;
+      text-align: center;
+    }
+
+    body {
+      margin: auto;
+      text-align: center;
+      background-color: gray;
+    }
+
+    .logo {
+      float: left;
+    }
+
+    h2 {
+      margin: auto;
+      text-align: center;
+    }
+
+    #pastIssue {
+      text-align: left;
+    }
+
+    .status-green {
+      color: #00ff66;
+    }
+
+    img {
+      display: block;
+    }
+
+    .status-red {
+      color: #f00;
+    }
+
+    .status-yellow {
+      color: #ffa500;
+    }
+  </style>
+
+  <header>
+    <h1 id="title" role="heading" aria-label="Title">
+      حالة البوت: EXA-BOT™#1076
+    </h1>
+  </header>
+
+  <body>
+    <div class="inner-container area--padding-large">
+      <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
+          <h2 class="status-<%= apps.some(app=>app.status==='green') ? 'green': 'red' %>">
+            <%= apps.some(app=>app.status==='green') ? 'كل الأنظمة تعمل!': "بعض الأنظمة معطلة" %>
+          </h2>
+          <div class="container-fluid">
+            <div class="row row">
+              <% apps.forEach((app)=>{ %>
+                <% if (app) { %>
+                  <hr />
+                  <div class="col col-6 row">
+                    <span class="status-page">
+                      <%= app.name %>
+                    </span>
+                  </div>
+                  <div class="col col-6 text-right  status-<%= app.status %>">
+                    <%= app.status==='green' ? 'يعمل' : 'مغلق' || 'غير معلوم' %>
+                  </div>
+            </div>
+            <hr />
+            <% } %>
+              <% }); %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</body>
+
+</html>
