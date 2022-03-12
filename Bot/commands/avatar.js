@@ -1,5 +1,5 @@
 module.exports = {
-  name: "avatar",
+  name: "صور",
   aliases: ["صور", "صورة", "a", "avatar"],
   category: "أوامـر عـامـة",
   description: "الحصول على صورة حساب عضو ما",

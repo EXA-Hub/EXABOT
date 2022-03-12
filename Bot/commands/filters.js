@@ -11,7 +11,7 @@ keys.forEach((key, i) =>
   })
 );
 module.exports = {
-  name: "filters",
+  name: "صفي",
   aliases: ["صفي", "رشح", "filter", "filters"],
   category: "الـمـوسـيـقـى",
   description: "تغيير فلاتر الصوت",

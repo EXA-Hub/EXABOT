@@ -1,5 +1,5 @@
 module.exports = {
-  name: "unmute",
+  name: "تكلم",
   aliases: ["تكلم", "فك-صمت", "unmute"],
   category: "الإداريـة",
   description: "فك حظر شخص كتابيا حذف رتبة الحظر",

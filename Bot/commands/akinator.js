@@ -1,5 +1,5 @@
 module.exports = {
-  name: "akinator",
+  name: "الجني",
   aliases: ["الجني", "akinator"],
   category: "الألـعـاب",
   description: "لعبة الجني الأزرق",

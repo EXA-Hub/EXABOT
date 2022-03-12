@@ -1,5 +1,5 @@
 module.exports = {
-  name: "antispam",
+  name: "منع-المزعج",
   aliases: ["منع-المزعج", "antispam"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات حماية الإزعاج",

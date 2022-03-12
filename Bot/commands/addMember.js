@@ -1,7 +1,7 @@
 const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "addMember",
+  name: "أضف-عضو",
   aliases: ["أضف-عضو", "am", "addMember"],
   category: "أوامر خـاصـة",
   description: "هذا أمر مخصص لأعلى المشتركين يسمح لك بشراء أعضاء",

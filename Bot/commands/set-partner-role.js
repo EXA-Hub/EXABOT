@@ -1,5 +1,5 @@
 module.exports = {
-  name: "set-partner-role",
+  name: "رتبة-الشراكات",
   aliases: ["رتبة-الشراكات", "spr", "set-partner-role"],
   category: "الإعـدادات",
   description: "تحديد رتبة الشراكة في السيرفر",

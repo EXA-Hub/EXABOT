@@ -1,5 +1,5 @@
 module.exports = {
-  name: "mute",
+  name: "صمت",
   aliases: ["صمت", "mute"],
   category: "الإداريـة",
   description: "حظر شخص كتابيا وتحديد رتبة الحظر",

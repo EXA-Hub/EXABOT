@@ -1,5 +1,5 @@
 module.exports = {
-  name: "emojify",
+  name: "رمز",
   aliases: ["رمز", "رمز-تعبير", "تعبير", "emojify"],
   category: "الألـعـاب",
   description: "تحويل الكلام لإيموجي",

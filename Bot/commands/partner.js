@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const wok = require("wokcommands");
 module.exports = {
-  name: "partner",
+  name: "شراكة",
   aliases: ["شراكة", "partner"],
   category: "أوامـر عـامـة",
   description: "طلب شراكة في السيرفر",

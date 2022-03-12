@@ -1,5 +1,5 @@
 module.exports = {
-  name: "user",
+  name: "مستخدم",
   aliases: ["مستخدم", "user"],
   category: "أوامـر عـامـة",
   description: "معلومات عضو ما!",

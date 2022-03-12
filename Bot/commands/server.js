@@ -1,5 +1,5 @@
 module.exports = {
-  name: "server",
+  name: "خادم",
   aliases: ["خادم", "مجتمع", "server"],
   category: "أوامـر عـامـة",
   description: "معلومات السيرفر!",

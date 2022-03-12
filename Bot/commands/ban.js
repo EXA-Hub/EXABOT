@@ -1,5 +1,5 @@
 module.exports = {
-  name: "ban",
+  name: "حظر",
   aliases: ["حظر", "ban"],
   category: "الإداريـة",
   description: "حظر عضو من دخول السيرفر",

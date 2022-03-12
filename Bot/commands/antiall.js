@@ -1,5 +1,5 @@
 module.exports = {
-  name: "antiall",
+  name: "منع-الكل",
   aliases: ["منع-الكل", "antiall"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات الحماية بالكامل",

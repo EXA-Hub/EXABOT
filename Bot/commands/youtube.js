@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "youtube",
+  name: "يوتيوب",
   aliases: ["يوتيوب", "قناة", "مقاطع", "مقطع", "yt", "youtube"],
   category: "أوامـر عـامـة",
   description: "الأوامر المتعلقة باليوتيوب",

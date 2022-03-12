@@ -1,5 +1,5 @@
 module.exports = {
-  name: "flags",
+  name: "شارات",
   aliases: ["شارات", "flag", "flags"],
   category: "الإعـدادات",
   description: "تحديد رتب للحسابات النادرة",

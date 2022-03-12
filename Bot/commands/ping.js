@@ -1,5 +1,5 @@
 module.exports = {
-  name: "ping",
+  name: "سرعة-الاتصال",
   aliases: ["سرعة-الاتصال", "الاتصال", "سرعة", "ping"],
   category: "أوامـر عـامـة",
   description: "سرعة إتصال البوت",

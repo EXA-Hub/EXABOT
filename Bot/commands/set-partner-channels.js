@@ -1,5 +1,5 @@
 module.exports = {
-  name: "set-partner-channels",
+  name: "غرفة-الشراكات",
   aliases: ["غرفة-الشراكات", "spc", "set-partner-channels"],
   category: "الإعـدادات",
   description: "تحديد قنوات الشراكة في السيرفر",

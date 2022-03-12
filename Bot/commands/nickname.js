@@ -1,5 +1,5 @@
 module.exports = {
-  name: "nickname",
+  name: "اسم_مستعار",
   aliases: ["اسم_مستعار", "لقب", "nick", "nickname"],
   category: "الإداريـة",
   description: "أمر تغيير الإسم الظاهري!",

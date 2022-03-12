@@ -1,7 +1,7 @@
 const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "volume",
+  name: "صوت",
   aliases: ["صوت", "v", "set", "set-volume", "volume"],
   category: "الـمـوسـيـقـى",
   description: "تغيير الصوت",

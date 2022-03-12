@@ -74,7 +74,7 @@ function sendApply(user, endChannel, channel, data) {
     });
 }
 module.exports = {
-  name: "apply",
+  name: "قدم",
   aliases: ["قدم", "apply"],
   category: "أوامـر عـامـة",
   description: "للتقديم في المجتمع",

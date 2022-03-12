@@ -4,7 +4,7 @@ const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
   name: "تجربة",
-  aliases: ["جرب", "مثال"],
+  aliases: ["تجربة", "جرب", "مثال"],
   category: "الألـعـاب",
   description: "جرب البوت",
   expectedArgs: "[كلام]",

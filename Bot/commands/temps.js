@@ -45,7 +45,7 @@ let tempChannelData = {
   },
 };
 module.exports = {
-  name: "temps",
+  name: "مؤقت",
   aliases: ["مؤقت", "temp", "temps"],
   category: "الإداريـة",
   description: "صنع وحذف الغرف المؤقتة",

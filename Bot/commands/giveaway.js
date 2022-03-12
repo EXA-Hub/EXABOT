@@ -1,5 +1,5 @@
 module.exports = {
-  name: "giveaway",
+  name: "جوائز",
   aliases: ["جوائز", "جائزة", "gv", "giveaway"],
   category: "الألـعـاب",
   description: "أمر بدأ الجيف أواي",

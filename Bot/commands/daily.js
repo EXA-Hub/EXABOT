@@ -1,5 +1,5 @@
 module.exports = {
-  name: "daily",
+  name: "يومي",
   aliases: ["يومي", "يومية", "d", "daily"],
   category: "أوامـر عـامـة",
   description: "أحصل على جائزتك اليومية",

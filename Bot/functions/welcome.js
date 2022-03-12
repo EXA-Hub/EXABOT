@@ -1,4 +1,15 @@
-async function welcome(client, guildID, tag, name, avatar, memberCount) {
+const { client } = require("../index");
+/**
+ *
+ * @param {client} bot
+ * @param {String} guildID
+ * @param {String} tag
+ * @param {String} name
+ * @param {String} avatar
+ * @param {Number} memberCount
+ * @returns
+ */
+async function welcome(bot, guildID, tag, name, avatar, memberCount) {
   const db = require("./database");
   let data = await db.get(`${guildID}/welcomeImageData`);
   if (Object.keys(data) === 0)
@@ -31,14 +42,15 @@ async function welcome(client, guildID, tag, name, avatar, memberCount) {
         fill: "#ffff00",
       },
     };
-  const { MessageEmbed } = require("discord.js");
+  const { MessageEmbed } = require("discord.js"),
+    Discord = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
   if (onOff === "on") {
     const messagesData = await db.get("welcome_message");
     const message = messagesData[guildID];
     if (message) {
-      const guild = client.guilds.cache.get(guildID);
+      const guild = bot.guilds.cache.get(guildID);
       const channelsID = await db.get("welcome_channels");
       const channelID = channelsID[guildID];
       const channel = guild.channels.cache.get(channelID);

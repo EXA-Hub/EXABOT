@@ -1,5 +1,5 @@
 module.exports = {
-  name: "play",
+  name: "غني",
   aliases: ["غني", "شغل", "تشغيل", "p", "play"],
   category: "الـمـوسـيـقـى",
   description: "تشغيل أغنية",

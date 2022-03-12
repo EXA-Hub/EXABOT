@@ -1,5 +1,5 @@
 module.exports = {
-  name: "report",
+  name: "شكو",
   aliases: ["شكو", "بلغ", "report"],
   category: "أوامر خـاصـة",
   description: "الإبلاغ على خطأ في البوت",

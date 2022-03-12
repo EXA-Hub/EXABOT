@@ -2,7 +2,7 @@ const zampx = require("zampx");
 const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "coins",
+  name: "عملة",
   aliases: ["عملة", "c", "coin", "coins"],
   category: "أوامـر عـامـة",
   description: "أمر العملة",

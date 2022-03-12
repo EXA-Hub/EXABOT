@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const wok = require("wokcommands");
 module.exports = {
-  name: "welcomer",
+  name: "ترحيب",
   aliases: ["ترحيب", "رحب", "welcome", "welcomer"],
   category: "الإداريـة",
   description: "التحكم في إعدادات الترحيب",

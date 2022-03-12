@@ -4,7 +4,7 @@ const { ICallbackObject } = require("wokcommands");
 const giveCoins = require("../functions/giveCoins");
 const takeCoins = require("../functions/takeCoins");
 module.exports = {
-  name: "gifts",
+  name: "هدايا",
   aliases: ["هدايا", "هدية", "gift", "gifts"],
   category: "أوامـر عـامـة",
   description: "الحصول على هدية مجانا بإستعمال رمز خاص",

@@ -1,5 +1,5 @@
 module.exports = {
-  name: "kick",
+  name: "طرد",
   aliases: ["طرد", "kick"],
   category: "الإداريـة",
   description: "طرد العضو",

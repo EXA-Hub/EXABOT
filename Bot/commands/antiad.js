@@ -1,5 +1,5 @@
 module.exports = {
-  name: "antiad",
+  name: "منع-الدعوات",
   aliases: ["منع-الدعوات", "antiad"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات مانع الدعوات",

@@ -1,5 +1,5 @@
 module.exports = {
-  name: "skip",
+  name: "تخطى",
   aliases: ["تخطى", "skip"],
   category: "الـمـوسـيـقـى",
   description: "تخطى محتوى ما",

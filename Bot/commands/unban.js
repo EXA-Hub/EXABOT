@@ -1,5 +1,5 @@
 module.exports = {
-  name: "unban",
+  name: "فك-حظر",
   aliases: ["فك-حظر", "unban"],
   category: "الإداريـة",
   description: "فك حظر عضو من دخول السيرفر",

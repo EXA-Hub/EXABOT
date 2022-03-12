@@ -1,5 +1,5 @@
 module.exports = {
-  name: "logs",
+  name: "تدوين",
   aliases: ["تدوين", "دون", "log", "logs"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات التدوين",

@@ -1,5 +1,5 @@
 module.exports = {
-  name: "pause",
+  name: "استوقف",
   aliases: ["استوقف", "hold", "pause"],
   category: "أوامـر عـامـة",
   description: "إيقاف الأغنية",

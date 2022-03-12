@@ -1,5 +1,5 @@
 module.exports = {
-  name: "stop",
+  name: "اخرج",
   aliases: ["اخرج", "قف", "disconnect", "leave", "stop"],
   category: "الـمـوسـيـقـى",
   description: "إيقاف تشغيل المحتوى",

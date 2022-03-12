@@ -1,5 +1,5 @@
 module.exports = {
-  name: "resume",
+  name: "اعادة-تشغيل",
   aliases: ["اعادة-تشغيل", "اعد", "ارجع", "resume", "unpause"],
   category: "الـمـوسـيـقـى",
   description: "إعادة تشغيل المحتوى",

@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "bot",
+  name: "بوت",
   aliases: ["بوت", "bot"],
   category: "أوامـر عـامـة",
   description: "معلومات متنوعة عن البوت",

@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "clear",
+  name: "حذف",
   aliases: ["حذف", "clear"],
   category: "الإداريـة",
   description: "حذف الرسائل",

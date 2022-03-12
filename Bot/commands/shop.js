@@ -1,7 +1,7 @@
 const { Client, MessageActionRow, MessageButton } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "shop",
+  name: "محل",
   aliases: ["محل", "متجر", "s", "shop"],
   category: "أوامـر عـامـة",
   description: "متجر البوت المعتمد",

@@ -2,7 +2,7 @@ const { client } = require("../index");
 const { MessageEmbed } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "backupServer",
+  name: "نسخ",
   aliases: ["نسخ", "حفظ", "backup", "backupServer"],
   category: "الإداريـة",
   description: "حفظ المجتمع بالكامل من حيث رتب وغرف ورسائل",

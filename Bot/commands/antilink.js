@@ -1,5 +1,5 @@
 module.exports = {
-  name: "antilink",
+  name: "منع-الروابط",
   aliases: ["منع-الروابط", "منع-الرابط", "antilink"],
   category: "الإعـدادات",
   description: "التحكم في إعدادات حماية الروابط",

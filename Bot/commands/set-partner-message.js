@@ -1,5 +1,5 @@
 module.exports = {
-  name: "set-partner-message",
+  name: "رسالة-الشراكات",
   aliases: ["رسالة-الشراكات", "spm", "set-partner-message"],
   category: "الإعـدادات",
   description: "تحديد رسالة الشراكة للسيرفر",

@@ -2,7 +2,7 @@ const { client } = require("../index");
 const { ICallbackObject } = require("wokcommands");
 const { fromS } = require("../functions/msForamt");
 module.exports = {
-  name: "seek",
+  name: "الى",
   aliases: ["الى", "نقل", "انتقل", "seek"],
   category: "الـمـوسـيـقـى",
   description: "تغيير الوقت",

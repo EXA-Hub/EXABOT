@@ -5,7 +5,7 @@ const getCoins = require("../functions/getCoins");
 const db = require("../functions/database");
 const config = require("../data/config");
 module.exports = {
-  name: "thx",
+  name: "شكر",
   aliases: ["شكر", "thx"],
   category: "أوامـر عـامـة",
   description: "التشكرات",

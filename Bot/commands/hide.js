@@ -1,7 +1,7 @@
 const { Client } = require("discord.js");
 const { ICallbackObject } = require("wokcommands");
 module.exports = {
-  name: "hide",
+  name: "اخفي",
   aliases: ["اخفي", "أخفي", "إخفاء", "اخفاء", "hide"],
   category: "الإداريـة",
   description: "إخفاء وإظهار الغرفة",

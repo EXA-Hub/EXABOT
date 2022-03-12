@@ -1,5 +1,5 @@
 module.exports = {
-  name: "partner-info",
+  name: "معلومات-الشراكات",
   aliases: ["معلومات-الشراكات", "pi", "partner-info"],
   category: "أوامـر عـامـة",
   description: "معلومات الشراكة في السيرفر",

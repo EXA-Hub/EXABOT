@@ -2,8 +2,8 @@ const { Client, MessageEmbed } = require("discord.js");
 const config = require("../data/config");
 const wok = require("wokcommands");
 module.exports = {
-  name: "music",
-  aliases: ["غني", "موسيقى", "مزكها", "مزيكا", "music"],
+  name: "موسيقى",
+  aliases: ["موسيقى", "غني", "مزكها", "مزيكا", "music"],
   category: "الـمـوسـيـقـى",
   description: "التحكم في الغرف الموسيقية في المجتمع",
   expectedArgs: "<run/end>",

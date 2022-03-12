@@ -1,5 +1,5 @@
 module.exports = {
-  name: "repeat",
+  name: "كرر",
   aliases: ["كرر", "loop", "rp", "repeat"],
   category: "الـمـوسـيـقـى",
   description: "repeatشغل تراكي على الـ",
