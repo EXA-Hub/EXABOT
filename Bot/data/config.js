@@ -5,7 +5,7 @@ module.exports = {
   youtube: {
     music: {
       banner:
-        "https://cdn.discordapp.com/attachments/865036175705112596/929499104709574676/xa.png",
+        "https://cdn.discordapp.com/attachments/952640766843420742/952643498035798086/xa.png",
     },
     API_KEY: "" || process.env.API_KEY,
   },
@@ -44,23 +44,23 @@ module.exports = {
   },
   support: {
     server: {
-      id: "864025710507065345",
+      id: "699393266092605451",
       invite: {
-        code: "n9AQZ6qjNc",
-        link: "https://discord.gg/n9AQZ6qjNc",
+        code: "ZPpwb3GRyG",
+        link: "https://discord.gg/ZPpwb3GRyG",
       },
       suggestion: {
         channel: {
-          id: "865036180688732191",
+          id: "952641961976795176",
         },
       },
       report: {
         channel: {
-          id: "880177793051267083",
+          id: "952642098249760848",
         },
         errors: {
           channel: {
-            id: "919271265666224128",
+            id: "952640480372473968",
           },
         },
       },

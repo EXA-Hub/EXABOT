@@ -42,8 +42,7 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
         fill: "#ffff00",
       },
     };
-  const { MessageEmbed } = require("discord.js"),
-    Discord = require("discord.js");
+  const Discord = require("discord.js");
   const onOffData = (await db.get("welcome_on-off")) || {};
   const onOff = onOffData[guildID];
   if (onOff === "on") {
@@ -82,7 +81,10 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
           .toString()
           .replace(" ", "")
           .replace("#", "")}`;
-        const image = new Discord.MessageAttachment(encodeURI(url));
+        const image = new Discord.MessageAttachment(
+          encodeURI(url),
+          "ترحيب.png"
+        );
         channel.send({ content: welcomeMessage, files: [image] });
       } else return;
     } else return;

@@ -47,14 +47,14 @@ app.listen(3000, () => {
 const { Client } = require("discord.js");
 const client = new Client();
 
-const channelID = "865036177764778005";
+const channelID = "952640766843420742";
 const botID = "865052410841792532";
-const reportID = "880177793051267083";
-const msgID = "883116346865504316";
+const reportID = "952642098249760848";
+const msgID = "952648181433384982";
 
 client.on("ready", () => {
   console.log("ready");
-  setInterval(() => {
+  setInterval(async () => {
     var bot = client.users.cache.get(`${botID}`);
     var channel = client.channels.cache.get(`${channelID}`);
     if (bot.presence.status == "offline") {
