@@ -111,7 +111,7 @@ module.exports = {
               break;
             case "info":
               if (!backupID)
-                return msg.edit({ content: "**❌ | معرف غير معروف**" });
+                return msg.edit({ content: "**❌ | معرف غير موجود**" });
               backup
                 .fetch(backupID)
                 .then((backup) => {
@@ -138,7 +138,7 @@ module.exports = {
                   if (err === "No backup found")
                     return channel.send({
                       content:
-                        "**❌ لا بوجد حافظ بهذا المعرف `" + backupID + "`!**",
+                        "**❌ لا بوجد حافظة بهذا المعرف `" + backupID + "`!**",
                     });
                   else
                     return channel.send(
@@ -151,7 +151,7 @@ module.exports = {
               break;
             case "load":
               if (!backupID)
-                return msg.edit({ content: "**❌ | معرف غير معروف**" });
+                return msg.edit({ content: "**❌ | معرف غير موجود**" });
               backup
                 .fetch(backupID)
                 .then(() => {

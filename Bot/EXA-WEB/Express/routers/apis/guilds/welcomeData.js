@@ -10,8 +10,8 @@ router.all("/:guildID/welcome", async (req, res) => {
     const welcomeImageData = await db.get(`${guildID}/welcomeImageData`);
     return res.send(welcomeImageData);
   } else {
-    if (Object.keys(data) !== ["StageData", "AvatarData", "TextData"])
-      return res.status(401).send({ message: "معلومات غير صحيحة" });
+    // if (Object.keys(data) !== ["StageData", "AvatarData", "TextData"])
+    //   return res.status(401).send({ message: "معلومات غير صحيحة" });
     await db.set(`${guildID}/welcomeImageData`, data);
     res.send({ message: "تم بتجاح" });
   }

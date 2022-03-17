@@ -11,7 +11,7 @@ module.exports = {
   description: "التشكرات",
   expectedArgs: "<top/to> <عضو/guild/all> [رقم]",
   minArgs: 1,
-  maxArgs: 3,
+  maxArgs: -1,
   syntaxError: "× خطأ ×",
   permissions: [],
   cooldown: "5s",
@@ -23,7 +23,7 @@ module.exports = {
   slash: "both",
   options: [
     {
-      name: "to",
+      name: "لـ",
       description: "شكر عضو ما",
       type: 1,
       options: [
@@ -36,7 +36,7 @@ module.exports = {
       ],
     },
     {
-      name: "top",
+      name: "مشاهير",
       description: "شكر عضو ما",
       type: 1,
       options: [
@@ -87,7 +87,7 @@ module.exports = {
     interaction,
   }) => {
     const type = interaction ? interaction.options.getSubcommand() : args[0];
-    if (type === "to") {
+    if (type === "لـ") {
       const thxMember = interaction
         ? interaction.options.getMember("العضو")
         : message.mentions.members.first() ||
@@ -107,7 +107,7 @@ module.exports = {
         db.set("thx", thxData);
         return `**✅ | تم شكر <@!${thxMember.id}> بنجاح**\n||خصم من رصيدك مقدار \`50\` عملة||`;
       }
-    } else if (type === "top") {
+    } else if (type === "مشاهير") {
       const topType = interaction
         ? interaction.options.getString("نوع")
         : args[1];

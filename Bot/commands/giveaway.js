@@ -3,7 +3,7 @@ module.exports = {
   aliases: ["جوائز", "جائزة", "gv", "giveaway"],
   category: "الألـعـاب",
   description: "أمر بدأ الجيف أواي",
-  expectedArgs: "<start/reroll/delete/end>",
+  expectedArgs: "<بدا/اعادة/حذف/انهاء>",
   minArgs: 1,
   maxArgs: 1,
   syntaxError: "",
@@ -24,19 +24,19 @@ module.exports = {
       choices: [
         {
           name: "لبدء_جائزة_جديدة",
-          value: "start",
+          value: "بدا",
         },
         {
           name: "لإعادة_إختيار_الفائزين",
-          value: "reroll",
+          value: "اعادة",
         },
         {
           name: "لحذف_جائزة_ما",
-          value: "delete",
+          value: "حذف",
         },
         {
           name: "لإنهاء_وقت_الجائزة_فورا",
-          value: "end",
+          value: "انهاء",
         },
       ],
     },
@@ -89,7 +89,7 @@ module.exports = {
         false
       )
       .setTitle(`إستخدام خطأ للأمر: ${message ? prefix : "/"}giveaway`);
-    if (args[0] === "start") {
+    if (args[0] === "بدا") {
       if (!message) interaction.reply({ content: "👍 | جاري بدأ جائزة جديدة" });
       await channel
         .send({
@@ -246,7 +246,7 @@ module.exports = {
               m.delete();
             });
         });
-    } else if (args[0] === "reroll") {
+    } else if (args[0] === "اعادة") {
       if (!message)
         interaction.reply({ content: "👍 | جاري إعادة إختيار الفائزين" });
       channel
@@ -294,7 +294,7 @@ module.exports = {
               msg.delete();
             });
         });
-    } else if (args[0] === "delete") {
+    } else if (args[0] === "حذف") {
       if (!message) interaction.reply({ content: "👍 | جاري حذف الجائزة" });
       channel
         .send({
@@ -332,7 +332,7 @@ module.exports = {
               msg.delete();
             });
         });
-    } else if (args[0] === "end") {
+    } else if (args[0] === "انهاء") {
       if (!message) interaction.reply({ content: "👍 | جاري إنهاء الجائزة" });
       channel
         .send({

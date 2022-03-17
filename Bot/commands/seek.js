@@ -60,7 +60,7 @@ module.exports = {
     const mm = parseInt(
       `${message ? args[0] : interaction.options.getInteger("دقائق")}`
     );
-    if (!mm)
+    if (mm ?? false)
       return `${client.emotes.success} | الوقت الحالي هو \`${fromS(
         Math.floor(queue.currentTime),
         "mm:ss"
@@ -70,10 +70,10 @@ module.exports = {
     const ss =
       parseInt(
         `${message ? args[1] : interaction.options.getInteger("ثوان")}`
-      ) || 0;
+      ) ?? 0;
     if (ss && isNaN(ss))
       return `${client.emotes.error} | يرجى كتابة رقم متاح للثوان!`;
-    const seek = (mm || 0) * 60 + ss;
+    const seek = (mm ?? 0) * 60 + ss;
     if (isNaN(seek)) return `${client.emotes.error} | يرجى كتابة رقم متاح!`;
     if (seek > queue.duration)
       return `${client.emotes.error} | يرجى كتابة رقم أصغر!`;

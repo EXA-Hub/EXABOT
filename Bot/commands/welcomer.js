@@ -215,7 +215,7 @@ module.exports = {
         const setMessageEmbed = new MessageEmbed()
           .setColor(config.bot.color.hex)
           .setDescription(
-            `**\`{{name}}\` => *إسم العضو***\n**\`{{memberCount}}\` => *عدد الأعضاء***\n**\`{{tag}}\` => *رقم العضو***`
+            `**\`{{name}}\` => *إسم العضو***\n**\`{{memberCount}}\` => *عدد الأعضاء***\n**\`{{tag}}\` => *رقم العضو***\n**\`{{user}}\` => *تحديد العضو***`
           )
           .setTitle("قم بإرسال الرسالة الخاصة بك وإستخدم التفاصيل التالية");
         channel.send({ embeds: [setMessageEmbed] }).then((msg1) => {
@@ -249,7 +249,8 @@ module.exports = {
             user.discriminator,
             user.username,
             user.avatarURL({ dynamic: false, format: "png", size: 4096 }),
-            guild.memberCount
+            guild.memberCount,
+            member.id
           );
         } catch (e) {
           console.log(e);

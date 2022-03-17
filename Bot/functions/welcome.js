@@ -9,7 +9,7 @@ const { client } = require("../index");
  * @param {Number} memberCount
  * @returns
  */
-async function welcome(bot, guildID, tag, name, avatar, memberCount) {
+async function welcome(bot, guildID, tag, name, avatar, memberCount, memberID) {
   const db = require("./database");
   let data = await db.get(`${guildID}/welcomeImageData`);
   if (Object.keys(data) === 0)
@@ -55,8 +55,9 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
       const channel = guild.channels.cache.get(channelID);
       if (channel) {
         const welcomeMessage = message
+          .replace("{{memberCount}}", memberCount)
+          .replace("{{user}}", `<@!${memberID}>`)
           .replace("{{name}}", name)
-          .replace("{{memberCount}}", guild.memberCount)
           .replace("{{tag}}", tag);
         if (
           data &&
@@ -69,21 +70,24 @@ async function welcome(bot, guildID, tag, name, avatar, memberCount) {
           data.AvatarData.url = encodeURI(avatar);
         }
         let url = `https://canvas.exabot.ml/welcome/data?data=${JSON.stringify(
-          data
+          data,
+          0,
+          0
         )
           .toString()
-          .replace(" ", "")
-          .replace("#", "")}&member=${JSON.stringify({
-          memberCount,
-          name,
-          tag,
-        })
+          .replace("#", "")}&member=${JSON.stringify(
+          {
+            memberCount,
+            name,
+            tag,
+          },
+          0,
+          0
+        )
           .toString()
-          .replace(" ", "")
           .replace("#", "")}`;
         const image = new Discord.MessageAttachment(
-          encodeURI(url),
-          "ترحيب.png"
+          encodeURI(url)
         );
         channel.send({ content: welcomeMessage, files: [image] });
       } else return;

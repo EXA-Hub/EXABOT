@@ -235,7 +235,9 @@ module.exports = async (client, instance) => {
         name: message.author.tag,
         iconURL: message.author.avatarURL({ dynamic: true }),
       })
-      .setDescription(`\`${message.content}\``)
+      .setDescription(
+        `${message.content ?? "لا يوجد محتوى"}\n` + `> بواسطة: ${message.user}`
+      )
       .setTimestamp()
       .setFooter({
         text: `Bot Developer: ${owner.tag}`,
@@ -250,7 +252,7 @@ module.exports = async (client, instance) => {
     if (!logChannel) return;
     const logEmbed = new MessageEmbed()
       .setTimestamp()
-      .setColor("LUMINOUS_VIVID_PINK")
+      .setColor(config.bot.color.hex)
       .setFooter({
         text: `Bot Developer: ${owner.tag}`,
         iconURL: owner.avatarURL({ dynamic: true }),

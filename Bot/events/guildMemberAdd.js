@@ -22,7 +22,8 @@ module.exports = (client, instance) => {
       member.user.discriminator,
       member.user.username,
       avatar,
-      guild.memberCount
+      guild.memberCount,
+      member.id
     );
     if (
       saveMutedDataFile &&
