@@ -20,9 +20,9 @@ app.get("/", async (req, res) => {
 });
 
 app.get("/welcome/1", async (req, res) => {
-  if (!req.query.name) return res.send(`${"/test/img?name="}`);
-  if (!req.query.tag) return res.send(`${"/test/img?tag="}`);
-  if (!req.query.memberCount) return res.send(`${"/test/img?memberCount="}`);
+  if (!req.query.name) return res.status(401).send(401);
+  if (!req.query.tag) return res.status(401).send(401);
+  if (!req.query.memberCount) return res.status(401).send(401);
   const canvas = Canvas.createCanvas(700, 250);
   const ctx = canvas.getContext("2d");
   const background = await Canvas.loadImage(
@@ -53,7 +53,7 @@ app.get("/welcome/1", async (req, res) => {
   ctx.fillText(text, x, 100 + pfp.height);
 
   res.set("Content-Type", "image/png");
-  res.send(`${canvas.toBuffer()}`);
+  res.send(canvas.toBuffer());
 });
 
 function validURL(str) {
@@ -73,63 +73,63 @@ app.get("/welcome/data", async (req, res) => {
   /**
    * تجهيز المعلومات المطلوبة
    */
-  if (!req.query.data || !req.query.member) return res.send(`${req.query}`);
+  if (!req.query.data || !req.query.member) return res.status(401).send(401);
   const data = JSON.parse(decodeURI(req.query.data));
   const member = JSON.parse(decodeURI(req.query.member));
-  if (!data || !member) return res.send(`${(data, member)}`);
+  if (!data || !member) return res.status(401).send(401);
   const { memberCount, name, tag } = member;
   const createCanvasWidth = data.StageData.width;
   const createCanvasHeight = data.StageData.height;
   if (!_.isInteger(createCanvasHeight) || !_.isInteger(createCanvasWidth))
-    return res.send(`${(createCanvasWidth, createCanvasHeight)}`);
+    return res.status(401).send(401);
   const pfpX = data.AvatarData.x;
   const pfpY = data.AvatarData.y;
   if (!_.isInteger(Math.floor(pfpX)) || !_.isInteger(Math.floor(pfpY)))
-    return res.send(`${(pfpX, pfpY)}`);
+    return res.status(401).send(401);
   const backgroundImageUrl = data.StageData.background;
   if (!_.isString(backgroundImageUrl) || !validURL(backgroundImageUrl))
-    return res.send(`${backgroundImageUrl}`);
+    return res.status(401).send(401);
   const pfpWidth = data.AvatarData.width;
   const pfpHeight = data.AvatarData.height;
   if (!_.isInteger(Math.floor(pfpWidth)) || !_.isInteger(Math.floor(pfpHeight)))
-    return res.send(`${(pfpWidth, pfpHeight)}`);
+    return res.status(401).send(401);
   const pfpScaleWidth = data.AvatarData.scaleX;
   const pfpScaleHeight = data.AvatarData.scaleY;
   if (
     !_.isInteger(Math.floor(pfpScaleWidth)) ||
     !_.isInteger(Math.floor(pfpScaleHeight))
   )
-    return res.send(`${(pfpScaleWidth, pfpScaleHeight)}`);
+    return res.status(401).send(401);
   const avatarImageUrl = data.AvatarData.url;
   if (!_.isString(avatarImageUrl) || !validURL(avatarImageUrl))
-    return res.send(`${avatarImageUrl}`);
+    return res.status(401).send(401);
   const rotation = data.AvatarData.rotation;
-  if (!_.isInteger(Math.floor(rotation))) return res.send(`${rotation}`);
+  if (!_.isInteger(Math.floor(rotation))) return res.status(401).send(401);
   const circle = data.AvatarData.circle;
-  if (!_.isBoolean(circle)) return res.send(`${circle}`);
+  if (!_.isBoolean(circle)) return res.status(401).send(401);
   const color = data.TextData.fill;
-  if (!_.isString(color)) return res.send(`${color}`);
+  if (!_.isString(color)) return res.status(401).send(401);
   const messageText = data.TextData.text;
-  if (!_.isString(messageText)) return res.send(`${messageText}`);
+  if (!_.isString(messageText)) return res.status(401).send(401);
   const messageTextX = data.TextData.x;
   const messageTextY = data.TextData.y;
   if (
     !_.isInteger(Math.floor(messageTextX)) ||
     !_.isInteger(Math.floor(messageTextY))
   )
-    return res.send(`${(messageTextX, messageTextY)}`);
+    return res.status(401).send(401);
   const messageTextPX = data.TextData.fontSize;
-  if (!_.isInteger(messageTextPX)) return res.send(`${messageTextPX}`);
+  if (!_.isInteger(messageTextPX)) return res.status(401).send(401);
   const messageTextScaleX = data.TextData.scaleX;
   const messageTextScaleY = data.TextData.scaleY;
   if (
     !_.isInteger(Math.floor(messageTextScaleX)) ||
     !_.isInteger(Math.floor(messageTextScaleY))
   )
-    return res.send(`${(messageTextScaleX, messageTextScaleY)}`);
+    return res.status(401).send(401);
   const messageTextRotation = data.TextData.rotation;
   if (!_.isInteger(Math.floor(messageTextRotation)))
-    return res.send(`${messageTextRotation}`);
+    return res.status(401).send(401);
 
   /**
    * بدأ المشروع النهائي
