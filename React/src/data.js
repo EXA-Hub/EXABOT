@@ -1,5 +1,5 @@
 const backend = process.env.REACT_APP_VERCEL_GIT_REPO_OWNER
-  ? "https://api.exabot.ml"
+  ? "https://valuabledarkkhakiclick.exa-bot1076team.repl.co"
   : "http://localhost:2323";
 module.exports = {
   backend,
