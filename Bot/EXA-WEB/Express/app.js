@@ -1,6 +1,7 @@
 const config = require("../../data/config");
 module.exports = (Client, instance) => {
   const cors = require("cors");
+  const path = require("path");
   const { react } = config.dashboard;
   const express = require("express");
   const passport = require("./strategy");
@@ -48,12 +49,11 @@ module.exports = (Client, instance) => {
   const api = require("./routers/api");
   app.use("/api", api);
 
+
+  const buildPath = path.join(__dirname, "..", "build");
+  app.use(express.static(buildPath));
   app.all("/:param?", (req, res) => {
-    res.send({
-      query: req.query,
-      params: req.params,
-      body: req.body,
-    });
+    res.sendFile(buildPath);
   });
 
   app.use((req, res, next) => {
