@@ -39,7 +39,7 @@
 
 ## عن المشروع
 
-[![Screen Shot](https://i.ytimg.com/vi/H-wprcAo4Bk/maxresdefault.jpg)](https://youtu.be/H-wprcAo4Bk)
+[![Screen Shot](https://i.ytimg.com/vi/OJyMcUH12Pk/maxresdefault.jpg)](https://youtu.be/OJyMcUH12Pk)
 
 يوجد العديد من البوتات العربية, ولكن, لم أجد مشروع واحد يحتوى على لوحة تحكم مع كونه مفتوح المصدر. لذلك أردت أن أصنع أول بوت عربي إحترافي مع لوحة تحكم متكاملة بإستعامل حزمة ميرن وجعل مشروعه مفتوح المصدر للجميع.
 
