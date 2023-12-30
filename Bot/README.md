@@ -151,7 +151,7 @@ git clone https://github.com/EXA-Hub/EXABOT.git
 
 <a href="https://heroku.com/deploy?template=https://github.com/EXA-Hub/EXABOT"><img src="https://www.herokucdn.com/deploy/button.svg" alt="Deploy to Heroku"></a>
 
-<a href="https://glitch.com/edit/#!/import/github/zhycorp/disc-11"><img src="https://cdn.discordapp.com/attachments/728240513441988618/921484542794170388/f3620a78-0ad3-4f81-a271-c8a4faa20f862Fremix-button.png" alt="Remix on Glitch"></a>
+<a href="https://glitch.com/edit/#!/import/github/EXA-Hub/EXABOT"><img src="https://cdn.discordapp.com/attachments/728240513441988618/921484542794170388/f3620a78-0ad3-4f81-a271-c8a4faa20f862Fremix-button.png" alt="Remix on Glitch"></a>
 
 5. تحميل الحزم المختلفة
 
